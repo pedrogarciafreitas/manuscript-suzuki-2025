@@ -248,7 +248,7 @@
 
 
 \gls{PPG} is a fundamental component to enable a myriad of continuous health monitoring applications. 
-These applications commonly utilize wearable devices to record signals that are useful in the individual's health condition diagnostic. \gls{PPG} is often used in these devices because it is compact, non-invasive, and cheap. 
+These applications commonly utilize wearable devices to record signals that are useful in the individual's health condition diagnostic. \gls{PPG} is widely adopted in wearable sensors due to its small form factor, non-invasive nature, and cost-effectiveness. 
 However, despite these benefits, the \gls{PPG} highly susceptible to noise caused by motion and environmental interferences. Such noise can greatly impair the quality of the signal, which compromises the performance and reliability of health monitoring. 
 Given that, assessing the signal quality is essential for enabling trustable health monitoring applications. Most \gls{SQA} strategies adopted in these devices rely either on \gls{ML} models, achieving high performance levels despite the associated increases in resource demand and power consumption, or rule-based strategies that can assess signal quality in an energy-efficient way with reduced accuracy. 
 In this work, we present VisionPPG, a method for assessing the quality of \gls{PPG} signals through a fusion of signal projections and \gls{CV} techniques. Specifically, the one-dimensional \gls{PPG} signal is projected onto a set of bidimensional representations based on \gls{GAF}, \gls{MTF} and \gls{RP}. These projections are then aggregated to form a tensor referred as \gls{PMix}. The \gls{PMix} is combined with several \gls{CV} to model a signal quality classifier. To validate \gls{PMix}, different \glspl{CV} models are trained and tested using the \gls{BUTPPG} database. 
@@ -257,14 +257,16 @@ The results indicate that VisionPPG outperforms state-of-the-art time series cla
 \end{abstract}
 
 %%Graphical abstract
-\begin{graphicalabstract}
-%\includegraphics{grabs}
-\end{graphicalabstract}
+% \begin{graphicalabstract}
+% \includegraphics{grabs}
+% \end{graphicalabstract}
 
 %%Research highlights
 \begin{highlights}
-\item Research highlight 1
-\item Research highlight 2
+\item Novel VisionPPG method combines signal projections with computer vision for PPG SQA.
+\item Proposed Projection Mix (PMix) fuses GAF, MTF, and RP for better signal assessment.
+\item VisionPPG with Wide ResNet outperforms state-of-the-art time series classifiers.
+\item Achieved a high Cohen Kappa score of 0.955 using deep learning and signal imagery.
 \end{highlights}
 
 %% Keywords
@@ -281,11 +283,11 @@ Intelligent Systems \sep Biomedical Engineering \sep Computer Vision \sep Photop
 \section{Introduction} \label{sec_intro}
 
 
-Humankind is continually seeking to improve longevity and quality of life. 
+The pursuit of enhanced clinical longevity and patient quality of life has driven significant research in medical monitoring technologies. 
 One of the main research areas in that regard is medicine, which provides means of preventing and remedying accidents and diseases. 
-Certain diseases can silently deteriorate a person's health. A prime example is the formation of atheromas, which, if left untreated, can lead to life-threatening complications such as strokes~\cite{atheromas}.
+Asymptomatic cardiovascular pathologies, such as atheroma formation, present significant clinical risks, including acute ischemic events and strokes~\cite{atheromas}.
 For that reason, it is vital to seek regular medical consultation to detect diseases in their early stages. The treatability of certain conditions, such as cardiac amyloidosis, is often contingent upon early diagnosis~\cite{cardiac-amyloidosis}.
-However, personalized professional care can be expensive and often lack the real-time responsiveness required to manage acute events when a patient is outside of a hospital setting.
+However, personalized professional care can be expensive and often lacks the real-time responsiveness required to manage acute events when a patient is outside of a hospital setting.
 As a result, there is a growing demand for autonomous and continuous health monitoring systems.
 
 
@@ -293,8 +295,8 @@ In this context, a promising solution for that demand is to use wearable devices
 Examples of wearable devices include quotidian objects, with the shape of belts, bracelets, rings, shoe soles, clothing, etc~\cite{van2024smart}.
 Smartwatches are a common category of wearables capable of running multiple health-monitoring applications.
 These applications are facilitated by the advent of the \gls{IoT}, which is defined as a scalable network of interconnected devices that exchange data captured by various sensors~\cite{aouedi2024survey}.
-Examples of sensed health data can include body temperature, blood pressure and neural activity.
-These sensors are significant to capture environmental and physiological data that are valuable for healthcare, since them can hint the patient conditions~\cite{ECG-diagnosis}. 
+These sensors capture vital physiological indicators, including thermal fluctuations, hemodynamic parameters, and neuroelectrical activity.
+These sensors are significant to capture environmental and physiological data that are valuable for healthcare, since they provide indicators of the patient's physiological state.~\cite{ECG-diagnosis}. 
 %For instance, certain \gls{ECG} patterns can signal a post-ischemic state~\cite{ECG-diagnosis}.
 
 
@@ -338,7 +340,7 @@ Consequently, \gls{PPG} emerges as a viable alternative to \gls{ECG}, particular
         & \includegraphics[width=0.48\textwidth, trim={4.12em 0 0em 0}, clip]{butppg_111004.png} \\
     \end{tabular}
     }
-    \caption{Example o reliable (blue) and distorted (red) \gls{PPG} signals from the \gls{BUTPPG} database~\protect\cite{butppg}.}
+    \caption{Example of reliable (blue) and distorted (red) \gls{PPG} signals from the \gls{BUTPPG} database~\protect\cite{butppg}.}
     \label{fig:butppg_samples}
 \end{figure}
 
@@ -363,7 +365,7 @@ Among the variety of physiological signals, the \gls{ECG} is prevalent in the li
 
 Also, there are other publications on the \gls{ECG} \gls{SQA}. For instance, in 2017, Orphanidou et al. \cite{ecg-3} introduced a feature based on the extraction of the \gls{HRV} of \gls{ECG} signals. The method decomposes this new signal into wavelets with different frequency ranges and calculates the entropy of each of them, forming a feature vector. This vector feeds a \gls{SVM}, which classifies the signal as acceptable or not. Later, Shahriari et al. \cite{ecg-4} developed an image-based feature that measures the structural similarity measure between the input plot image, containing each signal channel Cartesian graph, and multiple template plot images of similar shape selected from the training dataset by using clustering analysis. One year later, Moeyersons et al. \cite{ecg-5} proposed transforming the signal using the auto correlation function and extracting simple features from it. In 2024, Huerta et al. \cite{ecg-6} generated phase space plots, such as Poincaré plots, and discretized them into a grid where each cell is the logarithm of the number of points contained in that cell. Thus, the \gls{SQA} literature for \gls{ECG} ranges multiple works.
 
-Besides the relevance of the \gls{ECG}, the \gls{PPG} has increased in popularity as an alternative to it. In fact, its number of related articles published from 2013 to 2023 has increased by 176\% \cite{ppg-1}. However, as previously presented in Chapter \ref{Introducao}, the \gls{PPG} is also susceptible to noise, fact that led to the development of \gls{PPG} \gls{SQA} methods. A sample of this literature is the work of Li et al. \cite{ppg-2}, which poses the measurement of a \gls{SQI} through the application of the \gls{DTW} technique to measure the signal disparity to an established template. These authors then fed this \gls{SQI} and some others to a \gls{MLP} and to a self-made rule function, predicting a unique \gls{SQI}. Experiments on private annotations on the MIMIC II dataset resulted on the \gls{MLP} achieving the highest accuracy, 95.2\%. Another sample is the work of Papini et al. \cite{ppg-3}, in which they proposed a method that first segments the input signal by finding all negative local minima points. Then, the method creates a template signal by calculating the \gls{DTW} barycenter average of the signal segments. Finally, it calculates the \gls{SQI} for each beat by comparing them to the template. This method obtained above 95\% sensitivity and positive predictive values on two public datasets. Therefore, it is possible to achieve good predictive quality in the \gls{SQA} of \glspl{PPG}.
+Besides the relevance of the \gls{ECG}, the \gls{PPG} has increased in popularity as an alternative to it. In fact, its number of related articles published from 2013 to 2023 has increased by 176\% \cite{ppg-1}. However, the \gls{PPG} is also susceptible to noise, fact that led to the development of \gls{PPG} \gls{SQA} methods. A sample of this literature is the work of Li et al. \cite{ppg-2}, which poses the measurement of a \gls{SQI} through the application of the \gls{DTW} technique to measure the signal disparity to an established template. These authors then fed this \gls{SQI} and some others to a \gls{MLP} and to a self-made rule function, predicting a unique \gls{SQI}. Experiments on private annotations on the MIMIC II dataset resulted on the \gls{MLP} achieving the highest accuracy, 95.2\%. Another sample is the work of Papini et al. \cite{ppg-3}, in which they proposed a method that first segments the input signal by finding all negative local minima points. Then, the method creates a template signal by calculating the \gls{DTW} barycenter average of the signal segments. Finally, it calculates the \gls{SQI} for each beat by comparing them to the template. This method obtained above 95\% sensitivity and positive predictive values on two public datasets. Therefore, it is possible to achieve good predictive quality in the \gls{SQA} of \glspl{PPG}.
 
 
 According to Such~\cite{such2007motion}, \gls{SQA} methods in biomedical signals generally fall into two categories: single-parameter and multiparameter approaches. Unlike single-parameter methods, multiparameter techniques utilize additional sensors that provide information related to the motion or the \gls{PPG} itself. Examples of these additional sensors include accelerometers~\cite{nabavi2020robust, tuauctan2015characterization} and optical source-detector pairs with peak responses beyond the red-infrared wavelength spectrum~\cite{zhang2019motion}. Some studies generate reference noise signals internally from the impaired \gls{PPG} segments, reducing the need for extra hardware~\cite{ram2011novel, raghuram2016use}. Additional sensor channels can also transmit data about the same or a similar physiological indicator that reacts differently to artifacts. Nevertheless, using measured or synthetic reference signals for detecting contaminated \gls{PPG} segments often relies on adaptive filtering. Beyond its high computational and mathematical complexity, this approach may require extended convergence times to reach an optimal solution.
@@ -749,7 +751,7 @@ where
         1, & x \in Q
     \end{cases}.
 \end{equation}
-\noindent Figure~\ref{fig:method:markov_chain} depicts the graph of the example signal. That graph $G$ allows a probabilistic representation $X' = \{ x'_1,x'_2,...,x'_n \}$ of the input signal $X$ by procedurally choosing a sample of the current quantile node and then transitioning to the next node according to the transitions probabilities. Algorithm \ref{alg:mtf_reconstruction} explicits that representation and Figure~\ref{fig:method:mtf_signals} exemplifies it applied to the example signal. Therefore, the signal conversion to that graph representation is probabilistically reversible, meaning that it preserves statistical information of the signal, even though that means the successful recovery is not certain.
+\noindent Figure~\ref{fig:method:markov_chain} depicts the graph of the example signal. That graph $G$ allows a representation $X' = \{ x'_1,x'_2,\cdots,x'_n \}$ of the input signal $X$ by procedurally choosing a sample of the current quantile node and then transitioning to the next node according to the transitions probabilities. Algorithm \ref{alg:mtf_reconstruction} explicits that representation and Figure~\ref{fig:method:mtf_signals} exemplifies it applied to the example signal. Therefore, the signal conversion to that graph representation is probabilistically reversible, meaning that it preserves statistical information of the signal, even though that means the successful recovery is not certain.
 
 
 \begin{algorithm}
@@ -779,7 +781,21 @@ Since that graph does not retain temporal relationships, the second step of the 
 
 The main idea of the projection methods is to reflect properties and shapes of the signal into visual patterns. That concept applies too to the inspection of the signal quality. Figure~\ref{fig:method:noises} presents examples of the influence of different type of noises over the projections aspect. On observation is that the presence of low-frequency or high-frequency noises tend to produce, respectively, big or small scale structures. We can see in the effects of that observation in the figure, where the baseline wander figures manifest two to four big structures and the high-frequency noise figures contain small dot-like structures. Another observation is that noises concentrated in a certain region tend to disturb the projection onto a cross-like structure, as we can see in the figure local noise column. We can see that property of ``reflection'' for usual noises, such as Gaussian, and salt and pepper noises. In the figure, the Gaussian noise still preserves the high-level structures and destroys low-level structures, while the salt and pepper noise produces vertical and horizontal lines with void or full colors in places corresponding to, respectively ``salts'' and ``peppers'' of the source signal. Therefore, those projections are likely to be useful in \gls{SQI} tasks for \gls{CV} approaches, since they present the noise and its characteristics as visual patterns that humans can recognize, raising the hypothesis that \gls{CV} could learn them as well.
 
+\begin{figure}[t!]
+    \centering
 
+    \subfigure[Proposed \gls{PPG} \gls{SQA} framework.]{
+        \includegraphics[width=0.96\columnwidth]{method.png}
+        \label{fig:method}
+    } 
+    \subfigure[Channel adaptations.]{
+        \includegraphics[width=0.96\columnwidth]{input_layer.png}
+        \label{fig:input_layer}
+    }
+
+    \caption{Components of VisionPPG: \subref{fig:input_layer} the four-channel of projection mix is convolved with a $1 \times 1$ convolution filter to produce the three-channel input layer used in the \gls{CV} classifier. \subref{fig:method} illustrates the whole process.}
+    \label{fig:visionppg}
+\end{figure}
 
 
 Since each projection has its unique characteristics, they are combined into an ensemble. For this end, all projections are fused to create an aggregated tensor. This tensor is analogous to a hyperspectral image, i.e., unlike a typical color image, which consists of only three bands (red, green, and blue), the produced tensor provides additional spectral information for each pixel. The aggregation, which we call \gls{PMix}, consists in the assignment of each projection to a particular channel of a single input layer. Then, we ``mix'' that aggregation by performing a pointwise ($1\times 1$ kernel-sized) convolution operation. Formally, the tensor $T_{in_{p \times n \times m}}$ used as input in the \gls{CV} models is constructed by stacking the $p$ projections $\{M_1, M_2, \ldots, M_p\}$, all with same dimensions $n \times m$, as defined as follows:
@@ -798,21 +814,7 @@ Since each projection has its unique characteristics, they are combined into an 
 We can observe that, for each cell with indexes $i,j$, the summation $\sum\limits_{l=1}^{p}M_{l_{i,j}} \cdot w_{(k,i,j);l}$ ``mixes'' the $p$ projections by adding its values $M_{l_{i,j}}$, while attributing different degrees of contribution for each $l$-th projection depending on the weight $w_{(k,i,j);l}$. Then, we can use the $f_{actv}$ function to mainly achieve binary distinguishability, leading to the final tensor value $T_{mix_{k,i,j}}$. Figure~\ref{fig:input_layer} illustrates the implementation framework of that mixture in the context of models pre-trained in three-channeled datasets. That process may require resizing, since pointwise convolution does not change the width and height dimensions.
 
 
-\begin{figure}[t!]
-    \centering
 
-    \subfigure[Proposed \gls{PPG} \gls{SQA} framework.]{
-        \includegraphics[width=0.96\columnwidth]{method.png}
-        \label{fig:method}
-    } 
-    \subfigure[Channel adaptations.]{
-        \includegraphics[width=0.96\columnwidth]{input_layer.png}
-        \label{fig:input_layer}
-    }
-
-    \caption{Components of VisionPPG: \subref{fig:input_layer} the four-channel of projection mix is convolved with a $1 \times 1$ convolution filter to produce the three-channel input layer used in the \gls{CV} classifier. \subref{fig:method} illustrates the whole process.}
-    \label{fig:visionppg}
-\end{figure}
 
 
 
@@ -828,7 +830,9 @@ Based on the \gls{PMix} projection method, this work proposes a new \gls{SQA} fr
 
 As with any machine learning task, we require a dataset to supply data for feeding the predictive models during parameter fitting, shaping them to the specific task's domain. In this work, assessing the quality of the signal is framed as a supervised classification problem, which can be described as the task of finding a function that best fits a predefined set of pairs of variables and labels, $(X, y)$. In this context, the pair corresponds to the signal mapped to its quality label, either ``good'' or ``bad''. To train the predictive methods and evaluate their performance in classifying the quality of heartbeat time series, the \gls{BUTPPG}~\cite{butppg} dataset was employed.
 
-The \glsxtrlong{BUTPPG} is a publicly available\footnote{Available at \url{https://physionet.org/content/butppg/2.0.0/}} database produced by the Department of Biomedical Engineering at Brno University of Technology. It contains samples of \gls{PPG} signals, their quality labels, and heart rate estimations. These signals were extracted using a low-cost method: recording with a smartphone camera. Specifically, the researchers recorded the subject's index finger while it covered the camera lens and its \gls{LED} light. For each video frame, they measured the average intensity of the red channel across all image pixels, resulting in a time series of averages. Finally, the signal was inverted. %The Figure \ref{fig:butppg_samples} shows examples of the results of such a sequence of procedures.  
+The \glsxtrlong{BUTPPG} is a publicly available\footnote{Available at \url{https://physionet.org/content/butppg/2.0.0/}} database produced by the Department of Biomedical Engineering at Brno University of Technology. It contains samples of \gls{PPG} signals, their quality labels, and heart rate estimations.
+The \gls{PPG} signals were acquired via smartphone-based photoplethysmography, leveraging the device's camera and \gls{LED} source to detect subcutaneous volumetric changes.
+Specifically, the researchers recorded the subject's index finger while it covered the camera lens and its \gls{LED} light. For each video frame, they measured the average intensity of the red channel across all image pixels, resulting in a time series of averages. Finally, the signal was inverted. %The Figure \ref{fig:butppg_samples} shows examples of the results of such a sequence of procedures.  
 
 They performed this method of obtaining \gls{PPG} signals 48 times, with the samples distributed equally among 12 subjects—4 measurements per subject. Moreover, the recordings were taken in two situations: one where the subject was seated and remained static, a case in which the quality label ``good'' was likely; and another where the subject was walking, a case likely to result in a ``bad'' recording. This distinction is relevant because the walking condition occurred only once for each subject, resulting in approximately 25\% of the recordings being labeled as ``bad''. Therefore, this dataset is imbalanced, a factor that was addressed in our experiment.
 
@@ -846,10 +850,10 @@ Machine learning tasks also require the dataset to be split into fragments. One 
 To evaluate the proposed projection-based framework and identify specific cases of superior performance, it was necessary to involve a large number of machine learning models. Firstly, this work compared the projection-based framework with other time series classification approaches using the Aeon-toolkit Python library\footnote{Documented at \url{https://www.aeon-toolkit.org/en/stable/}.}, with the models listed in Table~\ref{tab:non_cv_list}. Furthermore, the proposed method was combined with a wide variety of classification \gls{CV} models, utilizing the PyTorch Python library\footnote{Documented at \url{https://pytorch.org/docs/stable/index.html}.}, which supports a diverse range of neural network architectures. These architectures vary from simple convolutional networks to vision transformers. Table~\ref{tab:cv_list} lists all the \gls{CV} models involved in the experiment, which are briefly described in the following subsections of this section.
 
 
-\begin{table*}[t!]
+\begin{table}[t!]
     \centering
     \caption{Non-Computer Vision models list, containing its references.}
-    \adjustbox{max width=0.7\textwidth}{
+    \adjustbox{max width=\columnwidth}{
     \begin{tabular}{llc}
         \toprule    
         Classification         & Model                 & Reference             \\
@@ -893,7 +897,7 @@ To evaluate the proposed projection-based framework and identify specific cases 
     \end{tabular}
     }
     \label{tab:non_cv_list}
-\end{table*}
+\end{table}
 
 
 
@@ -966,7 +970,10 @@ However, defining the models alone is insufficient, as the selection of their hy
 
 \subsection{Training strategy}
 
-Given the aforementioned models, dataset, and its divisions, it was necessary to establish the training method for adjusting the models' parameters. Since the Aeon implementation already contained a default training procedure, which our experiments used for convenience reasons, our experiments only established the fitting framework for the PyTorch computer vision models and the data feeding method. Our experiment involved feeding the models by loading the signals data, applying random oversampling before transforming them, as the dataset was unbalanced. After performing the projection transform, our experiment loaded pre-trained model weights provided by PyTorch, which were originally trained on the ImageNet\footnote{Available at \url{https://image-net.org/}.}~\cite{ImageNet} dataset. Such choice was made because this work hypothesizes that a model trained in a dataset with real word images might already be familiar with the basic shapes present in the 2D projection methods. Following that, we fitted the PyTorch models using the Adam optimization algorithm~\cite{Adam} to minimize the cross-entropy loss function. A reason to use that algorithm is that it surpassed some of the other options present in the PyTorch library when tested in several datasets \cite{Adam}. The implementation of the training strategy performed this optimization cycle with a number of epochs determined by a median-deviation-based early stopping technique, through the assumption that a low dispersion on the last epochs indicates a convergence to a local-optimal in the search space. The formula below gives the score of the $n$-th epoch:
+Given the aforementioned models, dataset, and its divisions, it was necessary to establish the training method for adjusting the models' parameters straightforwardly.
+Experiment involved feeding the models by loading the signals data, applying random oversampling before transforming them, as the dataset was unbalanced. After performing the projection transform, our experiment loaded pre-trained model weights provided by PyTorch, which were originally trained on the ImageNet\footnote{Available at \url{https://image-net.org/}.}~\cite{ImageNet} dataset.
+Transfer learning was employed by utilizing pre-trained ImageNet weights; this leverages the model's existing capacity for low-level feature extraction (e.g., edges and textures) relevant to 2D signal projections.
+Following that, we fitted the PyTorch models using the Adam optimization algorithm~\cite{Adam} to minimize the cross-entropy loss function. A reason to use that algorithm is that it surpassed some of the other options present in the PyTorch library when tested in several datasets \cite{Adam}. The implementation of the training strategy performed this optimization cycle with a number of epochs determined by a median-deviation-based early stopping technique, through the assumption that a low dispersion on the last epochs indicates a convergence to a local-optimal in the search space. The formula below gives the score of the $n$-th epoch:
 \begin{equation}
 EarlyStopScore(n) = med([|l_{n-i} - med([l_{n-i}]_{i=0}^9)|]_{i=0}^{9}),
 \end{equation}
@@ -997,12 +1004,9 @@ Precision = \frac{TP}{TP+FP},
 Recall = \frac{TP}{TP+FN},
 \end{equation}
 and
-\begin{align}
-\begin{split}
-    F1      & = HarmonicMean(Precision,Recall) \\
-            & = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}. \label{eq:F1-Score}
-\end{split}
-\end{align}
+\begin{equation} \label{eq:F1-Score}
+F1 = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}.
+\end{equation}
 Therefore, the Cohen kappa score provides an overall sense of accuracy, the F1-Score suggests the model's usability level, and precision indicates the predictor's reliability.
 
 \begin{table}[h!]
@@ -1107,11 +1111,11 @@ Table \ref{tab:Averages_of_SwinTransformer} exhibits the \gls{SwinT} scores, wit
 Table \ref{tab:Averages_of_SwinTransformerV2} displays the \gls{SwinTV2} scores, with variants categorized as Base (B), Small (S), or Tiny (T). The \gls{PMix} method achieved better scores for the B and S variants, while the \gls{RP} method performed better for the T variant, despite \gls{RP} having the largest dispersion for the F1-Score in this case. Specifically, the \gls{PMix} method with the S variant resulted in the highest Cohen Kappa and F1 scores, and the second-best precision, where the \gls{RP} method with the T variant was superior.
 
 % Inter-Family Comparison
-When considering all Tables \ref{tab:Averages_of_VisionTransformer}, \ref{tab:Averages_of_Maxvit}, \ref{tab:Averages_of_SwinTransformer}, and \ref{tab:Averages_of_SwinTransformerV2}, the \gls{RP} and \gls{PMix} methods with \mbox{\gls{ViT} B 16} and \mbox{\gls{ViT} L 16}, as well as \gls{PMix} with \mbox{\gls{ViT} B 32} and \mbox{\gls{ViT} L 32}, and the \gls{SwinTV2} S with \gls{PMix}, generally achieved better scores. The benchmarking metrics for these combinations are summarized next. Table~\ref{tab:Memory_of_Transformers} shows that the \gls{SwinT} V2 S variant uses considerably less memory than the \gls{ViT} variants. Therefore, the \gls{SwinT} V2 S with \gls{PMix} can achieve high scores while utilizing less memory. However, Figure~\ref{fig:Time_of_Transformers} indicates that the \gls{SwinT} V2 S variant has a slower inference speed compared to the \gls{ViT} variants. Among the \gls{ViT} variants, the \mbox{B 32} variant was the fastest, suggesting that the combination of \gls{PMix} with \gls{ViT} B 32 can produce high scores with lower inference time. Therefore, we select the following methods for this section:
-\begin{itemize}
-    \item \gls{SwinT} V2 S with \gls{PMix};
-    \item and \gls{ViT} B 32 with \gls{PMix}. 
-\end{itemize}
+% When considering all Tables \ref{tab:Averages_of_VisionTransformer}, \ref{tab:Averages_of_Maxvit}, \ref{tab:Averages_of_SwinTransformer}, and \ref{tab:Averages_of_SwinTransformerV2}, the \gls{RP} and \gls{PMix} methods with \mbox{\gls{ViT} B 16} and \mbox{\gls{ViT} L 16}, as well as \gls{PMix} with \mbox{\gls{ViT} B 32} and \mbox{\gls{ViT} L 32}, and the \gls{SwinTV2} S with \gls{PMix}, generally achieved better scores. The benchmarking metrics for these combinations are summarized next. Table~\ref{tab:Memory_of_Transformers} shows that the \gls{SwinT} V2 S variant uses considerably less memory than the \gls{ViT} variants. Therefore, the \gls{SwinT} V2 S with \gls{PMix} can achieve high scores while utilizing less memory. However, Figure~\ref{fig:Time_of_Transformers} indicates that the \gls{SwinT} V2 S variant has a slower inference speed compared to the \gls{ViT} variants. Among the \gls{ViT} variants, the \mbox{B 32} variant was the fastest, suggesting that the combination of \gls{PMix} with \gls{ViT} B 32 can produce high scores with lower inference time. Therefore, we select the following methods for this section:
+% \begin{itemize}
+%     \item \gls{SwinT} V2 S with \gls{PMix};
+%     \item and \gls{ViT} B 32 with \gls{PMix}. 
+% \end{itemize}
 
 
 \begin{table}[t!]
@@ -1931,7 +1935,7 @@ WiResNet: 101-2 & PMix \textcolor[rgb]{0.7,0.2,0.7}{(proposed)} & \textbf{\textc
 
 \begin{table}[t!]
     \centering
-    \caption{Memory size (in MB) of the best-performing models.}
+    \caption{Memory size (in MB) of the top-12 best-performing models.}
 
     \adjustbox{max width=\columnwidth,center}{
     \begin{tabular}{lr}
@@ -1987,7 +1991,9 @@ Despite the promising results, some limitations can be considered. The experimen
 
 Another constraint is that the experiments did not explore all available options in terms of models. For instance, our experiments left out some of the models of the Pytorch and the Aeon libraries. Examples of them are the GoogLeNet~\cite{GoogLeNet}, from the Pytorch library, and the Hydra Classifier~\cite{HydraClassifier}, from the Aeon library.  Additionally, models external to these libraries, such as Xception~\cite{Xception} available in the Keras library\footnote{Accessible at \url{https://keras.io/}.}, were not tested. Furthermore, not all variants of the tested models were evaluated, such as EfficientNet~B7. Additionally, the hyperparameters of the projection methods, such as the number of dimensions in \gls{RP}, were not optimized. Exploring a broader range of options, including different libraries and hyperparameter search techniques like Optuna, could yield more comprehensive results.
 
-Finally, additional limitations were identified at the implementation level.  Firstly, the implementation utilized random oversampling to balance the dataset. However, alternative methods specifically designed for time series data, such as those described in~\cite{TimeSeriesAugmentation}, could have been employed.  These methods not only balance the dataset but also can augment it. Secondly, resizing transforms were used to adapt projection images to model inputs, potentially leading to significant loss of information for matrix images that encode pixel relationships. As a consequence, the \gls{CV} models probably did not performed as good as they could. Thirdly, there was no research for the early stop method that our implementation used. Consequently, there is a chance that this method prematurely stopped the training for models that required more epochs. Lastly, benchmarking metrics were measured using the Python standard API, which may be limited by the interpreter. Additionally, our measurements did not control the environment where measured the inference time. This could imply that external users have scheduled tasks that competed with mine measurements. Therefore, improvements at the implementation level could include applying time series augmentation techniques, resizing images without distortion by using integer multipliers and padding, researching and optimizing early stopping methods, and conducting measurements in a more controlled environment using low-level interfaces.
+Finally, additional limitations were identified at the implementation level.  Firstly, the implementation utilized random oversampling to balance the dataset. However, alternative methods specifically designed for time series data, such as those described in~\cite{TimeSeriesAugmentation}, could have been employed.  These methods not only balance the dataset but also can augment it. Secondly, resizing transforms were used to adapt projection images to model inputs, potentially leading to significant loss of information for matrix images that encode pixel relationships. As a consequence, the \gls{CV} models not performed as good as they could.
+While early stopping was implemented to prevent overfitting, future work should involve sensitivity analysis to determine if this mechanism impacted the convergence of high-complexity models.
+Lastly, benchmarking metrics were measured using the Python standard API, which may be limited by the interpreter. Additionally, our measurements did not control the environment where measured the inference time. This could imply that competed with the experimental measurements. Therefore, improvements at the implementation level could include applying time series augmentation techniques, resizing images without distortion by using integer multipliers and padding, researching and optimizing early stopping methods, and conducting measurements in a more controlled environment using low-level interfaces.
 
 
 
@@ -2000,7 +2006,11 @@ Finally, additional limitations were identified at the implementation level.  Fi
 
 This work, presented a study on \gls{SQA} for \gls{PPG} signals, mainly following an 1D-to-2D-projection approach in combination with \gls{CV} techniques. The investigated projection-based approach involved transforming 1D signals onto 2D images using the \gls{RP}, \gls{GAF}, and \gls{MTF} methods. In addition to these methods, we proposed a mixed approach combining them. The results indicate that the \gls{RP} and \gls{PMix} projection methods outperformed the \gls{GAF} and \gls{MTF} methods, with \gls{RP} and \gls{PMix} yielding similar outcomes. Although the set of machine learning models was extensive, the \gls{BUTPPG} dataset was small and unbalanced, limiting the conclusiveness of the results. Consequently, the experiment should be replicated on a larger dataset, either by using data augmentation techniques to balance and expand the BUTPPG dataset or by utilizing a different dataset with more samples.
 
-The experiments provided insights of the importance of the proposed \gls{PMix} approach. One key finding is that the \gls{PMix} method appeared more frequently among the best-performing results compared to the other projection methods. Specifically, as depicted in Table~\ref{tab:Averages_of_best models}, all but one top-performing approaches used the \gls{PMix} method. This suggests that the proposed method can enhance the performance of a set of isolated projection methods. Our experiments also demonstrate the overall effectiveness of projection methods. Notably, in the best-performing models listed in Table \ref{tab:Averages_of_best models}, the \gls{PMix} method combined with Wide ResNet outperformed the baseline time series classification models in terms of the Cohen Kappa score. This indicates that a projection-based approach can be highly accurate for both binary \gls{SQI} classes. While this highlights the viability of the projection-based approach alongside other time series classifiers, the conventional time series classifiers achieved higher F1 and Precision scores, suggesting they performed better for the positive \gls{SQI} class. An additional drawback is that combining projection-based methods with \gls{CV} models is computationally more expensive and requires more memory than using 1D classifiers. Nevertheless, the projection-based approach proved to be effective for \gls{SQA}, fulfilling our original objective described in Section~\ref{sec:problem}.
+The experiments provided insights of the importance of the proposed \gls{PMix} approach. One key finding is that the \gls{PMix} method appeared more frequently among the best-performing results compared to the other projection methods. Specifically, as depicted in Table~\ref{tab:Averages_of_best models}, all but one top-performing approaches used the \gls{PMix} method.
+These results demonstrate that the proposed \gls{PMix} fusion strategy effectively mitigates the limitations of individual projection techniques by providing a more comprehensive spatial encoding of the \gls{PPG} morphology.
+Our experiments also demonstrate the overall effectiveness of projection methods. Notably, in the best-performing models listed in Table \ref{tab:Averages_of_best models}, the \gls{PMix} method combined with Wide ResNet outperformed the baseline time series classification models in terms of the Cohen Kappa score.
+This indicates that a projection-based approach can be highly accurate for both binary \gls{SQI} classes.
+While this highlights the viability of the projection-based approach alongside other time series classifiers, the conventional time series classifiers achieved higher F1 and Precision scores, suggesting they performed better for the positive \gls{SQI} class. An additional drawback is that combining projection-based methods with \gls{CV} models is computationally more expensive and requires more memory than using 1D classifiers. Nevertheless, the projection-based approach proved to be effective for \gls{SQA}, fulfilling our original objective described in Section~\ref{sec:problem}.
 
 
 % Aplicabilidade dos métodos de projeção
