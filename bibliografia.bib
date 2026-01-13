@@ -101,11 +101,17 @@ doi = {10.1109/QoMEX58391.2023.10178569}
 
 %Nemcova A, Vargova E, Smisek R, Marsanova L, Smital L, Vitek M. Brno University of Technology Smartphone PPG Database (BUT PPG): Annotated Dataset for PPG Quality Assessment and Heart Rate Estimation. BioMed Research International. 2021 Sep 7;2021. https://doi.org/10.1155/2021/3453007
 @article{butppg,
-    author = {Nemcova,A. and Vargova,E. and Smisek,R. and Marsanova,L. and Smital,L. and Vitek,M.},
-    title = {Brno University of Technology Smartphone PPG Database (BUT PPG): Annotated Dataset for PPG Quality Assessment and Heart Rate Estimation},
-    journal = {BioMed Research International},
-    year = {2021},
-    url = {https://doi.org/10.1155/2021/3453007},
+  author = {Nemcova, Andrea and Vargova, Enikö and Smisek, Radovan and Marsanova, Lucie and Smital, Lukas and Vitek, Martin},
+  title = {Brno University of Technology Smartphone PPG Database (BUT PPG): Annotated Dataset for PPG Quality Assessment and Heart Rate Estimation},
+  journal = {BioMed Research International},
+  volume = {2021},
+  number = {1},
+  pages = {3453007},
+  doi = {https://doi.org/10.1155/2021/3453007},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1155/2021/3453007},
+  eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1155/2021/3453007},
+  abstract = {To the best of our knowledge, there is no annotated database of PPG signals recorded by smartphone publicly available. This article introduces Brno University of Technology Smartphone PPG Database (BUT PPG) which is an original database created by the cardiology team at the Department of Biomedical Engineering, Brno University of Technology, for the purpose of evaluating photoplethysmographic (PPG) signal quality and estimation of heart rate (HR). The data comprises 48 10-second recordings of PPGs and associated electrocardiographic (ECG) signals used for determination of reference HR. The data were collected from 12 subjects (6 female, 6 male) aged between 21 and 61. PPG data were collected by smartphone Xiaomi Mi9 with sampling frequency of 30 Hz. Reference ECG signals were recorded using a mobile ECG recorder (Bittium Faros 360) with a sampling frequency of 1,000 Hz. Each PPG signal includes annotation of quality created manually by biomedical experts and reference HR. PPG signal quality is indicated binary: 1 indicates good quality for HR estimation, 0 indicates signals where HR cannot be detected reliably, and thus, these signals are unsuitable for further analysis. As the only available database containing PPG signals recorded by smartphone, BUT PPG is a unique tool for the development of smart, user-friendly, cheap, on-the-spot, self-home-monitoring of heart rate with the potential of widespread using.},
+  year = {2021}
 }
 
 %Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220.
@@ -324,6 +330,23 @@ month = {jul}
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 
+@article{aeon2024,
+	title        = {Aeon: a Python toolkit for learning from time series},
+	author       = {Middlehurst, Matthew and Ismail-Fawaz, Ali and Guillaume, Antoine and Holder, Christopher and Guijo-Rubio, David and Bulatova, Guzal and Tsaprounis, Leonidas and Mentel, Lukasz and Walter, Martin and Sch\"{a}fer, Patrick and Bagnall, Anthony},
+	year         = 2024,
+	month        = jan,
+	journal      = {J. Mach. Learn. Res.},
+	publisher    = {JMLR.org},
+	volume       = 25,
+	number       = 1,
+	issn         = {1532-4435},
+	issue_date   = {January 2024},
+	abstract     = {aeon is a unified Python 3 library for all machine learning tasks involving time series. The package contains modules for time series forecasting, classification, extrinsic regression and clustering, as well as a variety of utilities, transformations and distance measures designed for time series data. aeon also has a number of experimental modules for tasks such as anomaly detection, similarity search and segmentation. aeon follows the scikit-learn API as much as possible to help new users and enable easy integration of aeon estimators with useful tools such as model selection and pipelines. It provides a broad library of time series algorithms, including efficient implementations of the very latest advances in research. Using a system of optional dependencies, aeon integrates a wide variety of packages into a single interface while keeping the core framework with minimal dependencies. The package is distributed under the 3-Clause BSD license and is available at https://github.com/aeon-toolkit/aeon.},
+	articleno    = 289,
+	numpages     = 10,
+	keywords     = {Python, open source, time series, machine learning, data mining, forecasting, classification, extrinsic regression, clustering}
+}
+
 @misc{AeonDoc,
   title        = {Aeon},
   author       = {Aeon Team},
@@ -347,6 +370,17 @@ month = {jul}
   howpublished = {\url{https://optuna.readthedocs.io/en/stable/}}
 }
 
+@article{ImbalancedLearn2017,
+author  = {Guillaume  Lema{{\^i}}tre and Fernando Nogueira and Christos K. Aridas},
+title   = {Imbalanced-learn: A Python Toolbox to Tackle the Curse of Imbalanced Datasets in Machine Learning},
+journal = {Journal of Machine Learning Research},
+year    = {2017},
+volume  = {18},
+number  = {17},
+pages   = {1-5},
+url     = {http://jmlr.org/papers/v18/16-365}
+}
+
 @misc{ImbalancedLearn,
   title        = {imbalanced-learn documentation},
   author       = {The imbalanced-learn developers},
@@ -356,26 +390,32 @@ month = {jul}
 }
 
 @misc{Sklearn,
-  title        = {scikit-learn},
-  author       = {scikit-learn developers},
-  year         = 2024,
-  note         = {Accessed: May 18, 2024},
-  howpublished = {\url{https://scikit-learn.org/}}
+  title={Scikit-learn: Machine Learning in {P}ython},
+  author={Pedregosa, F. and Varoquaux, G. and Gramfort, A. and Michel, V.
+          and Thirion, B. and Grisel, O. and Blondel, M. and Prettenhofer, P.
+          and Weiss, R. and Dubourg, V. and Vanderplas, J. and Passos, A. and
+          Cournapeau, D. and Brucher, M. and Perrot, M. and Duchesnay, E.},
+  journal={Journal of Machine Learning Research},
+  volume={12},
+  pages={2825--2830},
+  year={2011}
 }
 
 @misc{Pympler,
-  title        = {Pympler},
   author       = {J. Brouwers, L. Haehne, R. Schuppenies},
-  year         = 2020,
-  note         = {Accessed: May 18, 2024},
-  howpublished = {\url{https://pympler.readthedocs.io/en/latest/}}
+  title        = {Pympler: A python package to measure, monitor and analyze the memory behavior of Python objects in a running Python application},
+  year         = {2023},
+  publisher    = {GitHub},
+  journal      = {GitHub repository},
+  howpublished = {\url{https://github.com/pympler/pympler}},
+  note         = {Accessed: 2026-01-13}
 }
 
 @misc{Keras,
-  title        = {Keras},
-  author       = {Google Inc},
-  note         = {Accessed: May 18, 2024},
-  howpublished = {\url{https://keras.io/}}
+  title={Keras},
+  author={Chollet, Fran\c{c}ois and others},
+  year={2015},
+  howpublished={\url{https://keras.io}},
 }
 
 @INPROCEEDINGS{ImageNet,
