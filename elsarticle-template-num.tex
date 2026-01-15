@@ -164,6 +164,7 @@
 \newacronym{Tanh}{Tanh}{Hyperbolic Tangent}
 
 \newacronym{LBP}{LBP}{Local Binary Pattern}
+\newacronym{FLOP}{FLOP}{Floating-Point Operations}
 
 
 \usepackage{lineno}
@@ -735,29 +736,29 @@ This indicates that the application of the function $f_{\sphericalangle}$ does n
 
 
 
-The second step is to construct the temporal relationship matrix. We can achieve that by two methods that exploit trigonometric properties. One of them is calculating the cosine of the summation of the pairs of angles, constructing the matrix $GASF_{n \times n}$:
+The second step is to construct the temporal relationship matrix. We can achieve that by two methods that exploit trigonometric properties. One of them is calculating the cosine of the summation of the pairs of angles, constructing the matrix $\text{GASF}_{n \times n}$:
 \begin{align}
 \begin{split}
-    GASF_{i,j}     & = \cos(\phi_i + \phi_j) \\
+    \text{GASF}_{i,j}     & = \cos(\phi_i + \phi_j) \\
             & = \cos(\phi_i) \cdot \cos(\phi_j) - \sin(\phi_i) \cdot \sin(\phi_j) \\
             & = x_i \cdot x_j - \sqrt{1 - x_i^2} \cdot \sqrt{1 - x_j^2}, \label{eq:gasf:algebraic}
 \end{split}
 \end{align}
 where \gls{GASF} is the final matrix. Due to the inversibility of the $arccos$ function, it is possible to express that calculation without trigonometric operations, as expressed by the equality \ref{eq:gasf:algebraic}. Thus, we can calculate \gls{GASF} using matrix operations, as follows:  
 \begin{equation}
-    GASF = X^T \cdot X - \sqrt[\circ 2]{\mathds{1}-X^{\circ 2}}^T \cdot \sqrt[\circ 2]{\mathds{1}-X^{\circ 2}},
+    \text{GASF} = X^T \cdot X - \sqrt[\circ 2]{\mathds{1}-X^{\circ 2}}^T \cdot \sqrt[\circ 2]{\mathds{1}-X^{\circ 2}},
 \end{equation}
-where $M^{\circ 2}$ and $\sqrt[\circ 2]{M}$ represents the element-wise square power and square root of the matrix $M$, respectively, and $\mathds{1}$ is a matrix in which all elements are $1$. The other method is analogous, but uses the sine of the difference of the pairs of angles, constructing the following matrix $GADF_{n \times n}$:
+where $M^{\circ 2}$ and $\sqrt[\circ 2]{M}$ represents the element-wise square power and square root of the matrix $M$, respectively, and $\mathds{1}$ is a matrix in which all elements are $1$. The other method is analogous, but uses the sine of the difference of the pairs of angles, constructing the following matrix $\text{GADF}_{n \times n}$:
 \begin{align}
 \begin{split}
-    GADF_{i,j} & = \sin(\phi_i - \phi_j) \\
+    \text{GADF}_{i,j} & = \sin(\phi_i - \phi_j) \\
         & = \sin(\phi_i) \cdot \cos{\phi_j} - \cos(\phi_i) \cdot \sin(\phi_j) \\
         & = \sqrt{1 - x_i^2} \cdot x_j - x_i \cdot \sqrt{1 - x_j^2},  \label{eq:gadf:algebraic}
 \end{split}
 \end{align}
 Also similarly, by the equality \ref{eq:gadf:algebraic}, we can express \gls{GADF} by matrix operations:
 \begin{equation}
-    GADF = \sqrt[\circ 2]{\mathds{1} - X^{\circ 2}}^T \cdot X - X^T \cdot \sqrt[\circ 2]{\mathds{1} - X^{\circ 2}}.
+    \text{GADF} = \sqrt[\circ 2]{\mathds{1} - X^{\circ 2}}^T \cdot X - X^T \cdot \sqrt[\circ 2]{\mathds{1} - X^{\circ 2}}.
 \end{equation}
 Figure~\ref{fig:method:gaf} illustrates the \gls{GASF} and \gls{GADF} representations of the example signal depicted in Figure~\ref{fig:methodology:signal}.
 
@@ -769,7 +770,7 @@ Figure~\ref{fig:method:gaf} illustrates the \gls{GASF} and \gls{GADF} representa
 \begin{figure*}[t!]
     \centering
 
-    \subfigure[Signal segments.]{
+    \subfigure[Signal segment.]{
         \includegraphics[width=0.46\textwidth, trim={2em 3em 2em 4em}, clip]{QuantileBins.png} 
         \label{fig:method:mtf_signals}
     }
@@ -791,24 +792,34 @@ Figure~\ref{fig:method:gaf} illustrates the \gls{GASF} and \gls{GADF} representa
 
 Oates et al.~\cite{gaf-mtf-1} proposed the \gls{MTF} as well, based on a signal to graph mapping of Campanharo et al.~\cite{mtf-1}. In fact, that mapping is the first step of this method. We map the signal $X=\{x_1,x_2,...,x_n\}$, with $x_i \in \mathbb{R}$, to a graph $G=(N,W)$, with nodes set $N$ and edges weights adjacency matrix $W$. Its nodes $N$ corresponds to $m \in \mathbb{N}$ quantile bins $Q_i \subseteq \{x_i | i \in \{1,2,...,n\}\}$, that is, $|Q_1|=|Q_2|=...=|Q_n|$ and, $\forall q_1 \in Q_1, \forall q_2 \in Q_2, ..., \forall q_n \in Q_n$, we have that $q_1 \leq q_2 \leq ... \leq q_n$. In other words, those quantiles bins separate the signal $X$ into bands $Q_i$ with equal amount of samples $x_i$. Figure~\ref{fig:method:mtf_signals} pictures this concept for the example signal. The other graph component, its edges, are directed and corresponds to the probability of a sample $x_{k+1}$, consecutive to a uniformly randomly chosen sample of a certain quantile $x_k \in Q_i$ (must have a consecutive), belonging to a certain quantile $Q_j$. Those edges are akin to transitions of first-order Markov chains, since the probabilities summation of the transitions that sources from a state is always equal to $100\%$.
 
-We can express the adjacency matrix $W_{m \times m}$ as follows:  
+The adjacency matrix $W_{m \times m}$ can be expressed as:  
 \begin{equation}
     W_{i,j} = \frac{
-            \sum\limits_{x_k \in Q_i, x_{k+1} \in X} f_{in}(x_{k+1}, Q_j)
-        }{
-            \sum\limits_{Q_l \in Q}\sum\limits_{x_k \in Q_i, x_{k+1} \in X} f_{in}(x_{k+1}, Q_l) 
-        },
+    \sum\limits_{k=1}^{n-1} \mathbb{I}(x_k \in Q_i \text{ and } x_{k+1} \in Q_j)
+    }{
+    \sum\limits_{k=1}^{n-1} \mathbb{I}(x_k \in Q_i)
+    }
 \end{equation}
-where
+where the indicator function
 \begin{equation}
-    f_{in}(x,Q) = \begin{cases}
+    \mathbb{I}_Q(x) = \begin{cases}
         0, & x \not\in Q \\
         1, & x \in Q
-    \end{cases}.
+    \end{cases}
 \end{equation}
+ensures that for every coordinate $(i, j)$ in the resulting matrix, the specific transition probability $W_{u,v}$ is selected according to the bins where the $i$-th and $j$-th samples reside. This mathematical formulation establishes a rigorous mapping from the 1D signal domain to the 2D image domain.
+This shows that the value at coordinates $(i, j)$ in the \gls{MTF} is the transition probability $W_{u,v}$ between the quantiles that contain samples $x_i$ and $x_j$.
 Figure~\ref{fig:method:markov_chain} depicts the graph of the example signal. This graph $G$ enables a representation  $X' = \{ x'_1,x'_2,\cdots,x'_n \}$  of the input signal $X$ by iteratively selecting a sample from the current quantile node and transitioning to the subsequent node based on the transition probabilities.
 
 Algorithm~\ref{alg:mtf_reconstruction} details this representation, while Figure~\ref{fig:method:mtf_signals} illustrates its application to the example signal. Consequently, the signal conversion to this graph representation is probabilistically reversible. This characteristic ensures that the statistical information of the signal is preserved, even though an exact recovery of the original values is not guaranteed.
+Since that graph does not retain temporal relationships, the second step of the \gls{MTF} method is to build the matrix $\text{MTF}_{n \times n}$ by explicitly mapping the signal indices to the quantile bins:
+\begin{equation}
+    %\text{MTF}_{i,j} = W_{u,v} | x_i \in Q_u, x_j \in Q_v,
+    \text{MTF}_{i,j} = W_{u,v} \quad \text{where} \quad x_i \in Q_u, x_j \in Q_v,
+\end{equation}
+where each cell $\text{MTF}_{i,j}$ contains the transition probability between the quantiles $(Q_u,Q_v)$ to which the samples $(x_i,x_j)$ belong.
+Figure~\ref{fig:method:mtf} pictures the final result of the method applied to the example signal. 
+
 
 
 \begin{algorithm}[t!]
@@ -824,16 +835,6 @@ Algorithm~\ref{alg:mtf_reconstruction} details this representation, while Figure
     \caption{The probabilistic signal representation algorithm. }
     \label{alg:mtf_reconstruction}
 \end{algorithm}
-
-Since that graph does not retain temporal relationships, the second step of the \gls{MTF} method is to build the matrix $MTF_{n \times n}$:
-\begin{equation}
-    MTF_{i,j} = W_{u,v} | x_i \in Q_u, x_j \in Q_v,
-\end{equation}
-\noindent that is, each cell $MTF_{i,j}$ contains the transition probability between the quantiles $Q_u,Q_v$ to which the samples $x_i,x_j$ belong. Figure~\ref{fig:method:mtf} pictures the final result of the method applied to the example signal. 
-
-
-
-
 
 
 \subsection{VisionPPG: Computer vision using projection mix}
@@ -932,26 +933,29 @@ Consequently, these projections are suitable for \gls{SQI} estimation using comp
     \label{fig:visionppg}
 \end{figure}
 
-Since each projection possesses unique characteristics, they are combined into an ensemble by fusing all projections into an aggregated tensor. This tensor is analogous to a hyperspectral image because, unlike a typical color image with only three bands, the produced tensor provides additional information layers for each pixel.
-This aggregation, termed \gls{PMix}, involves assigning each projection to a particular channel of a single input layer. This structure is then processed through a pointwise convolution operation utilizing a $1 \times 1$ kernel. Formally, the tensor $T_{in}$ with dimensions $p \times n \times m$ used as input for the \gls{CV} models is constructed by stacking the $p$ projections $\{M_1, M_2, \dots, M_p\}$, all with the same dimensions $n \times m$, defined as $T_{in_{k,i,j}} = M_{k_{i,j}}$.
-Then, the tensor $T_{in}$ is ``mixed'' into $T_{mix_{q \times n \times m}}$ as follows:
+Each projection captures distinct signal features and are consequently integrated into a unified ensemble by fusing them into an aggregated tensor. This structure, termed \gls{PMix}, is analogous to a hyperspectral image because it provides multiple information layers beyond the three channels of a standard color image. The \gls{PMix} framework assigns each projection to a specific channel of the input layer which is subsequently processed via a pointwise convolution operation using a $1 \times 1$ kernel. Formally, the input tensor $T_{in}$ with dimensions $p \times n \times m$ is constructed by stacking $p$ projections $\{M_1, M_2, \dots, M_p\}$ of identical dimensions $n \times m$ such that $T_{in_{k,i,j}} = M_{k_{i,j}}$. This tensor is then transformed into a mixed representation $T_{mix_{q \times n \times m}}$ as follows:
 \begin{equation}
-    T_{mix_{k,i,j}} = \mathcal{A}\left(\sum\limits_{l=1}^{p}T_{in_{l,i,j}} \cdot w_{(k,i,j);l}\right),
+    %T_{mix_{k,i,j}} = \mathcal{A}\left(\sum\limits_{l=1}^{p}T_{in_{l,i,j}} \cdot w_{(k,i,j);l}\right),
+    T_{mix_{k,i,j}} = \mathcal{A}\left(\sum_{l=1}^{p} T_{in_{l,i,j}} \cdot w_{k,l} + b_k\right),
 \end{equation}
 where $w_{(k,i,j);l} \in \mathbb{R}$ denotes the weight applied to the connection between the output tensor cell $T_{mix_{k,i,j}}$ and the input tensor cell $T_{in_{l,i,j}}$. The term $\mathcal{A}: \mathbb{R} \to \mathbb{R}$ represents an activation function, such as ReLU, sigmoid, or Softmax. This relationship can be expressed in terms of the input projections as follows:
 \begin{equation}
     \label{eq:mix}
-    T_{mix_{k,i,j}} = \mathcal{A}\left(\sum\limits_{l=1}^{p}M_{l_{i,j}} \cdot w_{(k,i,j);l}\right).
+    %T_{mix_{k,i,j}} = \mathcal{A}\left(\sum\limits_{l=1}^{p}M_{l_{i,j}} \cdot w_{(k,i,j);l}\right).
+    T_{mix_{k,i,j}} = \mathcal{A}\left(\sum_{l=1}^{p} M_{l,i,j} \cdot w_{k,l} + b_k\right)
 \end{equation}
-For each cell with indices $(i,j)$, the summation $\sum\limits_{l=1}^{p}M_{l_{i,j}} \cdot w_{(k,i,j);l}$ integrates the $p$ projections by aggregating the values $M_{l_{i,j}}$ according to the specific contribution weights $w_{(k,i,j);l}$. Subsequently, the activation function $\mathcal{A}$ is applied to enforce binary distinguishability, resulting in the final tensor value $T_{mix_{k,i,j}}$. The implementation framework for this integration is illustrated in Figure~\ref{fig:input_layer} within the context of models pre-trained on three-channel datasets. This process may necessitate a resizing step, as pointwise convolution preserves the spatial dimensions of width and height.
+For each spatial coordinate $(i,j)$, the summation integrates the $p$ projections by aggregating the values $M_{l,i,j}$ according to the learnable weights $w_{k,l}$.
+Subsequently, the activation function $\mathcal{A}$ is applied to the result to produce the final tensor value $T_{mix_{k,i,j}}$.
+This integration framework is illustrated in Figure~\ref{fig:input_layer} within the context of models pre-trained on three-channel datasets.
+Furthermore, this process may incorporate a resizing step to ensure compatibility with model input requirements because pointwise convolution preserves the original spatial dimensions of the projections.
+
+
+Based on the \gls{PMix} projection method, this work proposes a novel \gls{SQA} framework as illustrated in Figure~\ref{fig:method}. The process begins by transforming the signal into four distinct projections using the aforementioned \gls{GAF}, \gls{MTF}, and \gls{RP} algorithms. These projections are subsequently integrated into an aggregated tensor by assigning each to a specific channel of a newly defined input layer. This multi-channel layer serves as the input for a computer vision model initialized with weights pre-trained on the ImageNet dataset~\cite{ImageNet}. Finally, the model performs binary classification to assess the signal quality, categorizing the input as either acceptable or unacceptable for clinical use.
 
 
 
 
 
-
-
-Based on the \gls{PMix} projection method, this work proposes a new \gls{SQA} framework presented by Figure \ref{fig:method}. First, we transform the signal into four projections using the three before-mentioned algorithms: \gls{GAF}, \gls{MTF}, and \gls{RP}. Afterwards, we aggregate those projections using composition, that is, we assign each of them to a different channel of a new input layer. Then, that layer feeds the computer vision model, which contained weights pre-trained on the ImageNet~\cite{ImageNet} dataset. Finally, that model classifies the signal into a binary \gls{SQI}, which indicates if the signal is ``good'' or ``bad''. 
 
 
 
@@ -960,26 +964,50 @@ Based on the \gls{PMix} projection method, this work proposes a new \gls{SQA} fr
 \section{Experimental Setup} \label{sec:setup}
 
 
-As with any machine learning task, we require a dataset to supply data for feeding the predictive models during parameter fitting, shaping them to the specific task's domain. In this work, assessing the quality of the signal is framed as a supervised classification problem, which can be described as the task of finding a function that best fits a predefined set of pairs of variables and labels, $(X, y)$. In this context, the pair corresponds to the signal mapped to its quality label, either ``good'' or ``bad''. To train the predictive methods and evaluate their performance in classifying the quality of heartbeat time series, the \gls{BUTPPG}~\cite{butppg} dataset was employed.
+Signal quality assessment is formulated in this study as a supervised classification task where a model learns to map input signals $X$ to their corresponding quality labels $y$.
+These labels represent binary categories identifying signals as either acceptable or unacceptable for clinical analysis.
+To train the predictive models and evaluate their performance on heartbeat time series, the \gls{BUTPPG}~\cite{butppg} dataset was utilized.
+Given that this repository currently constitutes the only publicly available dataset for this specific domain, it serves as the primary benchmark for the proposed methodology while providing a foundation for future studies involving novel datasets.
+
 
 The \glsxtrlong{BUTPPG} is a publicly available database produced by the Department of Biomedical Engineering at Brno University of Technology. It contains samples of \gls{PPG} signals, their quality labels, and heart rate estimations.
 The \gls{PPG} signals were acquired via smartphone-based photoplethysmography, leveraging the device's camera and \gls{LED} source to detect subcutaneous volumetric changes.
 Specifically, the researchers recorded the subject's index finger while it covered the camera lens and its \gls{LED} light. For each video frame, they measured the average intensity of the red channel across all image pixels, resulting in a time series of averages. Finally, the signal was inverted. %The Figure \ref{fig:butppg_samples} shows examples of the results of such a sequence of procedures.  
 
-They performed this method of obtaining \gls{PPG} signals 48 times, with the samples distributed equally among 12 subjects (4 measurements per subject). Moreover, the recordings were taken in two situations: one where the subject was seated and remained static, a case in which the quality label ``good'' was likely; and another where the subject was walking, a case likely to result in a ``bad'' recording. This distinction is relevant because the walking condition occurred only once for each subject, resulting in approximately 25\% of the recordings being labeled as ``bad''. Therefore, this dataset is imbalanced, a factor that was addressed in our experiment.
+The data acquisition process involved 48 \gls{PPG} recordings collected from 12 subjects with each participant providing four distinct measurements.
+These recordings were obtained under two specific conditions including a static seated position and an ambulatory walking state.
+The static condition typically yielded high-quality signals whereas the ambulatory state was prone to motion artifacts and lower quality recordings.
+Because the walking condition was performed only once per subject, approximately 25\% of the dataset is categorized as low-quality.
+Consequently, the dataset exhibits a class imbalance that was addressed through specific mitigation techniques during the experimental phase..
 
-For the definition of signal quality labels, specialists were designated to estimate the heart rate associated with the \gls{PPG} signals using specialized software developed by the researchers. The organizers then compared the specialists' estimates with those provided by a gold standard method, which used an ECG recording as a reference instead of the \gls{PPG} signal. The ECG was manually synchronized by the measurer. If the specialist's measurement had an error of 5 \gls{BPM} or less, the estimate was considered correct. Finally, if 3 out of 5 specialists provided correct estimates, the \gls{PPG} signal quality was labeled as ``good''. Thus, the ``good'' labels in the dataset essentially indicate whether a signal is human-readable.
+
+To establish signal quality labels, five experts estimated heart rates from the \gls{PPG} signals using custom software.
+These estimations were validated against a gold standard derived from concurrently recorded \gls{ECG} signals that were manually synchronized during acquisition.
+An estimation was considered accurate if the absolute deviation from the \gls{ECG} reference was 5 \gls{BPM} or less.
+A \gls{PPG} signal was categorized as high quality if at least three of the five experts achieved this accuracy threshold.
+Consequently, these labels serve as a proxy for the interpretability of the signal and the feasibility of manual heart rate detection.
 
 
 
 
-\subsection{The dataset split}
+\subsection{Dataset split}
 
-Machine learning tasks also require the dataset to be split into fragments. One of these is the training dataset, used for fitting the model's parameters. Another is the test dataset, used for evaluating the model's efficiency. An additional split is the validation dataset, used to select the best set of hyperparameters for the trained model or conducting the learning process. A direct way one could achieve the training-test split is randomly partitioning the dataset into both fragments. However, that method never uses the data in the training set for testing and vice-versa. Since the \gls{BUTPPG} is small and it is desirable to reuse data, our experiments defined the training-test splits by using a cross-validation method called \gls{LOSO}, which partitions the dataset into $K$ train-test splits. The $k$-th train-test split assigns the $k$-th segment as the test dataset, leaving the remaining $K-1$ segments as the training dataset. In the case of \gls{BUTPPG}, $K$ equals 12, which corresponds to the number of subjects. In our experiment, the smallest unit of division was the subject, not the individual signals associated with each subject, because having signals of the same subject in both training and testing datasets would introduce biases. This approach has the advantage of increasing the distinction between training and testing samples, since having the same subject in both training and test sets could also introduce biases into the results. Since the dataset is small, this splitting method increases the use of available resources by ensuring every sample is used as a test case at least once. Additionally, the training dataset was further divided using random partitioning to produce a validation dataset of size 3, used for early stopping.
 
-\subsection{The compared techniques}
+The experimental evaluation utilized a \gls{LOSO} cross-validation strategy to maximize the utility of the limited \gls{BUTPPG} dataset. 
+Given that \gls{BUTPPG} contains only 12 subjects, the data was partitioned into $K=12$ folds where each fold reserved a single subject for testing while the remaining 11 subjects were used for training.
+This subject-level partitioning is essential to prevent data leakage because the inclusion of signals from the same subject in both training and testing sets would introduce significant bias and artificially inflate performance results.
+By adopting this approach, every sample is utilized as a test case across the $K$ iterations while maintaining strict subject independence.
+Furthermore, the training partition of each fold was subdivided to create a validation set comprising three subjects for hyperparameter optimization and early stopping.
+The results presented in this papers correspond to the mean ($\mu$) accuracy of these multiple folds along with its standard deviation ($\sigma$).
 
-To evaluate the proposed projection-based framework and identify specific cases of superior performance, it was necessary to involve a large number of machine learning models. Firstly, this work compared the projection-based framework with other time series classification approaches using the Aeon Toolkit~\cite{aeon2024}, with the models listed in Table~\ref{tab:non_cv_list}. Furthermore, the proposed method was combined with a wide variety of classification \gls{CV} models, utilizing the PyTorch Python library~\cite{pytorch}, which supports a diverse range of neural network architectures. These architectures vary from simple convolutional networks to vision transformers. Table~\ref{tab:cv_list} lists all the \gls{CV} models involved in the experiment, which are briefly described in the following subsections of this section.
+
+\subsection{Compared techniques}
+
+To evaluate the proposed projection-based framework and identify specific cases of superior performance, it was necessary to involve a large number of machine learning models.
+Firstly, this work compared the projection-based framework with other time series classification approaches using the Aeon Toolkit~\cite{aeon2024}, with the models listed in Table~\ref{tab:non_cv_list}.
+Furthermore, the proposed method was combined with a wide variety of classification \gls{CV} models, utilizing the PyTorch library~\cite{pytorch}, which supports a diverse range of neural network architectures.
+These architectures vary from simple convolutional networks to vision transformers.
+Table~\ref{tab:cv_list} lists all the \gls{CV} models involved in our experiments, which are briefly described in the following subsections.
 
 
 \begin{table}[t!]
@@ -1070,19 +1098,35 @@ To evaluate the proposed projection-based framework and identify specific cases 
 
 \subsubsection{Transformers}
 
-The experiments tested four transformers: \gls{ViT}, \gls{MaxViT}, \gls{SwinT}, and its second version, \gls{SwinTV2}. The \gls{ViT} transforms visual input into a sequence where each element is a linear embedding of subimage patches obtained by partitioning the original image into a grid-like pattern~\cite{VisionTransformer}. Subsequent models build on this base by incorporating additional layers and altering attention mechanisms. For example, the \gls{MaxViT} utilizes architectural blocks that alternate between two self-attention modes: grid attention, which operates with high granularity, and block attention, which operates with low granularity~\cite{MaxViT}. The \gls{SwinT} modifies attention at both the layer level—by merging patches from the previous layer—and at the block level—by shifting self-attention windows to different positions~\cite{SwinTransformer}. The \gls{SwinTV2} introduces several specific improvements over the earlier version~\cite{SwinTransformerV2}.
+The evaluation encompassed four transformer architectures including \gls{ViT}, \gls{MaxViT}, \gls{SwinT}, and \gls{SwinTV2}.
+The \gls{ViT} model processes visual input as a sequence of linear embeddings derived from fixed-size image patches obtained by partitioning the original image into a grid~\cite{VisionTransformer}.
+Subsequent architectures refine this approach by modifying attention mechanisms to improve feature extraction.
+For instance, \gls{MaxViT} employs blocks that alternate between grid-based and block-based self-attention to capture dependencies at both high and low granularities~\cite{MaxViT}.
+Similarly, the \gls{SwinT} architecture utilizes a hierarchical structure that merges patches across layers and implements shifted window self-attention to facilitate connectivity between adjacent windows~\cite{SwinTransformer}.
+Finally, \gls{SwinTV2} introduces architectural refinements to enhance training stability and scaling capacity compared to the original version~\cite{SwinTransformerV2}.
 
 \subsubsection{Residual nets}
 
-ResNet introduced residual connections, which are links between non-adjacent layers that bypass intermediate layers~\cite{ResNet}. The two variations considered are Wide ResNet and ResNeXt. Wide ResNet expands the original network by increasing the number of channels per block, offering an alternative to increasing layer depth~\cite{WideResNet}. In contrast, ResNeXt employs a multipath approach, aggregating paths through an additive operation~\cite{ResNeXt}. Instead of increasing width and depth, ResNeXt introduces an additional dimension for enhancement.
+ResNet introduced residual connections which consist of links between non-adjacent layers that bypass intermediate processing stages to mitigate the vanishing gradient problem~\cite{ResNet}.
+In this paper, we evaluated two significant architectural variations including Wide ResNet and ResNeXt.
+Wide ResNet enhances the original framework by increasing the number of channels per block to provide an alternative to increasing network depth~\cite{WideResNet}.
+In contrast, ResNeXt employs a multipath approach that aggregates parallel transformations through an additive operation~\cite{ResNeXt}.
+Rather than focusing solely on width and depth, ResNeXt introduces cardinality as an additional enhancement dimension .
 
 \subsubsection{Mobile Nets}
 
-This study defines mobile oriented models as neural networks designed specifically to address hardware constraints. We evaluate three architectures: MNASNet~\cite{MNASNet}, MobileNet V2~\cite{MobileNetV2}, and MobileNet V3~\cite{MobileNetV3}. MobileNet V2 incorporates architectural changes to reduce memory usage while maintaining accuracy through the use of inverted residual blocks~\cite{MobileNetV2}. This design alternates high and low channel layers by connecting layers with fewer channels, which reduces the total number of parameters in the block~\cite{MobileNetV2}. MNASNet selects blocks to fit a predefined architectural skeleton to optimize model performance on actual mobile hardware~\cite{MNASNet}. Finally, MobileNet V3 combines these approaches and introduces further refinements, such as the inclusion of the NetAdapt~\cite{NetAdapt} algorithm within the architectural search process~\cite{MobileNetV3}.
+Mobile-oriented models are defined in this study as neural networks specifically engineered to operate within stringent hardware constraints.
+The evaluation encompasses three primary architectures including MNASNet~\cite{MNASNet}, MobileNet V2~\cite{MobileNetV2}, and MobileNet V3~\cite{MobileNetV3}.
+MobileNet V2 optimizes memory efficiency and predictive accuracy through the implementation of inverted residual blocks~\cite{MobileNetV2}.
+These blocks utilize thin bottleneck layers for skip connections while expanding the channel dimensions internally, which effectively reduces the total parameter count.
+
+In contrast, MNASNet utilizes a reinforcement learning approach to select optimal architectural blocks that fit a predefined skeleton, thereby maximizing performance on physical mobile hardware~\cite{MNASNet}.
+Finally, MobileNet V3 integrates these structural advancements and incorporates the NetAdapt~\cite{NetAdapt} algorithm into the automated search process to further refine the balance between latency and accuracy~\cite{MobileNetV3}.
 
 \subsubsection{Extreme Nets}
 
-This paper defines extreme nets as neural models that prioritize the optimization of specific architectural concepts such as layer depth, model compression, or residual connectivity.
+We categorize as extreme nets the neural models that prioritize the maximization of specific design parameters including layer depth, model compression, or advanced residual connectivity.
+These architectures represent the frontiers of model scaling and efficiency by pushing the theoretical limits of network design to improve feature extraction capabilities.
 This category includes VGG~\cite{VGG}, DenseNet~\cite{DenseNet}, and SqueezeNet~\cite{SqueezeNet}. VGG utilizes $3 \times 3$ filters to facilitate deeper architectures by increasing the total number of layers~\cite{VGG}.
 DenseNet employs skip connections between all pairs of architectural blocks which positions each layer closer to both the input and the output to enhance performance~\cite{DenseNet}.
 SqueezeNet minimizes memory usage through model compression and the introduction of a specialized architectural module that reduces channel density before applying large convolution filters~\cite{SqueezeNet}.
@@ -1092,18 +1136,28 @@ This strategy significantly reduces the parameter count compared to convolutions
 
 \hyphenation{Shuffle-Net}
 
-This paper defines efficiency-oriented networks as architectures designed for optimal resource utilization to maximize performance with minimal parameter counts.
-Notable examples include ShuffleNet V2~\cite{ShuffleNetV2}, EfficientNet~\cite{EfficientNet}, and EfficientNet V2~\cite{EfficientNetV2}.
-ShuffleNet V2 advances the original ShuffleNet by introducing the channel shuffle operator to facilitate information exchange across channels~\cite{ShuffleNetV2}.
-It improves upon its predecessor by incorporating a channel split operation within each block to avoid the use of computationally expensive grouped convolutions~\cite{ShuffleNetV2}.
-EfficientNet focuses on model scaling through a compound resizing method that proportionally increases depth, width, and resolution~\cite{EfficientNet}.
-This approach creates a highly efficient base model that can be scaled to larger variants while preserving the inherent advantages of the architecture~\cite{EfficientNet}.
-EfficientNet V2 builds on this foundation by proposing non proportional scaling and utilizing network architecture search~\cite{EfficientNetV2}.
-Furthermore, it introduces progressive learning which involves the gradual increase of dataset regularization during training~\cite{EfficientNetV2}.
+This paper categorizes efficiency-oriented networks as architectures engineered for optimal resource utilization to maximize predictive performance while minimizing parameter counts.
+Notable examples include ShuffleNetV2~\cite{ShuffleNetV2}, EfficientNet~\cite{EfficientNet}, and EfficientNetV2~\cite{EfficientNetV2}.
+ShuffleNet V2 enhances the original architecture by utilizing the channel shuffle operator to facilitate information exchange across feature maps.
+
+It improves upon its predecessor by incorporating a channel split operation within each block to eliminate the overhead associated with grouped convolutions.
+This design ensures high computational efficiency by maintaining a balanced channel width and minimizing element-wise operations.
+Furthermore, the EfficientNet series utilizes compound scaling to uniformly scale depth, width, and resolution, thereby achieving state-of-the-art accuracy with significantly reduced \glspl{FLOP}.
+
+EfficientNet optimizes model performance through a compound scaling method that proportionally increases network depth, width, and resolution~\cite{EfficientNet}.
+This approach establishes a highly efficient baseline architecture that remains effective across various model scales while preserving structural integrity.
+
+EfficientNetV2 enhances EfficientNet by incorporating non-proportional scaling and leveraging neural architecture search to optimize training speed and parameter efficiency~\cite{EfficientNetV2}.
+Furthermore, EfficientNetV2 introduces a progressive learning to gradually increase both the input resolution and regularization during the training process~\cite{EfficientNetV2}.
+This technique ensures higher accuracy while significantly reducing the computational overhead required for convergence.
 
 \subsubsection{Diverse}
 
-The remaining models not included in the anterior groups were reunited in this category. It includes the following models: AlexNet, ConvNeXt, and RegNet. Introduced in 2012, AlexNet was one of the earliest deep learning models designed to be trained across multiple GPUs, which accelerated the training process and utilized dropout to mitigate overfitting~\cite{AlexNet}. In contrast, ConvNeXt, a modern model from 2022, integrates various convolutional techniques from recent years, such as patchified convolutions, inverted bottlenecks, and grouped convolutions, with the goal of advancing traditional convolutional networks~\cite{ConvNeXt}. On the other hand, RegNet departs from designing individual networks by focusing on creating network families defined by linear parameter spaces, facilitating architectural search within these defined populations~\cite{RegNet}. The experiments in that category encompassed networks with significant variations among them.
+The remaining models not included in the previously mentioned were grouped in this category. It includes AlexNet, ConvNeXt, and RegNet. 
+Introduced in 2012, AlexNet was one of the earliest deep learning models designed to be trained across multiple GPUs, which accelerated the training process and utilized dropout to mitigate overfitting~\cite{AlexNet}.
+In contrast, ConvNeXt, a modern model from 2022, integrates various convolutional techniques from recent years, such as patchified convolutions, inverted bottlenecks, and grouped convolutions, with the goal of advancing traditional convolutional networks~\cite{ConvNeXt}.
+Furthermore, RegNet shifts the focus from individual network design to the creation of network families defined by linear parameter spaces which facilitates efficient architectural search within these populations~\cite{RegNet}.
+The inclusion of these diverse models ensures a comprehensive evaluation of the \gls{PMix} framework across both historical and state-of-the-art architectural paradigms.
 
 
 
@@ -2018,7 +2072,15 @@ WEASEL V2 & \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.917} $\pm$ \textcol
 \subsection{Comparison of the top-performing models}
 
 
-The best combinations between models and projections from previous analyses are aggregated in Table~\ref{tab:Averages_of_best models}. The top-performing models include the \gls{TDE}, the \gls{RISEC}, and the \mbox{Wide ResNet 100-2} with \gls{PMix}. While the \mbox{Wide ResNet} achieved the highest Cohen kappa score, it is notable that this model was the second largest in terms of memory usage, as indicated in Table~\ref{tab:Memory_of_best models}. Additionally, it did not achieve the highest F1-Score or precision and was the second slowest in terms of inference speed, as shown in Figure~\ref{fig:Time_of_Best Models}. In contrast, the \gls{TDE} and \gls{RISEC} models excelled in usability and security metrics, including F1-Score and precision. They also demonstrated superior performance in terms of inference speed and memory efficiency. Consequently, while the \gls{CV} approach, represented by the \mbox{Wide ResNet 100-2} with \gls{PMix}, achieved higher accuracy, the non-\gls{CV} approach, embodied by the \gls{TDE} and \gls{RISEC}, offers better resource efficiency and speed, making it a more practical choice for applications requiring lower resource consumption and faster performance.
+The optimal combinations of models and projections identified in the preceding analyses are summarized in Table~\ref{tab:Averages_of_best models}.
+The top-performing models include the \gls{TDE}, the \gls{RISEC}, and the \mbox{Wide ResNet 100-2} with \gls{PMix}.
+While the \mbox{Wide ResNet} achieved the highest Cohen's $\kappa$ score, it is notable that this model was the second largest in terms of memory usage, as indicated in Table~\ref{tab:Memory_of_best models}.
+Additionally, it did not achieve the highest F1-Score or precision and was the second slowest in terms of inference speed, as shown in Figure~\ref{fig:Time_of_Best Models}.
+In contrast, the \gls{TDE} and \gls{RISEC} models excelled in usability and security metrics, including F1-Score and precision.
+They also demonstrated superior performance in terms of inference speed and memory efficiency.
+% Conversely, the \gls{TDE} and \gls{RISEC} models demonstrated superior performance in terms of F1-score, precision, and computational efficiency.
+% While the \gls{CV} approach utilizing \mbox{Wide ResNet} and \gls{PMix} achieved marginal gains in classification consistency, the non-\gls{CV} approaches represented by \gls{TDE} and \gls{RISEC} provide a more optimized balance of resource consumption and latency.
+% These characteristics make non-\gls{CV} methods a more viable selection for real-time applications or environments with limited computational overhead.
 
 
 
@@ -2108,14 +2170,28 @@ WiResNet: 101-2 & \purpole{PMix} & \textbf{\textcolor[rgb]{0.0000000000,0.700000
 \section{Discussion and Limitations}
 \label{sec:Limitations}
 
-Despite the promising results, some limitations can be considered. The experiments utilized only the BUTPPG dataset for testing. This has a series of implications in our context. Firstly, even though the proposed method allowed the use of \gls{CV} models with a good performance in the BUTPPG dataset, the same could not necessarily be concluded for different datasets. This is because different methods of measurement, sensor qualities, signal lengths, and individual medical conditions could lead to alterations on the obtained performance. One evidence of that is the absence of confirmed \gls{CA} cases in the \gls{BUTPPG} dataset, which could be present in external data. Furthermore, the small size of the dataset resulted in a reduced testing dataset, which makes the obtained results less general, that is, unreliable when we consider the possible variability of data that is external to the dataset. A small dataset size also implies that the deep learning models had less data samples to effectively learn. This contrasts with the usual treatment for deep learning, where usually large amounts of data feed the training of the model, allowing the proper adjustment of the large set of parameters. Therefore, our experiments would be more complete if our experiments tested on different and larger datasets.
 
-A further limitation is that this study did not evaluate every available architecture or library. For instance, several models within the PyTorch and Aeon ecosystems, such as GoogLeNet~\cite{GoogLeNet} and the Hydra Classifier~\cite{HydraClassifier}, remained outside the current scope. Similarly, architectures from other frameworks, including Xception~\cite{Xception} from the Keras library~\cite{Keras}, were not tested. Furthermore, the evaluation did not encompass all model variants, such as EfficientNet B7, nor did it optimize the hyperparameters of the projection methods, such as the dimensionality of the \gls{RP}. Future work incorporating a broader range of architectures and hyperparameter optimization techniques like Optuna could provide more exhaustive insights.
+While the results are promising, few limitations must be acknowledged regarding the scope of the evaluation.
+The study relied exclusively on the \gls{BUTPPG} dataset, which currently represents the only publicly available dataset labeled for \gls{SQA} task.
+Consequently, the performance of the proposed \gls{CV} framework may vary across external datasets that utilize different acquisition protocols, sensor specifications, and signal lengths.
+Furthermore, the absence of confirmed cardiac arrhythmia cases in the \gls{BUTPPG} population limits the clinical generalizability of the findings to more diverse medical conditions.
+The relatively small sample size also resulted in a constrained testing environment, which may not fully capture the statistical variability found in real-world data.
+From a deep learning perspective, the limited data volume restricts the ability of high-capacity models to optimize their extensive parameter sets effectively.
+Therefore, future research should focus on the development of novel datasets to provide a more robust benchmark for the proposed methodology.
 
-Finally, additional limitations were identified at the implementation level.  Firstly, the implementation utilized random oversampling to balance the dataset. However, alternative methods specifically designed for time series data, such as those described in~\cite{TimeSeriesAugmentation}, could have been employed.  These methods not only balance the dataset but also can augment it. Secondly, resizing transforms were used to adapt projection images to model inputs, potentially leading to significant loss of information for matrix images that encode pixel relationships. As a consequence, the \gls{CV} models not performed as good as they could.
-While early stopping was implemented to prevent overfitting, future work should involve sensitivity analysis to determine if this mechanism impacted the convergence of high-complexity models.
 
-Lastly, benchmarking metrics were measured using the Python standard API, which may be limited by the interpreter. Additionally, our measurements did not control the environment where measured the inference time. This could imply that competed with the experimental measurements. Therefore, improvements at the implementation level could include applying time series augmentation techniques, resizing images without distortion by using integer multipliers and padding, researching and optimizing early stopping methods, and conducting measurements in a more controlled environment using low-level interfaces.
+% A further limitation is that this study did not evaluate every available architecture or library. For instance, several models within the PyTorch and Aeon ecosystems, such as GoogLeNet~\cite{GoogLeNet} and the Hydra Classifier~\cite{HydraClassifier}, remained outside the current scope. Similarly, architectures from other frameworks, including Xception~\cite{Xception} from the Keras library~\cite{Keras}, were not tested. Furthermore, the evaluation did not encompass all model variants, such as EfficientNet B7, nor did it optimize the hyperparameters of the projection methods, such as the dimensionality of the \gls{RP}. Future work incorporating a broader range of architectures and hyperparameter optimization techniques like Optuna could provide more exhaustive insights.
+
+
+Several implementation-level limitations provide opportunities for further optimization.
+Although random oversampling was utilized to address class imbalance, specialized time series augmentation techniques could be explored to simultaneously balance and expand the training distribution~\cite{TimeSeriesAugmentation}.
+Additionally, the application of resizing transforms to adapt projection images to model input requirements may have suppressed fine-grained spatial relationships within the encoding matrices.
+This potential loss of information suggests that the current performance of the \gls{CV} architectures represents a lower bound rather than their maximum theoretical capacity.
+While early stopping was employed to mitigate overfitting, future research should include a comprehensive sensitivity analysis to evaluate how this mechanism influences the convergence of high-complexity models.
+
+
+
+% Lastly, benchmarking metrics were measured using the Python standard API, which may be limited by the interpreter. Additionally, our measurements did not control the environment where measured the inference time. This could imply that competed with the experimental measurements. Therefore, improvements at the implementation level could include applying time series augmentation techniques, resizing images without distortion by using integer multipliers and padding, researching and optimizing early stopping methods, and conducting measurements in a more controlled environment using low-level interfaces.
 
 
 
@@ -2126,30 +2202,38 @@ Lastly, benchmarking metrics were measured using the Python standard API, which 
 \label{sec:Limitations}
 
 
-This work presented a study on \gls{SQA} for \gls{PPG} signals, mainly following an 1D-to-2D-projection approach in combination with \gls{CV} techniques. The investigated projection-based approach involved transforming 1D signals onto 2D images using the \gls{RP}, \gls{GAF}, and \gls{MTF} methods. In addition to these methods, we proposed a mixed approach combining them. The results indicate that the \gls{RP} and \gls{PMix} projection methods outperformed the \gls{GAF} and \gls{MTF} methods, with \gls{RP} and \gls{PMix} yielding similar outcomes. Although the set of machine learning models was extensive, the \gls{BUTPPG} dataset was small and unbalanced, limiting the conclusiveness of the results. Consequently, the experiment should be replicated on a larger dataset, either by using data augmentation techniques to balance and expand the BUTPPG dataset or by utilizing a different dataset with more samples.
 
-The experiments provided insights of the importance of the proposed \gls{PMix} approach. One key finding is that the \gls{PMix} method appeared more frequently among the best-performing results compared to the other projection methods. Specifically, as depicted in Table~\ref{tab:Averages_of_best models}, all but one top-performing approaches used the \gls{PMix} method.
-These results demonstrate that the proposed \gls{PMix} fusion strategy effectively mitigates the limitations of individual projection techniques by providing a more comprehensive spatial encoding of the \gls{PPG} morphology.
-Our experiments also demonstrate the overall effectiveness of projection methods. Notably, in the best-performing models listed in Table \ref{tab:Averages_of_best models}, the \gls{PMix} method combined with Wide ResNet outperformed the baseline time series classification models in terms of the Cohen Kappa score.
-This indicates that a projection-based approach can be highly accurate for both binary \gls{SQI} classes.
-While this highlights the viability of the projection-based approach alongside other time series classifiers, the conventional time series classifiers achieved higher F1 and Precision scores, suggesting they performed better for the positive \gls{SQI} class. An additional drawback is that combining projection-based methods with \gls{CV} models is computationally more expensive and requires more memory than using 1D classifiers. Nevertheless, the projection-based approach proved to be effective for \gls{SQA}, fulfilling our original objective described in Section~\ref{sec:problem}.
+This study evaluated a signal quality assessment framework for \gls{PPG} signals using 1D-to-2D projections and computer vision architectures.
+The results demonstrate that the proposed \gls{PMix} fusion strategy provides a more comprehensive spatial encoding of signal morphology than individual techniques, consistently appearing among the top-performing configurations.
+While the combination of \gls{PMix} and Wide ResNet achieved superior Cohen's $\kappa$ scores compared to baseline time series classifiers, conventional 1D models maintained higher F1-scores and precision scores with significantly lower computational overhead.
 
+The findings suggest that while projection-based methods are highly accurate, their memory requirements currently favor remote healthcare environments over direct deployment on resource-constrained wearable devices.
+A primary limitation of this work remains the exclusive reliance on the \gls{BUTPPG} dataset, which is currently the only publicly available resource for this task.
+The small sample size and lack of diverse clinical conditions, such as cardiac arrhythmias, restrict the generalizability of the results.
 
-% Aplicabilidade dos métodos de projeção
-The results reveal that the proposed method is a promising tool for real-life applications, as presented in Section~\ref{sec_intro}.
-% - Ferramenta de engenharia de IA
-This technique allows \gls{AI} engineers to trade memory and computational cost for improved accuracy. By combining multiple projection methods, the approach increases image size and incurs 1D-to-2D conversion costs for each projection.
-% - Aplicação em dispositivos vestíveis
-For that reason, even though the \gls{CV} models incorporated into the proposed method have sufficiently low latency to support a responsive application, they may not be advisable for wearable devices, such as smartwatches, due to memory constraints.
-% - Aplicação em monitoramento médico remoto
-It is necessary to process the signal on a remote device with greater memory capacity, such as a server in a remote healthcare environment.
-% - Conclusão
-Therefore, this method is suitable for remote healthcare applications.
+Future research will focus on the development of novel datasets to facilitate robust cross-dataset validation and more extensive benchmarking against specialized algorithms. 
+dditionally, implementation refinements involving optimized augmentation and low-level profiling will be explored to further enhance the efficiency of the proposed framework.
 
 
-Several opportunities for improvement exist, some of which are discussed in Section~\ref{sec:Limitations}. For instance, this study utilized the only currently available public dataset, which is constrained by its size, variety, and recording length. Future work should involve the development of novel datasets to enable more extensive experiments and cross-dataset validation.
-%Additionally, our experiments did not exhaustively explore all 1D and 2D open-source models, nor did they systematically vary the parameters of the projections and \gls{ML} architectures. Investigating these variables could reveal critical relationships between model selection and projection performance.
-Beyond expanding the model selection, it is essential to benchmark the proposed method against specialized \gls{SQA} techniques. This would provide a more robust assessment of the method's comparative performance. Finally, the implementation could be refined through optimized pre-processing techniques, advanced training strategies, and a more robust experimental setup.
+
+% This work presented a study on \gls{SQA} for \gls{PPG} signals, mainly following an 1D-to-2D-projection approach in combination with \gls{CV} techniques. The investigated projection-based approach involved transforming 1D signals onto 2D images using the \gls{RP}, \gls{GAF}, and \gls{MTF} methods. In addition to these methods, we proposed a mixed approach combining them. The results indicate that the \gls{RP} and \gls{PMix} projection methods outperformed the \gls{GAF} and \gls{MTF} methods, with \gls{RP} and \gls{PMix} yielding similar outcomes. Although the set of machine learning models was extensive, the \gls{BUTPPG} dataset was small and unbalanced, limiting the conclusiveness of the results. Consequently, the experiment should be replicated on a larger dataset, either by using data augmentation techniques to balance and expand the BUTPPG dataset or by utilizing a different dataset with more samples.
+
+% The experiments provided insights of the importance of the proposed \gls{PMix} approach. One key finding is that the \gls{PMix} method appeared more frequently among the best-performing results compared to the other projection methods. Specifically, as depicted in Table~\ref{tab:Averages_of_best models}, all but one top-performing approaches used the \gls{PMix} method.
+% These results demonstrate that the proposed \gls{PMix} fusion strategy effectively mitigates the limitations of individual projection techniques by providing a more comprehensive spatial encoding of the \gls{PPG} morphology.
+% Our experiments also demonstrate the overall effectiveness of projection methods. Notably, in the best-performing models listed in Table \ref{tab:Averages_of_best models}, the \gls{PMix} method combined with Wide ResNet outperformed the baseline time series classification models in terms of the Cohen Kappa score.
+% This indicates that a projection-based approach can be highly accurate for both binary \gls{SQI} classes.
+% While this highlights the viability of the projection-based approach alongside other time series classifiers, the conventional time series classifiers achieved higher F1 and Precision scores, suggesting they performed better for the positive \gls{SQI} class. An additional drawback is that combining projection-based methods with \gls{CV} models is computationally more expensive and requires more memory than using 1D classifiers. Nevertheless, the projection-based approach proved to be effective for \gls{SQA}, fulfilling our original objective described in Section~\ref{sec:problem}.
+
+
+% The results reveal that the proposed method is a promising tool for real-life applications, as presented in Section~\ref{sec_intro}.
+% This technique allows \gls{AI} engineers to trade memory and computational cost for improved accuracy. By combining multiple projection methods, the approach increases image size and incurs 1D-to-2D conversion costs for each projection.
+% For that reason, even though the \gls{CV} models incorporated into the proposed method have sufficiently low latency to support a responsive application, they may not be advisable for wearable devices, such as smartwatches, due to memory constraints.
+% It is necessary to process the signal on a remote device with greater memory capacity, such as a server in a remote healthcare environment.
+% Therefore, this method is suitable for remote healthcare applications.
+
+
+% Several opportunities for improvement exist, some of which are discussed in Section~\ref{sec:Limitations}. For instance, this study utilized the only currently available public dataset, which is constrained by its size, variety, and recording length. Future work should involve the development of novel datasets to enable more extensive experiments and cross-dataset validation.
+% Beyond expanding the model selection, it is essential to benchmark the proposed method against specialized \gls{SQA} techniques. This would provide a more robust assessment of the method's comparative performance. Finally, the implementation could be refined through optimized pre-processing techniques, advanced training strategies, and a more robust experimental setup.
 
 
 \section*{Declaration of AI-assisted technologies}
