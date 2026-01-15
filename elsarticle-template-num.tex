@@ -360,31 +360,91 @@ Therefore, methods for assessing \gls{PPG} signal quality are essential to preve
 \label{sec:related}
 
 
-\gls{SQA} involves a wide range of problems in signal processing technologies, and it is not exclusive to the medical domain. Actually, its origins relate to the old communication systems, when researchers published their first works on the information theory     in the 1920s and 1930s. One example of such foundational publications is the work of Rice~\cite{origins-1}, in which he analyzes the statistical properties of communication device noises. Another example is the work of Shannon \cite{origins-2}, which introduces fundamental concepts in communication systems. In that millennium, studies already used the concept of \gls{SQA} \cite{origins-3, origins-4}. We can see samples of this in the 1980s, such as the work of Stehle \cite{origins-3}, which proposed an algorithm for assessing the quality of shortwave broadcast signals, trying to objectively measure the human perception of the signal message intelligibility. Some of its conclusions are useful in the \gls{SQA} in clinical contexts, such as the high degree of subjectivity in the human idea of quality. This makes labeling datasets properly fundamental to reflect this concept of quality in the proper evaluation of the developed \gls{SQA} algorithms.
-    
-Past the 20th century, the \gls{SQA} of physiological signals begin to become popular. Particularly, the early 2000s had several works in the subject. One of them is the work of Wang et al. \cite{2000s-1}, which proposed a \gls{ECG} \gls{SQA} method based on the difference between the areas of distinct QRS complexes. The work proposed comparing the cumulative histograms of different \gls{ECG} leads to assess its qualities. Later,  Li et al. \cite{2000s-2} suggested the combination of multiple quality indices and \gls{HR} to assess \gls{ECG}. Another work, by Deshmane et al. \cite{2000s-3}, posed the thresholding based on the Hjorth parameters~\cite{hjorth-parameters} to assess the quality of \gls{PPG} signals. Afterwards, Zhang et al. \cite{2000s-4} elaborated an \gls{ABP} signal quality assessment metric based on the \gls{EDSS} and \gls{SESS} features. Through those works, the researchers proposed quantifying the \gls{SQA} in a metric \cite{2000s-2, 2000s-3, 2000s-4}. A name that they used to refer to this metric was \gls{SQI} \cite{2000s-2, 2000s-3}.
+\gls{SQA} involves a wide range of problems in signal processing technologies, and it is not exclusive to the medical domain.
+Its origins are rooted in early communication systems, specifically the information theory developments of the 1920s and 1930s.
+Foundational studies, such as the work by Rice~\cite{origins-1}, analyzed the statistical properties of noise in communication devices, while Shannon~\cite{origins-2} established the fundamental principles of communication systems.
+By the late 20th century, the concept of \gls{SQA} was well-established~\cite{origins-3, origins-4}.
+For instance, Stehle~\cite{origins-3} proposed an algorithm in the 1980s to objectively measure human perception regarding the intelligibility of shortwave broadcast signals.
+Several conclusions from that era remain relevant to contemporary clinical \gls{SQA}, particularly the inherent subjectivity of human quality assessment.
+This subjectivity underscores the critical importance of rigorous dataset labeling to ensure that \gls{SQA} algorithms are evaluated against a consistent and representative ground truth.
 
-Among the variety of physiological signals, the \gls{ECG} is prevalent in the literature. This signal has multiple applications, such as disease classification, heartbeat type detection, biometric detection and emotion recognition \cite{ecg-1}. There are plenty of works in the \gls{SQA} of ECG signals. In one of them, Naseri et al. \cite{ecg-2} proposed two features for the estimation of a classification \gls{SQI} of multi-channeled \gls{ECG}s. One feature consists of verifying if two energy-like indices, measured in decibels, are within an admissible range. The other feature result from randomly choosing a target lead, feeding a \gls{FFNN} with array of derivatives of all leads to reconstruct the targeted lead and finally comparing the original target lead to its artificial version with correlation analysis. Therefore, the \gls{ECG} is present in the \gls{SQA} literature.
-
-Also, there are other publications on the \gls{ECG} \gls{SQA}. For instance, in 2017, Orphanidou et al. \cite{ecg-3} introduced a feature based on the extraction of the \gls{HRV} of \gls{ECG} signals. The method decomposes this new signal into wavelets with different frequency ranges and calculates the entropy of each of them, forming a feature vector. This vector feeds a \gls{SVM}, which classifies the signal as acceptable or not. Later, Shahriari et al. \cite{ecg-4} developed an image-based feature that measures the structural similarity measure between the input plot image, containing each signal channel Cartesian graph, and multiple template plot images of similar shape selected from the training dataset by using clustering analysis. One year later, Moeyersons et al. \cite{ecg-5} proposed transforming the signal using the auto correlation function and extracting simple features from it. In 2024, Huerta et al. \cite{ecg-6} generated phase space plots, such as Poincaré plots, and discretized them into a grid where each cell is the logarithm of the number of points contained in that cell. Thus, the \gls{SQA} literature for \gls{ECG} ranges multiple works.
-
-Besides the relevance of the \gls{ECG}, the \gls{PPG} has increased in popularity as an alternative to it. In fact, its number of related articles published from 2013 to 2023 has increased by 176\% \cite{ppg-1}. However, the \gls{PPG} is also susceptible to noise, fact that led to the development of \gls{PPG} \gls{SQA} methods. A sample of this literature is the work of Li et al. \cite{ppg-2}, which poses the measurement of a \gls{SQI} through the application of the \gls{DTW} technique to measure the signal disparity to an established template. These authors then fed this \gls{SQI} and some others to a \gls{MLP} and to a self-made rule function, predicting a unique \gls{SQI}. Experiments on private annotations on the MIMIC II dataset resulted on the \gls{MLP} achieving the highest accuracy, 95.2\%. Another sample is the work of Papini et al. \cite{ppg-3}, in which they proposed a method that first segments the input signal by finding all negative local minima points. Then, the method creates a template signal by calculating the \gls{DTW} barycenter average of the signal segments. Finally, it calculates the \gls{SQI} for each beat by comparing them to the template. This method obtained above 95\% sensitivity and positive predictive values on two public datasets. Therefore, it is possible to achieve good predictive quality in the \gls{SQA} of \glspl{PPG}.
-
-
-According to Such~\cite{such2007motion}, \gls{SQA} methods in biomedical signals generally fall into two categories: single-parameter and multiparameter approaches. Unlike single-parameter methods, multiparameter techniques utilize additional sensors that provide information related to the motion or the \gls{PPG} itself. Examples of these additional sensors include accelerometers~\cite{nabavi2020robust, tuauctan2015characterization} and optical source-detector pairs with peak responses beyond the red-infrared wavelength spectrum~\cite{zhang2019motion}. Some studies generate reference noise signals internally from the impaired \gls{PPG} segments, reducing the need for extra hardware~\cite{ram2011novel, raghuram2016use}. Additional sensor channels can also transmit data about the same or a similar physiological indicator that reacts differently to artifacts. Nevertheless, using measured or synthetic reference signals for detecting contaminated \gls{PPG} segments often relies on adaptive filtering. Beyond its high computational and mathematical complexity, this approach may require extended convergence times to reach an optimal solution.
-
-
-
-In contrast to the techniques mentioned earlier, \gls{SQA} methods that do not rely on measured or synthetic reference signals (i.e. referenceless methods) may be better suited for wearable, real-time applications, since they eliminate the need for additional data collection and processing. In this context, \gls{ML} has made significant strides in this area by enabling the classification of \gls{PPG} signals into ``reliable'' or ``unreliable'' based on the extraction of distinguishing information and the recognition of complex patterns, either automatically or with minimal human involvement~\cite{janiesch2021machine}. 
+Following the 20th century, \gls{SQA} for physiological signals gained significant traction, with a proliferation of studies emerging in the early 2000s. 
+For example, Wang et al. \cite{2000s-1} proposed an \gls{ECG} \gls{SQA} method based on the area differences between distinct QRS complexes, utilizing cumulative histogram comparisons across various \gls{ECG} leads.
+Subsequently, Li et al. \cite{2000s-2} introduced a combination of multiple quality indices and \gls{HR} for \gls{ECG} evaluation.
+In a different approach, Deshmane et al. \cite{2000s-3} utilized thresholding based on Hjorth parameters~\cite{hjorth-parameters} to assess \gls{PPG} signal quality. Furthermore, Zhang et al. \cite{2000s-4} developed an \gls{ABP} quality metric based on \gls{EDSS} and \gls{SESS} features.
+Collectively, these studies moved toward quantifying \gls{SQA} through a single representative metric \cite{2000s-2, 2000s-3, 2000s-4}, frequently referred to in the literature as the \gls{SQI} \cite{2000s-2, 2000s-3}.
 
 
-One characteristic of the \gls{PPG} \gls{SQA} literature is the presence of both supervised and unsupervised machine learning approaches. Supervised learning involves learning features with the presence of labels. This allows the machine learning model to have access to more information in the learning process, but at the cost of more training computational expense. Multiple works in the \gls{SQA} literature are supervised. Per example, Mohagheghian et al. \cite{ppg-sqa-1} introduced a method to improve feature selection algorithms by ensembling feature subsets into a majority voting schema. A machine learning algorithm determines the voting threshold, such as AdaBoost, \gls{SVM}, \gls{KNN} and discriminant analysis. Among those predictors, the AdaBoost presented the best performance in terms of \gls{ROC AUC} and accuracy. Furthemore, the method achieved accuracies of 91.55\%, 92.29\% and 95.86\% on, respectively, the DeepBeat, UMMC Simband, and MIMICIII datasets. This result is competitive to other three compared methods, despite the labeled quality scores are not publicly available. As another example, Tiwari et al. \cite{ppg-sqa-2} proposed transforming the signal into a modulation spectrogram representation and, then, extracting features from it for subsequently feeding them to a machine learning model. Experiments compared the method to various \glspl{SQI} by feeding them to a logistic regressor. Tests involved three wavelengths: red, green and infrared. The results showed that the method outperformed the others \glspl{SQI} by 21.3\% \gls{BACC} for green, 21.6\% \gls{BACC} for red, and 19.0\% \gls{BACC} for infrared wavelengths. A final example is the work of Miranda et al. \cite{ppg-sqa-3}, in which the \gls{SQA} results from the application of a interval type-2 fuzzy logic system. Experiments on a private dataset lead to 77\% and 93.72\% \gls{MCC} and \gls{ACC}, respectively. However, it is observed that most of these studies originally utilize non-publicly unlabeled datasets, which compromises the reproducibility of their results.
-    
-On the other hand, unsupervised learning dismisses labels in the learning process. Even though this approach gives less information to the trained model, this makes the model independent of specialists guidance and its biases. As opposed to most works in the \gls{SQA} literature, some works present unsupervised methods. For example, Singha et al. \cite{ppg-sqa-4} propose extracting entropy and statistical features from the input signal and feeding them to a self-organizing map. Experiments on a private dataset resulted in 92.01\% accuracy in ternary classification. As another example, Mahmoudzadeh et al. \cite{ppg-sqa-5} proposed extracting features from the time and frequency domains and feeding them to a elliptical envelope algorithm. This method achieved 97\% and 93\% F1-Score on ``reliable'' label for, respectively, intra and inter subject testing on a private dataset. Additionally, the combination of the supervised and unsupervised methods can produce semi-supervised methods, such as the method of Feli et al. \cite{ppg-sqa-6}, which feeds features to a semi-supervised one class \gls{SVM}, training it only on samples labeled as ``reliable''. Comparing this semi-supervised approach to rule-based, unsupervised, supervised and deep learning methods lead to the proposed method surpassing all of them in terms of F1-Score for ``reliable'' class with 99\% value on a private dataset. However, likewise the supervised works, most datasets and its testing labeling are not public.        
+Among the variety of physiological signals, the \gls{ECG} remains the most prominent in the literature due to its diverse applications, including disease classification, arrhythmia detection, biometric identification, and emotion recognition \cite{ecg-1}.
+Consequently, \gls{SQA} methodologies for \gls{ECG} signals are extensively documented.
+For instance, Naseri et al. \cite{ecg-2} proposed two distinct features to estimate a classification-based \gls{SQI} for multi-channel \gls{ECG} data.
+The first feature evaluates whether two energy-based indices, measured in decibels, fall within a predefined admissible range.
+The second feature utilizes a \gls{FFNN} to reconstruct a randomly selected target lead from the derivatives of all available leads and the reconstructed signal is then compared to the original via correlation analysis to assess signal integrity.
 
-Another characteristic of the \gls{PPG} \gls{SQA} literature is the existence of the \gls{CA} identification problem. The \gls{CA} is the presence of an anomalous cardiac rate or rhythm without a physiological reason \cite{arrhythmia-1}. This medical condition is an obstacle in the design of \gls{SQI}, since, in contrast to arrhythmic individuals, normal cardiac signals are periodic. Some features assume that the signal is periodic. This assumption can result in signals with arrhythmia being rejected as unreliable signals, leaving patients with the \gls{CA} condition misdiagnosed. Pereira et al. \cite{arrhythmia-2} conducted experiments on a private dataset that contains cases of \gls{AF}, a type or arrhythmia. In this experiment, 40 features used in previous studies fed a \gls{SVM}, which achieved an average accuracy superior to 94\%. That accuracy was far higher than other existing methods, which the researchers also tested. Therefore, abundant feeding a machine learning algorithm with features and training it on datasets with arrhythmia cases already present an improvement in the detection of those special cases.
 
-In sequence, two studies adopted a similar approach to the one mentioned in the past paragraph to attack the arrhythmia problem. In the first study, Pereira et al. \cite{arrhythmia-3} fed several features to three classifiers: \gls{SVM}, \gls{KNN} and decision tree. Similarly to their previous study, experiments on a private dataset demonstrated that the \gls{SVM} was the best of all classifiers and it obtained above 95\% surpassing the methods of other studies. The second study, by Pereira et al. \cite{arrhythmia-4}, also included the \gls{SVM} method, but added to the experiment deep learning models. The study contemplated both one-dimensional (1D) and bidimensional (2D) deep learning models, with the first receiving the raw signal and the second receiving its Cartesian plot image. Experiments on private data with presence of \gls{AF} showed that the ResNet18 model was the best, with 98.5\% accuracy. That last study highlighted that deep learning models have the potential to surpass conventional methods even with the presence of arrhythmic events. The next section further explores the use of deep learning in the literature.  
+Beyond foundational studies, various specialized features have been developed for \gls{ECG} \gls{SQA}.
+For instance, Orphanidou et al. \cite{ecg-3} proposed extracting the \gls{HRV} signal and decomposing it into wavelet coefficients across multiple frequency ranges.
+The entropy of these coefficients forms a feature vector utilized by a \gls{SVM} for binary quality classification.
+Alternatively, Shahriari et al. \cite{ecg-4} introduced an image-based approach that calculates the structural similarity between a Cartesian plot of the signal and clustered templates from the training set.
+Other signal transformation techniques include the use of the autocorrelation function for feature extraction \cite{ecg-5} and the generation of discretized phase space plots—such as Poincaré plots—where cell values represent the logarithm of point density \cite{ecg-6}.
+Collectively, these methodologies demonstrate the technical diversity of \gls{ECG} quality assessment within the existing literature.
+
+
+In addition to the established relevance of the \gls{ECG}, the use of \gls{PPG} as a diagnostic alternative has gained significant traction, with related publications increasing by 176\% between 2013 and 2023 \cite{ppg-1}.
+However, the susceptibility of \gls{PPG} to noise necessitates robust \gls{SQA} methodologies.
+For instance, Li et al. \cite{ppg-2} utilized \gls{DTW} to quantify signal disparity relative to an established template.
+This \gls{SQI}, alongside auxiliary metrics, was processed through both an \gls{MLP} and a heuristic rule-based function to determine a final quality score, achieving a peak accuracy of 95.2\% using the MIMIC II dataset as benchmark.
+Similarly, Papini et al. \cite{ppg-3} demonstrated that comparing individual heartbeats to a \gls{DTW} barycenter template yields predictive values exceeding 95\% across two public datasets. These findings suggest that high predictive accuracy is attainable for \gls{PPG} \gls{SQA} tasks using template-based comparisons.
+
+
+According to Such~\cite{such2007motion}, \gls{SQA} methods in biomedical signals generally fall into two categories: single-parameter and multiparameter approaches.
+Unlike single-parameter methods, multiparameter techniques utilize additional sensors that provide information related to the motion or the \gls{PPG} itself.
+Examples of these additional sensors include accelerometers~\cite{nabavi2020robust, tuauctan2015characterization} and optical source-detector pairs with peak responses beyond the red-infrared wavelength spectrum~\cite{zhang2019motion}.
+Some studies generate reference noise signals internally from the impaired \gls{PPG} segments, reducing the need for extra hardware~\cite{ram2011novel, raghuram2016use}.
+dditional sensor channels can also transmit data about the same or a similar physiological indicator that reacts differently to artifacts.
+Nevertheless, using measured or synthetic reference signals for detecting contaminated \gls{PPG} segments often relies on adaptive filtering.
+Beyond its high computational and mathematical complexity, this approach may require extended convergence times to reach an optimal solution.
+
+
+In contrast to the aforementioned techniques, \gls{SQA} methods that do not rely on measured or synthetic reference signals (i.e. referenceless methods) may be better suited for wearable, real-time applications, since they eliminate the need for additional data collection and processing.
+In this context, \gls{ML} has made significant strides in this area by enabling the classification of \gls{PPG} signals into ``reliable'' or ``unreliable'' based on the extraction of distinguishing information and the recognition of complex patterns, either automatically or with minimal human involvement~\cite{janiesch2021machine}. 
+
+
+The \gls{PPG} \gls{SQA} literature encompasses both supervised and unsupervised learning paradigms.
+Supervised approaches leverage labeled data to capture discriminative features, often yielding higher predictive performance at the expense of increased computational training costs.
+For instance, Mohagheghian et al. \cite{ppg-sqa-1} improved feature selection by ensembling subsets through a majority voting scheme, where the threshold was determined by classifiers such as AdaBoost, \gls{SVM}, and \gls{KNN}.
+Among these, AdaBoost achieved peak performance with accuracies of 91.55\%, 92.29\%, and 95.86\% on the DeepBeat, UMMC Simband, and MIMIC III datasets, respectively. Similarly, Tiwari et al. \cite{ppg-sqa-2} utilized modulation spectrogram representations to extract features for logistic regression.
+Their method outperformed traditional \glspl{SQI} across green, red, and infrared wavelengths, improving \gls{BACC} by up to 21.6\%.
+Furthermore, Miranda et al. \cite{ppg-sqa-3} applied an interval type-2 fuzzy logic system to a private dataset, achieving an \gls{MCC} of 77\% and an \gls{ACC} of 93.72\%.
+Notably, the reliance of many such studies on private or non-publicly available datasets limits the reproducibility of their results and underscores the need for standardized benchmarking.
+
+
+On the other hand, unsupervised learning paradigms omit ground-truth labels during the training process.
+While this provides the model with less explicit information, it ensures independence from specialist guidance and inherent human biases. 
+Although supervised methods predominate in \gls{SQA} research, several unsupervised approaches have demonstrated significant efficacy.
+For instance, Singha et al. \cite{ppg-sqa-4} proposed a self-organizing map that utilizes entropy and statistical features, achieving 92.01\% accuracy in ternary classification on a private dataset.
+Similarly, Mahmoudzadeh et al. \cite{ppg-sqa-5} employed an elliptical envelope algorithm to process time and frequency domain features, attaining F1-scores of 97\% and 93\% for intra- and inter-subject testing, respectively.
+Furthermore, hybrid architectures can facilitate semi-supervised learning.
+Feli et al. \cite{ppg-sqa-6} utilized a one-class \gls{SVM} trained exclusively on ``reliable'' samples.
+This semi-supervised approach outperformed rule-based, unsupervised, and deep learning methods, reaching a 99\% F1-score on a private dataset.
+However, as with the supervised literature, the reliance on non-public datasets and private labeling protocols remains a significant barrier to cross-study validation.
+
+
+
+The \gls{PPG} \gls{SQA} literature also addresses the challenge of identifying \glspl{CA}, which involve anomalous cardiac rates or rhythms without an underlying physiological cause \cite{arrhythmia-1}.
+These conditions present a significant challenge for \gls{SQI} design because many traditional features assume signal periodicity.
+Consequently, arrhythmic signals may be erroneously rejected as unreliable, potentially leading to misdiagnosis in patients with \glspl{CA}.
+To address this, Pereira et al. \cite{arrhythmia-2} utilized a private dataset containing \gls{AF} cases to evaluate 40 features previously established in the literature. By employing these features within an \gls{SVM} framework, they achieved an average accuracy exceeding 94\%, significantly outperforming existing methodologies.
+These results demonstrate that incorporating diverse feature sets and training models on datasets inclusive of arrhythmic cases significantly improves the detection of these specific signal types.
+
+In sequence, two studies adopted a similar approach to the one mentioned in the past paragraph to attack the arrhythmia problem.
+In the first study, Pereira et al. \cite{arrhythmia-3} fed several features to three classifiers: \gls{SVM}, \gls{KNN} and decision trees.
+Similarly to their previous study, experiments on a private dataset demonstrated that the \gls{SVM} was the best of all classifiers and it obtained above 95\% surpassing the methods of other studies.
+A following study by Pereira et al. \cite{arrhythmia-4} expanded this comparison by incorporating \gls{DL} models alongside the \gls{SVM} framework.
+This research contemplated both one-dimensional (1D) and bidimensional (2D) \gls{DL} models, , where the 1D models processed raw signals and the 2D models utilized Cartesian plot images.
+Experiments on private data containing \gls{AF} instances revealed that the ResNet18 model achieved a peak accuracy of 98.5\%.
+These results underscore the potential of deep learning architectures to surpass conventional methods even in the presence of arrhythmic events.
+The following section provides a more comprehensive review of deep learning applications in the \gls{SQA} literature.
 
 
 {
@@ -460,13 +520,41 @@ In sequence, two studies adopted a similar approach to the one mentioned in the 
 \subsubsection{Signal quality assessment using deep learning}
 \label{sec:deep_learning}
 
-Methods based on \gls{DL} have demonstrated the potential to achieve a higher accuracy when compared with feature-based models, even in the presence of \gls{CA} \cite{arrhythmia-3}. On one hand, differently of hand-crafted features, \gls{DL} automatically extracts features from the input signal, creating models that are adaptable to different dataset training contexts. Additionally, a high quality dataset can provide resources for the \gls{DL} model to be robust to variations on the signal conditions. On the other hand, not only it creates a black-box that does not explain the reasons why the model attributed a certain \gls{SQI}, but also requires large amounts of data to properly adjust the model parameters. Despite this, \gls{DL} is worth exploring since it can provide the accuracy and robustness that the medical applications require. 
+\gls{DL} methods have demonstrated the capacity to achieve superior accuracy compared to feature-based models even when arrhythmic conditions are present \cite{arrhythmia-3}.
+In contrast to hand-crafted features, \gls{DL} architectures automatically extract hierarchical representations from the input signal to create models that adapt to diverse training contexts.
+Furthermore, high-quality datasets provide the necessary resources for these models to develop robustness against variations in signal conditions.
+Despite these advantages, \gls{DL} models function as black boxes that lack interpretability regarding the specific reasons for a given quality score.
+These architectures also necessitate large volumes of data for optimal parameter optimization.
+Nevertheless, the potential for \gls{DL} to provide the accuracy and robustness required for clinical applications justifies its investigation in the \gls{SQA} domain.
 
-In this context, several studies proposed the application \glspl{CNN} receiving the one-dimensional input signal. For instance, Naeini et al. \cite{deep-learning-1} designed a 1D \gls{CNN} to extract a binary \gls{SQI}. Tests on a private dataset with data of three devices lead to 85\% F1-score for the ``reliable'' class. Alike, Zanelli et al. \cite{deep-learning-2} employed a self-made 1D \gls{CNN}, but examined the effect of transfer learning as well. They conducted the experiment on three private datasets. It starts training the model mostly on one dataset, in which it achieved an accuracy of 99.8\%. Then, for each remaining database, they fine-tuned the the model with little training and tested on it. This procedure resulted on the 93\% and 81\% accuracies on the second and third datasets, respectively. Additionally, the model trained solely on the second database scored lower, 86\%. Those results indicate that not only 1D \glspl{CNN} can achieve high accuracy in \gls{SQA} but also it is possible to transfer its learned features over different databases to improve its performance.
 
-In a different light, some works go beyond the simple application of such \glspl{CNN}. The research of Lucafo et al. \cite{deep-learning-3}, per example, introduced a hybrid-model for quality assessment, which combines a 1D \gls{CNN} with a rule-based approach. This rule can bypass the utilization of the \gls{CNN} by verifying if the min-to-max distance of the signal is less than an threshold. They determined the threshold by methods such as Last Value Thresholding and Nearest Value Thresholding. The researchers did it to avoid the unnecessary power demanded by the \gls{DL} model. The method proved to be functional since it avoided the usage of the \gls{CNN} for 3.27\% of the input samples, while maintaining similar prediction scores if compared to the \gls{CNN} without the rule component. Therefore, combining the 1D \gls{CNN} with other methods can achieve particular advantages.
 
-Besides the 1D \gls{CNN}s mentioned at this point, works explored the use of alternative \gls{DL} models for the \gls{SQA} of \gls{PPG}. An example of this is recurrent networks, as we can see in the work of Gao et al. \cite{deep-learning-4}, in which they proposed the application of a long-short-term memory network for real time \gls{SQA}, giving a \gls{SQI} for each point in the signal. For the experiments, they labeled private and public datasets by applying Blind Source Separation to generate from each \gls{PPG} signal one high-quality signal and one low-quality signal. When compared to baseline \gls{SQI}s and existing models, it achieved competitive accuracy, while being light-weighted and enoughly fast to predict in real-time. Another example of alternative model is the combination of a stack denoising auto-encoder and a \gls{MLP}, as seen in the work of Singha et al. \cite{deep-learning-5}. This model achieved 95\% accuracy on a private dataset, better than baseline classifiers. A final example is the application of 2D \glspl{CNN} through the projection of the signal into a image using \glspl{GAF} by Naeini et al. \cite{deep-learning-6}. Even though three 2D \glspl{CNN} achieved above 90\% accuracy, F1-Score, and \gls{ROC AUC} scores on a private dataset, a proposed 1D \gls{CNN} overperformed all of them. Thus, several approaches show results that compete with 1D \glspl{CNN}. The usage of 2D \glspl{CNN}, in particular, increased in interest in this last decade.
+In this context, several studies have proposed 1D \gls{CNN} architectures that process raw input signals directly.
+For instance, Naeini et al. \cite{deep-learning-1} designed a 1D \gls{CNN} to extract a binary \gls{SQI} and achieved an 85\% F1-score for the ``reliable'' class using a private dataset comprising data from three different devices.
+Similarly, Zanelli et al. \cite{deep-learning-2} utilized a custom 1D \gls{CNN} to evaluate the impact of transfer learning.
+Their methodology involved initially training the model on a primary dataset where it reached 99.8\% accuracy followed by fine-tuning on two additional private databases. 
+This procedure yielded accuracies of 93\% and 81\% on the subsequent datasets respectively.
+Notably, the model trained exclusively on the second database achieved a lower accuracy of 86\% compared to the transfer learning approach.
+These results indicate that 1D \glspl{CNN} can achieve high accuracy in \gls{SQA} while demonstrating the feasibility of transferring learned features across disparate databases to enhance performance.
+
+
+Alternatively, some research explores hybrid architectures that extend beyond the standard application of \glspl{CNN}.
+For instance, Lucafo et al. \cite{deep-learning-3} introduced a hybrid model for quality assessment that integrates a 1D \gls{CNN} with a rule-based component.
+This rule-based mechanism bypasses the \gls{CNN} if the min-to-max signal distance falls below a predefined threshold.
+The researchers determined this threshold using methods such as Last Value Thresholding and Nearest Value Thresholding.
+This approach was implemented to reduce the computational overhead and power consumption associated with \gls{DL} models.
+The hybrid method proved effective as it bypassed the \gls{CNN} for 3.27\% of the input samples while maintaining predictive performance comparable to the standalone \gls{CNN}.
+Consequently, integrating 1D \glspl{CNN} with heuristic rules can provide specific advantages in terms of computational efficiency.
+
+
+Beyond the aforementioned 1D \glspl{CNN}, various alternative \gls{DL} architectures have been explored for \gls{PPG} \gls{SQA}.
+For instance, Gao et al. \cite{deep-learning-4} proposed a \gls{LSTM} \gls{SQA} that generates a quality index for each individual signal point.
+Their experiments involved labeling private dataset by applying blind source separation to derive high- and low-quality components from raw \gls{PPG} signals.
+This model achieved competitive accuracy relative to baseline \glspl{SQI} while remaining computationally efficient for real-time inference.
+Another approach combines a stacked denoising autoencoder with an \gls{MLP} as demonstrated by Singha et al. \cite{deep-learning-5}.
+This architecture achieved 95\% accuracy on a private dataset outperforming several baseline classifiers.
+Additionally, Naeini et al. \cite{deep-learning-6} evaluated 2D \glspl{CNN} by transforming signals into images using \glspl{GAF}. Although three different 2D \gls{CNN} models achieved scores exceeding 90\% for accuracy and F1-score, a proposed 1D \gls{CNN} outperformed all 2D variants.
+Consequently, while multiple architectures yield competitive results, the application of 2D \glspl{CNN} has garnered significant interest within the last decade.
 
 
 
@@ -475,35 +563,71 @@ Besides the 1D \gls{CNN}s mentioned at this point, works explored the use of alt
 \subsubsection{Methods based on time series imaging}
 \label{sec:imaging}
 
-Several works in the literature propose transforming the input signal into an image and then feeding it to a \gls{CV} model. Figure \ref{fig:literature_projections} shows some of those transformations. Some works used 2D \gls{CNN}s as a classifier of the \gls{SQI}. One of those, Chen et al. \cite{imaging-1}, proposed the construction of a short-time Fourier transform spectrogram as the signal transformation method. The researchers annotated the VitalDB database~\cite{vitaldb-dataset} and, then, conducted experiments that lead to the proposed method achieving a better accuracy than four chosen baseline models. Its value was 98.3\%. 
-Chatterjee et al. \cite{imaging-2} transformed \gls{PPG} signals into quantum pattern recognition images for \gls{SQA}. This approach achieved 98.3\% accuracy on the University of Queensland vital signs dataset \cite{queensland-dataset} using labels produced by the researchers, which outperformed both baseline models and a standard \gls{DL} method. Despite the high accuracy reported by Chatterjee et al. \cite{imaging-2}, their study presents reproducibility challenges because the quality labels are not publicly available.
-Similarly, Roh et al. \cite{imaging-3} embedded the signal into an \gls{RP} matrix for \gls{PPG} \gls{SQA} to capture non linear dynamics.
-Using a private dataset, the method proposed by Roh et al. \cite{imaging-3} achieved 97.5\% accuracy. These results demonstrate that transforming time series into images is a promising approach for \gls{SQA} tasks within the current literature.
+Several studies in the literature propose transforming input signals into two-dimensional images for processing via \gls{CV} models.
+Figure \ref{fig:literature_projections} illustrates representative examples of these transformations.
+For instance, Chen et al. \cite{imaging-1} utilized 2D \glspl{CNN} to classify \glspl{SQI} based on short-time Fourier transform spectrograms.
+By annotating the VitalDB database \cite{vitaldb-dataset}, they achieved a peak accuracy of 98.3\% which outperformed four selected baseline models.
+Alternatively, Chatterjee et al. \cite{imaging-2} transformed \gls{PPG} signals into quantum pattern recognition images for quality assessment.
+This methodology achieved an accuracy of 98.3\% on the University of Queensland vital signs dataset \cite{queensland-dataset} using custom labels.
+While this approach outperformed both baseline and standard \gls{DL} methods, the lack of publicly available quality labels presents significant reproducibility challenges.
+Similarly, Roh et al. \cite{imaging-3} embedded signals into \glspl{RP} to capture nonlinear dynamics.
+Their method achieved 97.5\% accuracy on a private dataset.
+Collectively, these results indicate that transforming time series into image-based representations is a promising approach for \gls{SQA} within \gls{SOTA}.
 
 
+One particular method present in the \gls{SQA} literature is the time series matrix embedding, which encodes time relationships of the original signal into a square matrix.
+For instance, Freitas et al.~\cite{imaging-4} fed a \gls{ViT} with a \gls{RP} or a \gls{MTF}, achieving, respectively, 89.9\% and 90.3\% accuracy on a private dataset. Freitas et al. \cite{imaging-5} also fed images with a \gls{ViT}, but used \glspl{GAF}, reaching 92.2\% accuracy on a private dataset.
+Liu et al. \cite{imaging-6} proposed to input multiscale \gls{MTF}, a \gls{MTF} version which concatenates the signal first and second derivatives, to a self-made \gls{CV} model, resulting in a binary classification accuracy of 99.1\% in a non-public dataset.
+These findings demonstrate that combining generic \gls{CV} models with projection methods can improve predictive performance.
 
-One particular method present in the \gls{SQA} literature is the time series matrix embedding, which encodes time relationships of the original signal into a square matrix. For instance, Freitas et al.~\cite{imaging-4} fed a \gls{ViT} with a \gls{RP} or a \gls{MTF}, achieving, respectively, 89.9\% and 90.3\% accuracy on a private dataset. Freitas et al. \cite{imaging-5} also fed images with a \gls{ViT}, but used \glspl{GAF}. The proposed approach reached 92.2\% accuracy on a private dataset. Liu et al. \cite{imaging-6} proposed to input multiscale \gls{MTF}, a \gls{MTF} version which concatenates the signal first and second derivatives, to a self-made \gls{CV} model. Experiments with pre-training on the MIMIC-III and UCI databases, and fine-tuning and testing on the Queensland dataset resulted in 99.1\% accuracy for binary classification. Thus, the combination of a generic \gls{CV} model with a projection method, such as \gls{RP}, \gls{GAF} or \gls{MTF}, can achieve a decent accuracy, while it is possible to apply the multiscaling technique to improve some of those projections accuracy. 
-
-
-Accurate identification of \gls{PPG} sequences contaminated with artifacts is crucial for enabling reliable smart health applications. In this regard, \gls{ML} techniques have facilitated significant advancements. Although labeled datasets remain scarce, supervised learning models are more frequently adopted than their unsupervised counterparts, with \gls{SVM} and \gls{CNN} being the most widely employed. While feature-engineered and deep learning methods demonstrate similar performance in some scenarios, deep learning may be more advantageous for overcoming the limitations of manual feature engineering. In the current literature, there is a clear need for a standardized experimental framework to validate 2D \gls{DL} approaches against 1D \gls{ML} methods. This work addresses that gap by evaluating various time-series methods to provide a comprehensive study of the field.
+Accurate identification of \gls{PPG} sequences contaminated with artifacts is crucial for enabling reliable smart health applications.
+In this regard, \gls{ML} techniques have facilitated significant advancements.
+Although labeled datasets remain scarce, supervised learning models are more frequently adopted than their unsupervised counterparts, with \gls{SVM} and \gls{CNN} being the most widely employed.
+While feature-engineered and deep learning methods demonstrate similar performance in some scenarios, deep learning may be more advantageous for overcoming the limitations of manual feature engineering.
+In the current literature, there is a clear need for a standardized experimental framework to validate 2D \gls{DL} approaches against 1D \gls{ML} methods.
+This work addresses that gap by evaluating various time-series methods to provide a comprehensive study of the field.
 
 
 
 \subsection{Contributions of this work}
 \label{sec:my_work}
 
-This paper presents a quality assessment framework for \gls{PPG} signals, providing several key contributions. First, it introduces a novel method for encoding time series into 2D images by aggregating various projections into a composite hyperspectral tensor. This approach assumes that such aggregation yields a richer feature representation than a single projection. Second, this work evaluates the approach across a diverse range of \gls{CV} models to identify which architectures best complement time-series matrix embeddings, a rarely scope explored in previous literature. Third, the study explores the application of transfer learning using the ImageNet dataset within the \gls{SQA} domain. Finally, to address the lack of transparency in the field, all experiments are conducted on the publicly available \gls{BUTPPG} dataset~\cite{butppg}, ensuring high reproducibility and providing a standard for future comparative studies.
-
+This paper introduces a quality assessment framework for \gls{PPG} signals and offers several key contributions to the field.
+First, it presents a novel method for encoding time series into 2D images by aggregating various projections into a composite hyperspectral tensor.
+This approach is based on the premise that such aggregation yields a richer feature representation than any single projection alone.
+Second, this work evaluates the methodology across a diverse range of \gls{CV} models to identify which architectures best complement time-series matrix embeddings, addressing a scope that is rarely explored in existing literature.
+Third, the study investigates the application of transfer learning using the ImageNet dataset within the \gls{SQA} domain.
+Finally, to address the lack of transparency in the field, all experiments utilize the publicly available \gls{BUTPPG} dataset~\cite{butppg}.
+This favors reproducibility and establishes a better benchmark for future comparative studies.
 
 
 
 \section{Proposed Method}
 \label{sec_proposed_method}
 
-Section~\ref{sec:related} presented several works in the \gls{SQA} literature employed the time series imaging method as a manner to allow \gls{CV} models to be used in the \gls{SQI} estimation.
-Figure~\ref{fig:projections:projection-based-approach} presents a generic framework of such method, which we qualify as ``projection-based''.
-It first converts the 1D signal into a 2D projection and afterwards feeds it to a \gls{CV} model.
-Finally the \gls{CV} estimates the \gls{SQI}. The framework can use several projection algorithms, but we restrain our scope to four time series embedding methods presented by this section: \gls{GAF}, which generates the variants \gls{GASF} and \gls{GADF}; \gls{MTF}; and \gls{RP}. Moreover, the aggregation of these projections is which we call \gls{PMix}.
+%Section~\ref{sec:related} established that time series imaging enables the application of \gls{CV} models to \gls{SQI} estimation.
+Figure~\ref{fig:projections:projection-based-approach} illustrates a general ``projection-based'' framework of the projection-based methods discussed in Section~\ref{sec:related}.
+While this framework accommodates various projection algorithms independently, our study focuses on four specific time series embedding methods including \gls{GASF} and \gls{GADF} variants of the \gls{GAF}, the \gls{MTF}, and the \gls{RP}.
+The aggregation of these distinct projections is defined here as \gls{PMix}.
+
+
+
+
+
+
+\subsection{Recurrence Plot}
+
+The \gls{RP} method was introduced by Eckmann et al.~\cite{rp-1} to visualize the fundamental properties and recurrence behaviors of time series data.
+Since its inception, the application of \gls{RP} has expanded across various domains including earth sciences, finance, engineering, and physics~\cite{rp-2}.
+Within the life sciences, researchers have utilized \gls{RP} to identify pathological states such as Parkinson's disease~\cite{rp-3}, epileptic seizures~\cite{rp-4}, fetal hypoxia~\cite{rp-5}, and Alzheimer's disease~\cite{rp-6}.
+Given its demonstrated efficacy in cardiological signal processing, \gls{RP} represents a robust tool for assessing the quality of physiological signals in the context of \gls{SQA}.
+
+
+The \gls{RP} represents the occurrence of recurrences between the phase space values of time instant pairs. For this end, the first step is to embed the time series $X=\{x_1,x_2,...,x_n\}$, with $ x_i \in \mathbb{R}$ and $n \in \mathbb{N}$ samples, into a phase space, creating a new time series $S=\{\vec{s_1},\vec{s_2},...,\vec{s_m}\}$, with $ \vec{s_i} \in \mathbb{R}^d$ and $m \in \mathbb{N}$ elements. We can employ the time delays method to represent each element $\vec{s_i}$ of this new sequence $S$ as follows:
+\begin{equation}
+    \vec{s_i} = (x_i, x_{i + \tau}, x_{i + 2\cdot \tau} ..., x_{i + (d-1) \cdot \tau}),
+\end{equation}   
+where $d \in \mathbb{N}$ is the dimension and $\tau \in \mathbb{N}$ is the time delay of the phase space. Notice that the length $m$ of the sequence $S$ depends on both $d$ and $\tau$ by the equation $m = n - (d-1) \cdot \tau$. Also notice that this embedding is optional, since the choice of the dimension $d=1$ results in $S=X$, the original time series. Figure~\ref{fig:phase_space} depicts the phase space of the example signal of Figure~\ref{fig:projections:signal}.
 
 \begin{figure}[t!]
     \centering
@@ -514,24 +638,10 @@ Finally the \gls{CV} estimates the \gls{SQI}. The framework can use several proj
     \caption{Projection-based time series imaging approach.}
 \end{figure}
 
-
-
-
-\subsection{Recurrence Plot}
-
-The work of Eckmann et al.~\cite{rp-1}, of 1987, introduced the \gls{RP} method as a tool for representing visually useful properties and behaviors of a time series. Since then its application expanded to various domains, ranging areas such as earth sciences, finances, engineering, chemistry and physics~\cite{rp-2}. It is also applicable in life sciences, with attempts on identifying the presence of Parkinson's disease~\cite{rp-3}, epileptic seizure~\cite{rp-4}, fetal hypoxia~\cite{rp-5}, and Alzheimer's disease~\cite{rp-6}. Particularly, we employ \gls{RP} in tasks involving cardiological signal processing. Thus, it is likely to be useful for \gls{SQA} of cardiological signals.  
-
-The \gls{RP} represents the occurrence of recurrences between the phase space values of time instant pairs. For this end, the first step is to embed the time series $X=\{x_1,x_2,...,x_n\}$, with $ x_i \in \mathbb{R}$ and $n \in \mathbb{N}$ samples, into a phase space, creating a new time series $S=\{\vec{s_1},\vec{s_2},...,\vec{s_m}\}$, with $ \vec{s_i} \in \mathbb{R}^d$ and $m \in \mathbb{N}$ elements. We can employ the time delays method to represent each element $\vec{s_i}$ of this new sequence $S$ as follows:
-\begin{equation}
-    \vec{s_i} = (x_i, x_{i + \tau}, x_{i + 2\cdot \tau} ..., x_{i + (d-1) \cdot \tau}),
-\end{equation}   
-where $d \in \mathbb{N}$ is the dimension and $\tau \in \mathbb{N}$ is the time delay of the phase space. Notice that the length $m$ of the sequence $S$ depends on both $d$ and $\tau$ by the equation $m = n - (d-1) \cdot \tau$. Also notice that this embedding is optional, since the choice of the dimension $d=1$ results in $S=X$, the original time series. Figure~\ref{fig:phase_space} depicts the phase space of the example signal of Figure~\ref{fig:projections:signal}.
-
-
 \begin{figure}[t!]
     \centering
 
-    \subfigure[Example artificial signal.]{
+    \subfigure[Signal formed from function $f(t)=\sin(\frac{15 \pi t}{500}) + \frac{t}{500}$.]{
         \includegraphics[width=0.9\columnwidth]{signal_1.png}
         \label{fig:methodology:signal}
     }
@@ -543,39 +653,39 @@ where $d \in \mathbb{N}$ is the dimension and $\tau \in \mathbb{N}$ is the time 
     \subfigure[]{
         \includegraphics[width=0.45\columnwidth, trim={0.5em 1em 2em 2em}, clip]{delay_phase_space_recurrences.pdf}
         \label{fig:phase_space_B}
-    } 
-    \caption{The example signal formed from function $f(t)=\sin(\frac{15 \pi t}{500}) + \frac{t}{500}$.The $t$ variable correspond to the time instant, while the $f(t)$ function gives the magnitude of the signal. On the left, we have the signal of the Figure~\ref{fig:methodology:signal} on the time delay phase space, without temporal information. Its parameters are dimension $d=2$ and delay $\tau=\RPDelay$. On the right, we have almost the same figure, but with the recurrences represented by red lines $\vec{s_i} - \vec{s_j}$ that links the pair of near points that have a distance bellow $\varepsilon=\RPThreshold$. That figure omits the recurrences to the point itself.}
+    }
+
+    \subfigure[Thresholded RP]{
+        \frame{\includegraphics[width=0.4\columnwidth]{RecurrencePlot.png}}
+        \label{fig:method:rp:thresholded}
+    }
+    \subfigure[Unthresholded RP]{
+        \frame{\includegraphics[width=0.4\columnwidth]{RecurrencePlotUnthresholded.png}}
+        \label{fig:method:rp:unthresholded}
+    }
+
+    \caption{\subref{fig:methodology:signal} Example of artificial signal, where the variable $t$ represents the time instant and $f(t)$ denotes the signal magnitude. 
+    \subref{fig:phase_space_A} encodes the illustrated signal in the time delay phase space without temporal information. Its parameters are dimension $d=2$ and delay $\tau=\RPDelay$. \subref{fig:phase_space_B} is almost the same but with the recurrences represented by red lines $\vec{s_i} - \vec{s_j}$ that links the pair of near points that have a distance below $\varepsilon=\RPThreshold$.
+    \subref{fig:method:rp:thresholded} displays the thresholded recurrence plot where binary values indicate proximal points, whereas \subref{fig:method:rp:unthresholded} presents the unthresholded version representing the continuous distance matrix.
+    }
     \label{fig:phase_space}
 \end{figure}
 
 
 
-
-\begin{figure}[t!]
-    \centering
-    \subfigure[Thresholded]{
-        \frame{\includegraphics[width=0.47\columnwidth]{RecurrencePlot.png}}
-        \label{fig:method:rp:thresholded}
-    }
-    \subfigure[Unthresholded]{
-        \frame{\includegraphics[width=0.47\columnwidth]{RecurrencePlotUnthresholded.png}}
-        \label{fig:method:rp:unthresholded}
-    }
-    \caption[The resulting recurrence plots of the signal in Figure \ref{fig:projections:signal}.]{The resulting recurrence plots of the signal in Figure \ref{fig:projections:signal}, in coherence with the phase space of the Figure \ref{fig:phase_space}. On the left \subref{fig:method:rp:thresholded} we have the thresholded version, while on the right \subref{fig:method:rp:unthresholded} we have the unthresholded version.}
-    \label{fig:method:rp}
-\end{figure}
-
-
-
-Then, the second step is to build a $m \times m$ matrix $RP$ of recurrences where each cell $RP_{i,j} \in \{0,1\}$ represents the presence or the absence of a recurrence in a pair of points $\vec{s_i},\vec{s_j}$ of the phase space $S$. We can represent this concept by measuring the distance $||\vec{s_i} - \vec{s_j}||$ between the points of the pair and verifying if it is smaller than a threshold $\varepsilon \in \mathbb{R}$, as the following equation:
-\begin{equation}
+Subsequently, a recurrence matrix $RP_{m \times m}$ is constructed where each element $RP_{i,j} \in \{0,1\}$ the occurrence of a recurrence between a pair of pointss $\left(\vec{s_i},\vec{s_j}\right)$ within the phase space $S$. We can represent this concept by measuring the distance $||\vec{s_i} - \vec{s_j}||$ between the points of the pair and verifying if it is smaller than a threshold $\varepsilon \in \mathbb{R}$, as the following equation:
+%\begin{equation}
+$
     RP_{i,j} = \mathcal{H}(\varepsilon - ||\vec{s_i} - \vec{s_j}||),
-\end{equation}
+$
+%\end{equation}
 where $\mathcal{H}: \mathbb{R} \mapsto \{0,1\}$ is the Heaviside function. Alternativelly, we can produce an unthresholded version $RP'_{m \times m}$ by attributing to each cell $RP'_{i,j} \in \mathbb{R}$ the points distance:
-\begin{equation}
-    RP'_{i,j} = ||\vec{s_i} - \vec{s_j}||.
-\end{equation}  
-Figure~\ref{fig:method:rp} exhibits both $RP$ and $RP'$ of the example signal.
+%\begin{equation}
+$
+RP'_{i,j} = ||\vec{s_i} - \vec{s_j}||.
+$
+%\end{equation}  
+$RP$ and $RP'$ are illustrated in Figures~\ref{fig:method:rp:thresholded} and \ref{fig:method:rp:unthresholded}, respectively.
 
 
 \begin{figure}[t!]
@@ -816,14 +926,14 @@ Since each projection possesses unique characteristics, they are combined into a
 This aggregation, termed \gls{PMix}, involves assigning each projection to a particular channel of a single input layer. This structure is then processed through a pointwise convolution operation utilizing a $1 \times 1$ kernel. Formally, the tensor $T_{in}$ with dimensions $p \times n \times m$ used as input for the \gls{CV} models is constructed by stacking the $p$ projections $\{M_1, M_2, \dots, M_p\}$, all with the same dimensions $n \times m$, defined as $T_{in_{k,i,j}} = M_{k_{i,j}}$.
 Then, the tensor $T_{in}$ is ``mixed'' into $T_{mix_{q \times n \times m}}$ as follows:
 \begin{equation}
-    T_{mix_{k,i,j}} = f_{actv}\left(\sum\limits_{l=1}^{p}T_{in_{l,i,j}} \cdot w_{(k,i,j);l}\right),
+    T_{mix_{k,i,j}} = \mathcal{A}\left(\sum\limits_{l=1}^{p}T_{in_{l,i,j}} \cdot w_{(k,i,j);l}\right),
 \end{equation}
-where $w_{(k,i,j);l} \in \mathbb{R}$ denotes the weight applied to the connection between the output tensor cell $T_{mix_{k,i,j}}$ and the input tensor cell $T_{in_{l,i,j}}$. The term $f_{actv}: \mathbb{R} \to \mathbb{R}$ represents an activation function, such as ReLU, sigmoid, or Softmax. This relationship can be expressed in terms of the input projections as follows:
+where $w_{(k,i,j);l} \in \mathbb{R}$ denotes the weight applied to the connection between the output tensor cell $T_{mix_{k,i,j}}$ and the input tensor cell $T_{in_{l,i,j}}$. The term $\mathcal{A}: \mathbb{R} \to \mathbb{R}$ represents an activation function, such as ReLU, sigmoid, or Softmax. This relationship can be expressed in terms of the input projections as follows:
 \begin{equation}
     \label{eq:mix}
-    T_{mix_{k,i,j}} = f_{actv}\left(\sum\limits_{l=1}^{p}M_{l_{i,j}} \cdot w_{(k,i,j);l}\right).
+    T_{mix_{k,i,j}} = \mathcal{A}\left(\sum\limits_{l=1}^{p}M_{l_{i,j}} \cdot w_{(k,i,j);l}\right).
 \end{equation}
-We can observe that, for each cell with indexes $i,j$, the summation $\sum\limits_{l=1}^{p}M_{l_{i,j}} \cdot w_{(k,i,j);l}$ ``mixes'' the $p$ projections by adding its values $M_{l_{i,j}}$, while attributing different degrees of contribution for each $l$-th projection depending on the weight $w_{(k,i,j);l}$. Then, we can use the $f_{actv}$ function to mainly achieve binary distinguishability, leading to the final tensor value $T_{mix_{k,i,j}}$. Figure~\ref{fig:input_layer} illustrates the implementation framework of that mixture in the context of models pre-trained in three-channeled datasets. That process may require resizing, since pointwise convolution does not change the width and height dimensions.
+For each cell with indices $(i,j)$, the summation $\sum\limits_{l=1}^{p}M_{l_{i,j}} \cdot w_{(k,i,j);l}$ integrates the $p$ projections by aggregating the values $M_{l_{i,j}}$ according to the specific contribution weights $w_{(k,i,j);l}$. Subsequently, the activation function $\mathcal{A}$ is applied to enforce binary distinguishability, resulting in the final tensor value $T_{mix_{k,i,j}}$. The implementation framework for this integration is illustrated in Figure~\ref{fig:input_layer} within the context of models pre-trained on three-channel datasets. This process may necessitate a resizing step, as pointwise convolution preserves the spatial dimensions of width and height.
 
 
 
@@ -846,7 +956,7 @@ The \glsxtrlong{BUTPPG} is a publicly available database produced by the Departm
 The \gls{PPG} signals were acquired via smartphone-based photoplethysmography, leveraging the device's camera and \gls{LED} source to detect subcutaneous volumetric changes.
 Specifically, the researchers recorded the subject's index finger while it covered the camera lens and its \gls{LED} light. For each video frame, they measured the average intensity of the red channel across all image pixels, resulting in a time series of averages. Finally, the signal was inverted. %The Figure \ref{fig:butppg_samples} shows examples of the results of such a sequence of procedures.  
 
-They performed this method of obtaining \gls{PPG} signals 48 times, with the samples distributed equally among 12 subjects—4 measurements per subject. Moreover, the recordings were taken in two situations: one where the subject was seated and remained static, a case in which the quality label ``good'' was likely; and another where the subject was walking, a case likely to result in a ``bad'' recording. This distinction is relevant because the walking condition occurred only once for each subject, resulting in approximately 25\% of the recordings being labeled as ``bad''. Therefore, this dataset is imbalanced, a factor that was addressed in our experiment.
+They performed this method of obtaining \gls{PPG} signals 48 times, with the samples distributed equally among 12 subjects (4 measurements per subject). Moreover, the recordings were taken in two situations: one where the subject was seated and remained static, a case in which the quality label ``good'' was likely; and another where the subject was walking, a case likely to result in a ``bad'' recording. This distinction is relevant because the walking condition occurred only once for each subject, resulting in approximately 25\% of the recordings being labeled as ``bad''. Therefore, this dataset is imbalanced, a factor that was addressed in our experiment.
 
 For the definition of signal quality labels, specialists were designated to estimate the heart rate associated with the \gls{PPG} signals using specialized software developed by the researchers. The organizers then compared the specialists' estimates with those provided by a gold standard method, which used an ECG recording as a reference instead of the \gls{PPG} signal. The ECG was manually synchronized by the measurer. If the specialist's measurement had an error of 5 \gls{BPM} or less, the estimate was considered correct. Finally, if 3 out of 5 specialists provided correct estimates, the \gls{PPG} signal quality was labeled as ``good''. Thus, the ``good'' labels in the dataset essentially indicate whether a signal is human-readable.
 
@@ -864,7 +974,7 @@ To evaluate the proposed projection-based framework and identify specific cases 
 
 \begin{table}[t!]
     \centering
-    \caption{Non-Computer Vision models list, containing its references.}
+    \caption{Tested \gls{SOTA} models that \textit{are not} based on computer vision.}
     \adjustbox{max width=\columnwidth}{
     \begin{tabular}{llc}
         \toprule    
@@ -915,7 +1025,7 @@ To evaluate the proposed projection-based framework and identify specific cases 
 
 \begin{table}[t]
     \centering
-    \caption{\Glsxtrlong{CV} models list, containing its citations.}
+    \caption{Neural architectures considered as computer vision classifier.}
     \adjustbox{max width=\columnwidth}{
     \begin{tabular}{llcc}
         \toprule    
@@ -998,26 +1108,30 @@ Experiment involved feeding the models by loading the signals data, applying ran
 Transfer learning was employed by utilizing pre-trained ImageNet weights; this leverages the model's existing capacity for low-level feature extraction (e.g., edges and textures) relevant to 2D signal projections.
 Following that, we fitted the PyTorch models using the Adam optimization algorithm~\cite{Adam} to minimize the cross-entropy loss function. A reason to use that algorithm is that it surpassed some of the other options present in the PyTorch library when tested in several datasets \cite{Adam}. The implementation of the training strategy performed this optimization cycle with a number of epochs determined by a median-deviation-based early stopping technique, through the assumption that a low dispersion on the last epochs indicates a convergence to a local-optimal in the search space. The formula below gives the score of the $n$-th epoch:
 \begin{equation}
-EarlyStopScore(n) = med([|l_{n-i} - med([l_{n-i}]_{i=0}^9)|]_{i=0}^{9}),
+    S_{ES}(n) = \operatorname*{median}_{i \in \{0, \dots, 9\}} \left( \left| l_{n-i} - \operatorname*{median}_{j \in \{0, \dots, 9\}} (l_{n-j}) \right| \right)
+    %S_{ES}(n) = \text{median} \left( \left| l_{n-i} - \text{median}_{j \in \{0, \dots, 9\}} (l_{n-j}) \right| \right)_{i=0}^{9}
+    %S_{ES}(n) = med([|l_{n-i} - med([l_{n-i}]_{i=0}^9)|]_{i=0}^{9}),
 \end{equation}
-\noindent where $l_k$ is the loss value (i.e., cross-entropy loss) of the $k$-th epoch, ${med}$ is the median and $[f(i)]_{i=0}^p$ is the sequence generated by $f(i)$ when varying $i$ from $0$ to $p$. In other words, the formula calculates the median of the absolute deviations of the medians of the last 10 loss values using the central value. If $EarlyStopScore(n) \leq 0.1$, the training stops in the $n$-th epoch. With that established, it remains to determine the metrics to be measured for smoother readability.
+\noindent where $l_k$ is the loss value (i.e., cross-entropy loss) of the $k$-th epoch, ${med}$ is the median and $[f(i)]_{i=0}^p$ is the sequence generated by $f(i)$ when varying $i$ from $0$ to $p$. In other words, the formula calculates the median of the absolute deviations of the medians of the last 10 loss values using the central value. If $S_{ES}(n) \leq 0.1$, the training stops in the $n$-th epoch. With that established, it remains to determine the metrics to be measured for smoother readability.
 
 \subsection{Performance measurements}
 
 Being established the training procedure, it is needed to choose metrics to evaluate the efficacy of the solution after the training of the model. For these experiments, we can categorize the metrics into two groups: prediction metrics, which measure the quality of the model's signal quality assessments, and benchmarking metrics, which measure resource usage and the model speed. As the prediction metrics, our experiments used the Cohen kappa score, the F1-score, and the precision, considering that they are capable of estimating the quality of binary classification through different perspectives. All of them can be evaluated using confusion matrix values, presented in Table~\ref{tab:experimentos:confusion_matrix}. The Cohen kappa score~\cite{CohenKappa}, in binary classification tasks, measures the agreement between the obtained accuracy $acc_o$ and the expected accuracy $acc_e$. The following equations define those accuracies and the Cohen kappa score:
-\begin{equation} 
+\begin{equation}
 acc_o = \frac{TP+TN}{N},
 \end{equation}
+and 
 \begin{equation}
-acc_e  = \left(\frac{TP+FP}{N} \cdot \frac{TP+FN}{N}\right) + \left(\frac{TN+FP}{N} \cdot \frac{TN+FN}{N}\right),
+    acc_{e} = \frac{ (TP+FP)(TP+FN) + (TN+FP)(TN+FN) }{N^2} 
+    %acc_e  = \left(\frac{TP+FP}{N} \cdot \frac{TP+FN}{N}\right) + \left(\frac{TN+FP}{N} \cdot \frac{TN+FN}{N}\right),
 \end{equation}
 and
 \begin{equation} \label{eq:Cohen kappa}
-CohenKappa(R)  = \frac{acc_o - acc_e}{1 - acc_e}, 
+\text{Cohen Kappa}  = \frac{acc_o - acc_e}{1 - acc_e}, 
 \end{equation}  
 where $N=TP+TN+FP+FN$ is the total number of samples. For the purpose of aligning this metric with others, we can rescale that metric from $[-1,1]$ to $[0,1]$:
 \begin{equation}
-CohenKappaRescaled(R) = \frac{CohenKappa(R)+1}{2}.
+ \text{Cohen's~} \kappa = \frac{\text{Cohen Kappa} +1}{2}.
 \end{equation}  
 In sequence, the precision is a metric that measures the ratio of hits in the set of positive predictions. In our context, a higher precision implies that the predictor avoided mistakenly labeling ``bad'' signals as ``good'', which is desirable in applications where we do not want to show to the user measurements based on unreliable signals. From the precision and from the recall, the ratio of hits in the set of all existing positives, we can obtain the F1-Score. Precisely, the F1-Score is the harmonic mean between those two metrics. In other words, a high F1-Score indicates a good balance between precision and recall scores. In our application, it measures the same as the precision plus the recall, which would measure the amount of ``good'' signals that would feed the application. This is an desirable quality when we want to provide constant feedback to the user. The following equations define those metrics:
 \begin{equation} \label{eq:Precision}
@@ -1078,47 +1192,15 @@ The \gls{CV} models were trained using a single NVIDIA\texttrademark RTX 3090 TI
 
 \section{Results} \label{sec:results}
 
-
-The results were analyzed by comparing the score metrics of the models and assessing their trade-offs with respect to memory consumption and inference time. The score metrics are presented like the example in Table \ref{tab:experiments:example}, in which the results of each combination of model and projection are shown in the format $mean \pm std$, with values up to three decimal places. Additionally, considering a particular column of mean or standard deviation, it is used a coloring system where the red color represents values worse or equal than the first quartile, the green color highlights values better or equal than the third quartile, and the blue color paints values in between the other colors. Given the large number of models considered, the analysis was organized into sections. First, each section focused on one of the \gls{CV} model families listed in Table~\ref{tab:cv_list}: Transformers, Residual Nets, Mobile-Oriented, Extreme Nets, Efficiency-Oriented, and Diverse. Within each category, the analysis identified the best combinations of model variants and projection methods. Subsequently, the top non-\gls{CV} models from the Aeon toolkit library were selected. Finally, the overall best choices were determined, and differences between the projection methods were discussed.
-
-
-\begin{table}[h!]
-    \centering
-    \caption{Example of the score-displaying system.}
-    \adjustbox{max width=\columnwidth}{
-    \begin{tabular}{llll}
-        \toprule
-        Model & Projection & Example metric 1 & Example metric 2 \\
-        \midrule
-        Example model 1 & Example projection 1 
-            & \textcolor[rgb]{0.0,0.7,0.0}{0.999} $\pm$ \textcolor[rgb]{0.3,0.3,0.5}{0.333} 
-            & \textcolor[rgb]{0.3,0.3,0.5}{0.777} $\pm$ \textcolor[rgb]{0.0,0.7,0.0}{0.111} 
-        \\
-        Example model 2 & Example projection 2 
-            & \textcolor[rgb]{0.3,0.3,0.5}{0.333} $\pm$ \textcolor[rgb]{1.0,0.2,0.2}{0.999} 
-            & \textcolor[rgb]{0.0,0.7,0.0}{0.999} $\pm$ \textcolor[rgb]{0.3,0.3,0.5}{0.333} 
-        \\
-        Example model 3 & Example projection 3 
-            & \textcolor[rgb]{0.3,0.3,0.5}{0.777} $\pm$ \textcolor[rgb]{0.0,0.7,0.0}{0.111} 
-            & \textcolor[rgb]{1.0,0.2,0.2}{0.111} $\pm$ \textcolor[rgb]{0.3,0.3,0.5}{0.777} 
-        \\
-        Example model 4 & Example projection 4 
-            & \textcolor[rgb]{1.0,0.2,0.2}{0.111} $\pm$ \textcolor[rgb]{0.3,0.3,0.5}{0.777} 
-            & \textcolor[rgb]{0.3,0.3,0.5}{0.333} $\pm$ \textcolor[rgb]{1.0,0.2,0.2}{0.999} 
-        \\ 
-        \bottomrule
-    \end{tabular}
-    }
-    \label{tab:experiments:example}
-\end{table}
-
-
-
+The results were analyzed considering the prediction performance, i.e., evaluating how effectively different machine learning models, including both vision- and non-vision-based approaches, classify signal samples as either reliable or unreliable. Moreover, following the extensive analysis presented in the subsequent subsections, the top-performing models were also evaluated with respect to memory consumption and inference time.
+Prediction metrics such as Cohen's $\kappa$, F1-Score, and Precision are shown in the format $\mu \pm \sigma$, where $\mu$ and $\sigma$ represent the mean and standard deviation of the scores across \gls{LOSO} folds.
+Given the large number of models tested in this research, the analysis was organized into subsections. In these subsections, the results are presented using a color-coding scheme where red denotes values at or below the first quartile, green highlights results at or above the third quartile, and blue represents values within the intermediate range.
+The experimental analysis is categorized by the \gls{CV} model families listed in Table~\ref{tab:cv_list}, specifically: Transformers, Residual Nets, Mobile-Oriented, Extreme Nets, Efficiency-Oriented, and Diverse. Within each category, the optimal combinations of model variants and projection methods are identified. These results are then compared against top-performing non-\gls{CV} models selected from the Aeon toolkit~\cite{aeon2024}. Finally, the overall superior configurations are determined, and the relative performance of the projection methods is evaluated.
 
 
 \subsection{Analysis by computer vision model family}
  
-This analysis covers each \gls{CV} model family listed in Table~\ref{tab:cv_list}.
+%This analysis covers each \gls{CV} model family listed in Table~\ref{tab:cv_list}.
  
 \subsubsection{Vision Transformers}
 
@@ -1143,12 +1225,12 @@ Table \ref{tab:Averages_of_SwinTransformerV2} displays the \gls{SwinTV2} scores,
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the Vision Transformer variants.}
+    \caption{Prediction results of the \textit{ViT} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_VisionTransformer}
     \adjustbox{max width=\columnwidth,center}{
     \begin{tabular}{lllll}
     \toprule
-    Model & Projection & Cohen Kappa & F1 Score & Precision \\
+    Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
     \midrule
     ViT: B 16 & GAF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.562} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.155} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.833} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.090} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.771} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.167} \\
     & MTF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.518} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.040} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.771} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.163} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.773} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.175} \\
@@ -1179,12 +1261,12 @@ Table \ref{tab:Averages_of_SwinTransformerV2} displays the \gls{SwinTV2} scores,
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the MaxViT variants.}
+    \caption{Prediction results of the \textit{MaxViT} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_Maxvit}
     \adjustbox{max width=\columnwidth,center}{
         \begin{tabular}{lllll}
         \toprule
-        Model & Projection & Cohen Kappa & F1 Score & Precision \\
+        Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
         \midrule
         MaxViT & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.653} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.261} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.857} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.132} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.806} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.192} \\
         & MTF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.544} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.190} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.706} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.186} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.788} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.222} \\
@@ -1199,12 +1281,12 @@ Table \ref{tab:Averages_of_SwinTransformerV2} displays the \gls{SwinTV2} scores,
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the SwinTransformer variants.}
+    \caption{Prediction results of the \textit{SwinTransformer} variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_SwinTransformer}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 SwinT: B & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.625} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.226} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.861} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.110} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.792} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.179} \\
  & MTF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.500} $\pm$ \textbf{\textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.000}} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.837} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.090} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.729} $\pm$ \textbf{\textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.129}} \\
@@ -1228,12 +1310,12 @@ SwinT: T & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.571} $\pm$ \te
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the SwinTransformerV2 variants.}
+    \caption{Prediction results of the \textit{SwinTransformerV2} variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_SwinTransformerV2}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 SwinTV2: B & GAF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.500} $\pm$ \textbf{\textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.000}} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.837} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.090} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.729} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.129} \\
  & MTF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.568} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.162} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.860} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.085} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.764} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.132} \\
@@ -1276,12 +1358,12 @@ Observing Tables~\ref{tab:Averages_of_ResNet}, \ref{tab:Averages_of_ResNeXt}, an
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the ResNet variants.}
+    \caption{Prediction results of the \textit{ResNet} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_ResNet}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 ResNet: 101 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.558} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.223} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.848} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.106} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.708} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.279} \\
  & MTF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.500} $\pm$ \textbf{\textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.000}} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.825} $\pm$ \textbf{\textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.074}} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.729} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.129} \\
@@ -1313,12 +1395,12 @@ ResNet: 50 & GAF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.510} $\pm$ \
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the ResNeXt variants.}
+    \caption{Prediction results of the \textit{ResNeXt} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_ResNeXt}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 ResNeXt: 101; 32x8d & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.729} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.271} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.853} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.179} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.847} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.204} \\
  & MTF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.568} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.162} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.844} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.102} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.771} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.167} \\
@@ -1343,12 +1425,12 @@ ResNeXt: 50; 32x4d & GAF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.542}
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the WideResNet variants.}
+    \caption{Prediction results of the \textit{WideResNet} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_WideResNet}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 WiResNet: 101-2 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.625} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.226} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.826} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.158} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.803} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.172} \\
  & MTF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.508} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.110} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.702} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.189} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.750} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.194} \\
@@ -1386,12 +1468,12 @@ Table~\ref{tab:Averages_of_MobileNetV3} lists the MobileNet V3 variants, which i
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the MNASNet variants.}
+    \caption{Prediction results of the \textit{MNASNet} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_MNASNet}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 MNASNet: 0.5 & GAF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.513} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.211} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.812} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.167} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.552} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.367} \\
  & MTF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.480} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.133} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.798} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.136} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.681} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.263} \\
@@ -1420,12 +1502,12 @@ MNASNet: 1.3 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.583} $\pm$
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the MobileNetV2 variants.}
+    \caption{Prediction results of the \textit{MobileNetV2} variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_MobileNetV2}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 MobileNet V2 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.565} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.214} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.776} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.164} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.788} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.294} \\
  & MTF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.485} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.200} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.773} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.201} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.708} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.193} \\
@@ -1440,12 +1522,12 @@ MobileNet V2 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.565} $\pm$
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the MobileNetV3 variants.}
+    \caption{Prediction results of the \textit{MobileNetV3} variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_MobileNetV3}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 MobileNet V3: Large & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.507} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.140} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.758} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.146} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.765} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.178} \\
  & MTF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.561} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.227} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.777} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.185} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.806} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.195} \\
@@ -1486,12 +1568,12 @@ Table \ref{tab:Averages_of_VGG} details the VGG scores across variants with 11, 
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the DenseNet variants.}
+    \caption{Prediction results of the \textit{DenseNet} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_DenseNet}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 DenseNet: 121 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.621} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.248} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.795} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.190} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.799} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.196} \\
  & MTF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.500} $\pm$ \textbf{\textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.000}} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.837} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.090} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.729} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.129} \\
@@ -1517,12 +1599,12 @@ DenseNet: 201 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.600} $\pm
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the SqueezeNet variants.}
+    \caption{Prediction results of the \textit{SqueezeNet} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_SqueezeNet}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 SqueezeNet: 1.0 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.591} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.231} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.804} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.192} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.771} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.198} \\
  & MTF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.586} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.194} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.742} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.197} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.812} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.217} \\
@@ -1540,12 +1622,12 @@ SqueezeNet: 1.1 & GAF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.500} $\
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the VGG variants.}
+    \caption{Prediction results of the \textit{VGG} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_VGG}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 VGG: 11 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.659} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.257} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.840} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.182} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.811} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.201} \\
  & MTF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.500} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.174} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.790} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.116} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.729} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.155} \\
@@ -1611,12 +1693,12 @@ Table~\ref{tab:Averages_of_ShuffleNetV2} displays the metrics for ShuffleNet V2 
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the EfficientNet variants.}
+    \caption{Prediction results of the \textit{EfficientNet} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_EfficientNet}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 EfficientNet: B0 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.569} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.177} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.828} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.090} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.778} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.152} \\
  & MTF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.507} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.206} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.806} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.155} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.694} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.257} \\
@@ -1644,12 +1726,12 @@ EfficientNet: B3 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.583} $
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the EfficientNetV2 variants.}
+    \caption{Prediction results of the \textit{EfficientNetV2} variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_EfficientNetV2}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 EfficientNet V2 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.600} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.200} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.826} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.167} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.800} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.197} \\
  & MTF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.545} $\pm$ \textbf{\textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.151}} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.849} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.101} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.750} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.151} \\
@@ -1665,12 +1747,12 @@ EfficientNet V2 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.600} $\
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the ShuffleNetV2 variants.}
+    \caption{Prediction results of the \textit{ShuffleNetV2} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_ShuffleNetV2}
     \adjustbox{max width=\columnwidth,center}{
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 ShuffleNet V2: x0.5 & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.523} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.208} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.784} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.199} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.736} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.210} \\
  & MTF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.473} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.090} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.851} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.090} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.667} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.280} \\
@@ -1721,13 +1803,13 @@ When evaluating the top-performing models from each type within the Diverse \gls
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the AlexNet variants.}
+    \caption{Prediction results of the \textit{AlexNet} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_AlexNet}
     \adjustbox{max width=\columnwidth,center}{
 
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 AlexNet & GAF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.545} $\pm$ \textbf{\textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.151}} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.849} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.101} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.750} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.151} \\
  & MTF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.598} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.247} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.827} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.174} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.773} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.163} \\
@@ -1745,13 +1827,13 @@ AlexNet & GAF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.545} $\pm$ \tex
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the ConvNeXt variants.}
+    \caption{Prediction results of the \textit{ConvNeXt} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_ConvNeXt}
     \adjustbox{max width=\columnwidth,center}{
 
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 ConvNeXt: Base & GAF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.536} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.157} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.792} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.137} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.764} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.170} \\
  & MTF & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.473} $\pm$ \textcolor[rgb]{0.0000000000,0.7000000000,0.0}{0.144} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.789} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.159} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.667} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.268} \\
@@ -1779,13 +1861,13 @@ ConvNeXt: Tiny & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.688} $\p
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the RegNet variants.}
+    \caption{Prediction results of the \textit{RegNet} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_RegNet}
     \adjustbox{max width=\columnwidth,center}{
 
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 RegNet: X; 16 GF & GAF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.668} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.226} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.837} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.167} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.841} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.202} \\
  & MTF & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.542} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.226} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.771} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.154} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.736} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.303} \\
@@ -1872,13 +1954,13 @@ Specifically, \gls{RISEC} demonstrated faster inference while \gls{TDE} had lowe
 
 \begin{table}[t!]
     \centering
-    \caption{Averages and standard deviations of the folds evaluation for the Non-CV variants.}
+    \caption{Prediction results of the \textit{Non-CV} model variants ($\mu \pm \sigma$).}
     \label{tab:Averages_of_Non-CV}
     \adjustbox{max width=\columnwidth,center}{
 
 \begin{tabular}{llll}
 \toprule
-Model & Cohen Kappa & F1 Score & Precision \\
+Model & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 Arsenal & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.639} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.252} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.804} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.140} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.819} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.204} \\
 BOSS Ensemble & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.688} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.241} & \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.884} $\pm$ \textcolor[rgb]{0.3000000000,0.3000000000,0.5}{0.101} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.826} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.168} \\
@@ -1939,7 +2021,7 @@ The best combinations between models and projections from previous analyses are 
 
 \begin{tabular}{lllll}
 \toprule
-Model & Projection & Cohen Kappa & F1 Score & Precision \\
+Model & Projection & Cohen's $\kappa$ & F1 Score & Precision \\
 \midrule
 AlexNet & \purpole{PMix} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.917} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.163} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.955} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.083} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.944} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.130} \\
 MNASNet: 1.0 & \purpole{PMix} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.917} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.163} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.955} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.083} & \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.944} $\pm$ \textcolor[rgb]{1.0000000000,0.2000000000,0.2}{0.130} \\
@@ -2034,7 +2116,7 @@ Lastly, benchmarking metrics were measured using the Python standard API, which 
 \label{sec:Limitations}
 
 
-This work, presented a study on \gls{SQA} for \gls{PPG} signals, mainly following an 1D-to-2D-projection approach in combination with \gls{CV} techniques. The investigated projection-based approach involved transforming 1D signals onto 2D images using the \gls{RP}, \gls{GAF}, and \gls{MTF} methods. In addition to these methods, we proposed a mixed approach combining them. The results indicate that the \gls{RP} and \gls{PMix} projection methods outperformed the \gls{GAF} and \gls{MTF} methods, with \gls{RP} and \gls{PMix} yielding similar outcomes. Although the set of machine learning models was extensive, the \gls{BUTPPG} dataset was small and unbalanced, limiting the conclusiveness of the results. Consequently, the experiment should be replicated on a larger dataset, either by using data augmentation techniques to balance and expand the BUTPPG dataset or by utilizing a different dataset with more samples.
+This work presented a study on \gls{SQA} for \gls{PPG} signals, mainly following an 1D-to-2D-projection approach in combination with \gls{CV} techniques. The investigated projection-based approach involved transforming 1D signals onto 2D images using the \gls{RP}, \gls{GAF}, and \gls{MTF} methods. In addition to these methods, we proposed a mixed approach combining them. The results indicate that the \gls{RP} and \gls{PMix} projection methods outperformed the \gls{GAF} and \gls{MTF} methods, with \gls{RP} and \gls{PMix} yielding similar outcomes. Although the set of machine learning models was extensive, the \gls{BUTPPG} dataset was small and unbalanced, limiting the conclusiveness of the results. Consequently, the experiment should be replicated on a larger dataset, either by using data augmentation techniques to balance and expand the BUTPPG dataset or by utilizing a different dataset with more samples.
 
 The experiments provided insights of the importance of the proposed \gls{PMix} approach. One key finding is that the \gls{PMix} method appeared more frequently among the best-performing results compared to the other projection methods. Specifically, as depicted in Table~\ref{tab:Averages_of_best models}, all but one top-performing approaches used the \gls{PMix} method.
 These results demonstrate that the proposed \gls{PMix} fusion strategy effectively mitigates the limitations of individual projection techniques by providing a more comprehensive spatial encoding of the \gls{PPG} morphology.
