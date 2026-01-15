@@ -709,25 +709,7 @@ $RP$ and $RP'$ are illustrated in Figures~\ref{fig:method:rp:thresholded} and \r
 \end{figure}
 
 
-\begin{figure*}[t!]
-    \centering
 
-    \subfigure[Signal segments.]{
-        \includegraphics[width=0.46\textwidth, trim={2em 3em 2em 4em}, clip]{QuantileBins.png} 
-        \label{fig:method:mtf_signals}
-    }
-    \subfigure[MTF transitions Markov chain.]{
-        \includegraphics[width=0.28\textwidth, trim={1em 1em 1em 1em}, clip]{MarkovChain.pdf}
-        \label{fig:method:markov_chain}
-    }
-    \subfigure[MTF projection]{
-        \frame{\includegraphics[width=0.205\textwidth]{MarkovTransitionField.png}}
-        \label{fig:method:mtf}
-    } 
-    
-    \caption{Original signal segmented into quantile bins \subref{fig:method:mtf_signals}, the Markov chain representing the transitions of the signal depicted in Figure~\ref{fig:method:mtf_signals} \subref{fig:method:markov_chain}, and the \gls{MTF} of the example signal with the number of quantile bins $m=8$ \subref{fig:method:mtf}.}
-    \label{fig:method:mtf_method}
-\end{figure*}
 
 
 
@@ -751,6 +733,119 @@ f_{\sphericalangle}^{-1}(r_i, \phi_i)=(r_i \cdot N, \cos(\phi_i))=(t_i,x_i).
 This indicates that the application of the function $f_{\sphericalangle}$ does not result in loss of information.
 
 
+
+
+The second step is to construct the temporal relationship matrix. We can achieve that by two methods that exploit trigonometric properties. One of them is calculating the cosine of the summation of the pairs of angles, constructing the matrix $GASF_{n \times n}$:
+\begin{align}
+\begin{split}
+    GASF_{i,j}     & = \cos(\phi_i + \phi_j) \\
+            & = \cos(\phi_i) \cdot \cos(\phi_j) - \sin(\phi_i) \cdot \sin(\phi_j) \\
+            & = x_i \cdot x_j - \sqrt{1 - x_i^2} \cdot \sqrt{1 - x_j^2}, \label{eq:gasf:algebraic}
+\end{split}
+\end{align}
+where \gls{GASF} is the final matrix. Due to the inversibility of the $arccos$ function, it is possible to express that calculation without trigonometric operations, as expressed by the equality \ref{eq:gasf:algebraic}. Thus, we can calculate \gls{GASF} using matrix operations, as follows:  
+\begin{equation}
+    GASF = X^T \cdot X - \sqrt[\circ 2]{\mathds{1}-X^{\circ 2}}^T \cdot \sqrt[\circ 2]{\mathds{1}-X^{\circ 2}},
+\end{equation}
+where $M^{\circ 2}$ and $\sqrt[\circ 2]{M}$ represents the element-wise square power and square root of the matrix $M$, respectively, and $\mathds{1}$ is a matrix in which all elements are $1$. The other method is analogous, but uses the sine of the difference of the pairs of angles, constructing the following matrix $GADF_{n \times n}$:
+\begin{align}
+\begin{split}
+    GADF_{i,j} & = \sin(\phi_i - \phi_j) \\
+        & = \sin(\phi_i) \cdot \cos{\phi_j} - \cos(\phi_i) \cdot \sin(\phi_j) \\
+        & = \sqrt{1 - x_i^2} \cdot x_j - x_i \cdot \sqrt{1 - x_j^2},  \label{eq:gadf:algebraic}
+\end{split}
+\end{align}
+Also similarly, by the equality \ref{eq:gadf:algebraic}, we can express \gls{GADF} by matrix operations:
+\begin{equation}
+    GADF = \sqrt[\circ 2]{\mathds{1} - X^{\circ 2}}^T \cdot X - X^T \cdot \sqrt[\circ 2]{\mathds{1} - X^{\circ 2}}.
+\end{equation}
+Figure~\ref{fig:method:gaf} illustrates the \gls{GASF} and \gls{GADF} representations of the example signal depicted in Figure~\ref{fig:methodology:signal}.
+
+
+
+
+
+
+\begin{figure*}[t!]
+    \centering
+
+    \subfigure[Signal segments.]{
+        \includegraphics[width=0.46\textwidth, trim={2em 3em 2em 4em}, clip]{QuantileBins.png} 
+        \label{fig:method:mtf_signals}
+    }
+    \subfigure[MTF transitions Markov chain.]{
+        \includegraphics[width=0.28\textwidth, trim={1em 1em 1em 1em}, clip]{MarkovChain.pdf}
+        \label{fig:method:markov_chain}
+    }
+    \subfigure[MTF projection]{
+        \frame{\includegraphics[width=0.205\textwidth]{MarkovTransitionField.png}}
+        \label{fig:method:mtf}
+    } 
+    
+    \caption{Original signal segmented into quantile bins \subref{fig:method:mtf_signals}, the Markov chain representing the transitions of the signal depicted in Figure~\ref{fig:method:mtf_signals} \subref{fig:method:markov_chain}, and the \gls{MTF} of the example signal with the number of quantile bins $m=8$ \subref{fig:method:mtf}.}
+    \label{fig:method:mtf_method}
+\end{figure*}
+
+
+\subsection{Markov Transition Field}
+
+Oates et al.~\cite{gaf-mtf-1} proposed the \gls{MTF} as well, based on a signal to graph mapping of Campanharo et al.~\cite{mtf-1}. In fact, that mapping is the first step of this method. We map the signal $X=\{x_1,x_2,...,x_n\}$, with $x_i \in \mathbb{R}$, to a graph $G=(N,W)$, with nodes set $N$ and edges weights adjacency matrix $W$. Its nodes $N$ corresponds to $m \in \mathbb{N}$ quantile bins $Q_i \subseteq \{x_i | i \in \{1,2,...,n\}\}$, that is, $|Q_1|=|Q_2|=...=|Q_n|$ and, $\forall q_1 \in Q_1, \forall q_2 \in Q_2, ..., \forall q_n \in Q_n$, we have that $q_1 \leq q_2 \leq ... \leq q_n$. In other words, those quantiles bins separate the signal $X$ into bands $Q_i$ with equal amount of samples $x_i$. Figure~\ref{fig:method:mtf_signals} pictures this concept for the example signal. The other graph component, its edges, are directed and corresponds to the probability of a sample $x_{k+1}$, consecutive to a uniformly randomly chosen sample of a certain quantile $x_k \in Q_i$ (must have a consecutive), belonging to a certain quantile $Q_j$. Those edges are akin to transitions of first-order Markov chains, since the probabilities summation of the transitions that sources from a state is always equal to $100\%$.
+
+We can express the adjacency matrix $W_{m \times m}$ as follows:  
+\begin{equation}
+    W_{i,j} = \frac{
+            \sum\limits_{x_k \in Q_i, x_{k+1} \in X} f_{in}(x_{k+1}, Q_j)
+        }{
+            \sum\limits_{Q_l \in Q}\sum\limits_{x_k \in Q_i, x_{k+1} \in X} f_{in}(x_{k+1}, Q_l) 
+        },
+\end{equation}
+where
+\begin{equation}
+    f_{in}(x,Q) = \begin{cases}
+        0, & x \not\in Q \\
+        1, & x \in Q
+    \end{cases}.
+\end{equation}
+Figure~\ref{fig:method:markov_chain} depicts the graph of the example signal. This graph $G$ enables a representation  $X' = \{ x'_1,x'_2,\cdots,x'_n \}$  of the input signal $X$ by iteratively selecting a sample from the current quantile node and transitioning to the subsequent node based on the transition probabilities.
+
+Algorithm~\ref{alg:mtf_reconstruction} details this representation, while Figure~\ref{fig:method:mtf_signals} illustrates its application to the example signal. Consequently, the signal conversion to this graph representation is probabilistically reversible. This characteristic ensures that the statistical information of the signal is preserved, even though an exact recovery of the original values is not guaranteed.
+
+
+\begin{algorithm}[t!]
+    \begin{algorithmic}
+        \Require Graph $G=(N=\{Q_1, Q_2, ..., Q_m\},W)$
+        \Ensure Reconstructed Signal $X'=x'_1,x'_2,...,x'_n$
+        \State $Q_{current} \gets Q \in_R N$ 
+        \For {$k \in 1,2,...,n$}
+            \State $x'_k \gets x \in_R Q_{current}$
+            \State $Q_{current} \gets Q_{next}$, with probability $W_{current,next}$
+        \EndFor
+    \end{algorithmic}
+    \caption{The probabilistic signal representation algorithm. }
+    \label{alg:mtf_reconstruction}
+\end{algorithm}
+
+Since that graph does not retain temporal relationships, the second step of the \gls{MTF} method is to build the matrix $MTF_{n \times n}$:
+\begin{equation}
+    MTF_{i,j} = W_{u,v} | x_i \in Q_u, x_j \in Q_v,
+\end{equation}
+\noindent that is, each cell $MTF_{i,j}$ contains the transition probability between the quantiles $Q_u,Q_v$ to which the samples $x_i,x_j$ belong. Figure~\ref{fig:method:mtf} pictures the final result of the method applied to the example signal. 
+
+
+
+
+
+
+\subsection{VisionPPG: Computer vision using projection mix}
+
+The fundamental objective of signal projection methods is to map the morphological properties and temporal dynamics of a signal into distinct visual patterns.
+This concept is highly applicable to the assessment of signal quality.
+Figure~\ref{fig:method:noises} illustrates the influence of various noise types on the visual characteristics of these projections.
+Notably, the presence of low-frequency or high-frequency interference tends to produce macro-scale or micro-scale structures, respectively.
+For instance, baseline wander manifests as a limited number of large-scale structures while high-frequency noise generates fine, granular patterns.
+Furthermore, localized noise often creates cross-like artifacts in the projection space as shown in the local noise column of Figure~\ref{fig:method:noises}.
+The sensitivity of these projections is also evident in the presence of Gaussian or impulsive noise. Gaussian noise tends to preserve high-level structural features while obscuring finer details, whereas impulsive noise generates distinct vertical and horizontal lines.
+Consequently, these projections are suitable for \gls{SQI} estimation using computer vision models because they represent noise characteristics as discernible visual features that these architectures are designed to identify.
 
 
 
@@ -820,91 +915,6 @@ This indicates that the application of the function $f_{\sphericalangle}$ does n
 
 
 
-
-
-
-
-The second step is to construct the temporal relationship matrix. We can achieve that by two methods that exploit trigonometric properties. One of them is calculating the cosine of the summation of the pairs of angles, constructing the matrix $GASF_{n \times n}$:
-\begin{align}
-\begin{split}
-    GASF_{i,j}     & = \cos(\phi_i + \phi_j) \\
-            & = \cos(\phi_i) \cdot \cos(\phi_j) - \sin(\phi_i) \cdot \sin(\phi_j) \\
-            & = x_i \cdot x_j - \sqrt{1 - x_i^2} \cdot \sqrt{1 - x_j^2}, \label{eq:gasf:algebraic}
-\end{split}
-\end{align}
-where \gls{GASF} is the final matrix. Due to the inversibility of the $arccos$ function, it is possible to express that calculation without trigonometric operations, as expressed by the equality \ref{eq:gasf:algebraic}. Thus, we can calculate \gls{GASF} using matrix operations, as follows:  
-\begin{equation}
-    GASF = X^T \cdot X - \sqrt[\circ 2]{\mathds{1}-X^{\circ 2}}^T \cdot \sqrt[\circ 2]{\mathds{1}-X^{\circ 2}},
-\end{equation}
-where $M^{\circ 2}$ and $\sqrt[\circ 2]{M}$ represents the element-wise square power and square root of the matrix $M$, respectively, and $\mathds{1}$ is a matrix in which all elements are $1$. The other method is analogous, but uses the sine of the difference of the pairs of angles, constructing the following matrix $GADF_{n \times n}$:
-\begin{align}
-\begin{split}
-    GADF_{i,j} & = \sin(\phi_i - \phi_j) \\
-        & = \sin(\phi_i) \cdot \cos{\phi_j} - \cos(\phi_i) \cdot \sin(\phi_j) \\
-        & = \sqrt{1 - x_i^2} \cdot x_j - x_i \cdot \sqrt{1 - x_j^2},  \label{eq:gadf:algebraic}
-\end{split}
-\end{align}
-Also similarly, by the equality \ref{eq:gadf:algebraic}, we can express \gls{GADF} by matrix operations:
-\begin{equation}
-    GADF = \sqrt[\circ 2]{\mathds{1} - X^{\circ 2}}^T \cdot X - X^T \cdot \sqrt[\circ 2]{\mathds{1} - X^{\circ 2}}.
-\end{equation}
-Figure~\ref{fig:method:gaf} illustrates the \gls{GASF} and \gls{GADF} representations of the example signal depicted in Figure~\ref{fig:methodology:signal}.
-
-
-
-
-
-
-
-
-\subsection{Markov Transition Field}
-
-Oates et al.~\cite{gaf-mtf-1} proposed the \gls{MTF} as well, based on a signal to graph mapping of Campanharo et al.~\cite{mtf-1}. In fact, that mapping is the first step of this method. We map the signal $X=\{x_1,x_2,...,x_n\}$, with $x_i \in \mathbb{R}$, to a graph $G=(N,W)$, with nodes set $N$ and edges weights adjacency matrix $W$. Its nodes $N$ corresponds to $m \in \mathbb{N}$ quantile bins $Q_i \subseteq \{x_i | i \in \{1,2,...,n\}\}$, that is, $|Q_1|=|Q_2|=...=|Q_n|$ and, $\forall q_1 \in Q_1, \forall q_2 \in Q_2, ..., \forall q_n \in Q_n$, we have that $q_1 \leq q_2 \leq ... \leq q_n$. In other words, those quantiles bins separate the signal $X$ into bands $Q_i$ with equal amount of samples $x_i$. Figure~\ref{fig:method:mtf_signals} pictures this concept for the example signal. The other graph component, its edges, are directed and corresponds to the probability of a sample $x_{k+1}$, consecutive to a uniformly randomly chosen sample of a certain quantile $x_k \in Q_i$ (must have a consecutive), belonging to a certain quantile $Q_j$. Those edges are akin to transitions of first-order Markov chains, since the probabilities summation of the transitions that sources from a state is always equal to $100\%$. We can express the adjacency matrix $W_{m \times m}$ as follows:  
-\begin{equation}
-    W_{i,j} = \frac{
-            \sum\limits_{x_k \in Q_i, x_{k+1} \in X} f_{in}(x_{k+1}, Q_j)
-        }{
-            \sum\limits_{Q_l \in Q}\sum\limits_{x_k \in Q_i, x_{k+1} \in X} f_{in}(x_{k+1}, Q_l) 
-        },
-\end{equation}
-where
-\begin{equation}
-    f_{in}(x,Q) = \begin{cases}
-        0, & x \not\in Q \\
-        1, & x \in Q
-    \end{cases}.
-\end{equation}
-Figure~\ref{fig:method:markov_chain} depicts the graph of the example signal. This graph $G$ enables a representation  $X' = \{ x'_1,x'_2,\cdots,x'_n \}$  of the input signal $X$ by iteratively selecting a sample from the current quantile node and transitioning to the subsequent node based on the transition probabilities.
-
-Algorithm~\ref{alg:mtf_reconstruction} details this representation, while Figure~\ref{fig:method:mtf_signals} illustrates its application to the example signal. Consequently, the signal conversion to this graph representation is probabilistically reversible. This characteristic ensures that the statistical information of the signal is preserved, even though an exact recovery of the original values is not guaranteed.
-
-
-\begin{algorithm}[t!]
-    \begin{algorithmic}
-        \Require Graph $G=(N=\{Q_1, Q_2, ..., Q_m\},W)$
-        \Ensure Reconstructed Signal $X'=x'_1,x'_2,...,x'_n$
-        \State $Q_{current} \gets Q \in_R N$ 
-        \For {$k \in 1,2,...,n$}
-            \State $x'_k \gets x \in_R Q_{current}$
-            \State $Q_{current} \gets Q_{next}$, with probability $W_{current,next}$
-        \EndFor
-    \end{algorithmic}
-    \caption{The probabilistic signal representation algorithm. }
-    \label{alg:mtf_reconstruction}
-\end{algorithm}
-
-Since that graph does not retain temporal relationships, the second step of the \gls{MTF} method is to build the matrix $MTF_{n \times n}$:
-\begin{equation}
-    MTF_{i,j} = W_{u,v} | x_i \in Q_u, x_j \in Q_v,
-\end{equation}
-\noindent that is, each cell $MTF_{i,j}$ contains the transition probability between the quantiles $Q_u,Q_v$ to which the samples $x_i,x_j$ belong. Figure~\ref{fig:method:mtf} pictures the final result of the method applied to the example signal. 
-
-
-
-
-\subsection{VisionPPG: Computer vision using projection mix}
-
-The main idea of the projection methods is to reflect properties and shapes of the signal into visual patterns. That concept applies too to the inspection of the signal quality. Figure~\ref{fig:method:noises} presents examples of the influence of different type of noises over the projections aspect. On observation is that the presence of low-frequency or high-frequency noises tend to produce, respectively, big or small scale structures. We can see in the effects of that observation in the figure, where the baseline wander figures manifest two to four big structures and the high-frequency noise figures contain small dot-like structures. Another observation is that noises concentrated in a certain region tend to disturb the projection onto a cross-like structure, as we can see in the figure local noise column. We can see that property of ``reflection'' for usual noises, such as Gaussian, and salt and pepper noises. In the figure, the Gaussian noise still preserves the high-level structures and destroys low-level structures, while the salt and pepper noise produces vertical and horizontal lines with void or full colors in places corresponding to, respectively ``salts'' and ``peppers'' of the source signal. Therefore, those projections are likely to be useful in \gls{SQI} tasks for \gls{CV} approaches, since they present the noise and its characteristics as visual patterns that humans can recognize, raising the hypothesis that \gls{CV} could learn them as well.
 
 \begin{figure}[t!]
     \centering
