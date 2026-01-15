@@ -1,3 +1,6 @@
+% !BIB TS-program = biber
+
+
 %% 
 %% Copyright 2007-2024 Elsevier Ltd
 %% 
@@ -19,6 +22,9 @@
 %% SP 2008/03/01
 %% $Id: elsarticle-template-num.tex 249 2024-04-06 10:51:24Z rishi $
 %%
+
+
+
 %\documentclass[preprint,12pt,twocolumn]{elsarticle}
 
 %% Use the option review to obtain double line spacing
@@ -251,12 +257,19 @@
 \begin{abstract}
 
 
-\gls{PPG} is a fundamental component to enable a myriad of continuous health monitoring applications. 
-These applications commonly utilize wearable devices to record signals that are useful in the individual's health condition diagnostic. \gls{PPG} is widely adopted in wearable sensors due to its small form factor, non-invasive nature, and cost-effectiveness. 
-However, despite these benefits, the \gls{PPG} highly susceptible to noise caused by motion and environmental interferences. Such noise can greatly impair the quality of the signal, which compromises the performance and reliability of health monitoring. 
-Given that, assessing the signal quality is essential for enabling trustable health monitoring applications. Most \gls{SQA} strategies adopted in these devices rely either on \gls{ML} models, achieving high performance levels despite the associated increases in resource demand and power consumption, or rule-based strategies that can assess signal quality in an energy-efficient way with reduced accuracy. 
-In this work, we present VisionPPG, a method for assessing the quality of \gls{PPG} signals through a fusion of signal projections and \gls{CV} techniques. Specifically, the one-dimensional \gls{PPG} signal is projected onto a set of bidimensional representations based on \gls{GAF}, \gls{MTF} and \gls{RP}. These projections are then aggregated to form a tensor referred as \gls{PMix}. The \gls{PMix} is combined with several \gls{CV} to model a signal quality classifier. To validate \gls{PMix}, different \glspl{CV} models are trained and tested using the \gls{BUTPPG} database. 
-The results indicate that VisionPPG outperforms state-of-the-art time series classifiers, achieving a K-Fold mean Cohen Kappa score of 0.955$\pm$0.101\%, F1 Score of 0.967$\pm$0.078, and Precision of 0.944$\pm$0.130 when the \gls{PMix} is combined with a Wide ResNet.
+\gls{PPG} is a fundamental component to enable a myriad of continuous \gls{HMA}. 
+These applications commonly utilize wearable devices to record signals that are useful in the individual's health condition diagnostic.
+%\gls{PPG} is widely adopted in wearable sensors due to its small form factor, non-invasive nature, and cost-effectiveness. 
+However, despite these benefits, \gls{PPG} is highly susceptible to noise caused by motion and environmental interferences.
+%Such noise can greatly impair the quality of the signal, which compromises the performance and reliability of health monitoring. 
+For that reason, \gls{SQA} is essential for enabling reliable \gls{HMA}.
+Most \gls{SQA} strategies rely either on \gls{ML} models, achieving high performance levels despite the associated increases in resource demand and power consumption, or rule-based strategies that can assess signal quality in an energy-efficient way with reduced accuracy. 
+In this work, we present VisionPPG, a method for assessing the quality of \gls{PPG} signals through a fusion of signal projections and \gls{CV} techniques.
+%Specifically, the one-dimensional \gls{PPG} signal is projected onto a set of bidimensional representations based on \gls{GAF}, \gls{MTF} and \gls{RP}.
+These projections are then aggregated to form a tensor referred as \gls{PMix}.
+%The \gls{PMix} is combined with several \gls{CV} to model a signal quality classifier.
+To validate \gls{PMix}, different \glspl{CV} models are trained and tested using the \gls{BUTPPG} database. 
+Results indicate that VisionPPG outperforms state-of-the-art time series classifiers, achieving a K-Fold mean Cohen Kappa score of 0.955$\pm$0.101\%, F1 Score of 0.967$\pm$0.078, and Precision of 0.944$\pm$0.130 when the \gls{PMix} is combined with a Wide ResNet.
 %The source code is available at \url{https://gitlab.com/lisa-unb/projection-based-biological-signal-processing}.
 \end{abstract}
 
@@ -300,7 +313,7 @@ Examples of wearable devices include quotidian objects, with the shape of belts,
 Smartwatches are a common category of wearables capable of running multiple health-monitoring applications.
 These applications are facilitated by the advent of the \gls{IoT}, which is defined as a scalable network of interconnected devices that exchange data captured by various sensors~\cite{aouedi2024survey}.
 These sensors capture vital physiological indicators, including thermal fluctuations, hemodynamic parameters, and neuroelectrical activity.
-These sensors are significant to capture environmental and physiological data that are valuable for healthcare, since they provide indicators of the patient's physiological state.~\cite{ECG-diagnosis}. 
+These sensors are significant to capture environmental and physiological data that are valuable for healthcare, since they provide indicators of the patient's physiological state~\cite{ECG-diagnosis}. 
 %For instance, certain \gls{ECG} patterns can signal a post-ischemic state~\cite{ECG-diagnosis}.
 
 
@@ -2242,7 +2255,1039 @@ During the preparation of this work the authors used ChatGPT\texttrademark and G
 
 
 \bibliographystyle{elsarticle-num}
-\bibliography{bibliografia}
+% \bibliography{bibliografia}
+
+
+\begin{thebibliography}{100}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{atheromas}
+T.~Thenappan, J.~A. Raza, A.~Movahed,
+  \href{https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-8175.2007.00568.x}{Review:
+  Aortic atheromas: Current concepts and controversies—a review of the
+  literature}, Echocardiography 25~(2) (2008) 198--207.
+\newblock \href
+  {http://arxiv.org/abs/https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1540-8175.2007.00568.x}
+  {\path{arXiv:https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1540-8175.2007.00568.x}},
+  \href {https://doi.org/https://doi.org/10.1111/j.1540-8175.2007.00568.x}
+  {\path{doi:https://doi.org/10.1111/j.1540-8175.2007.00568.x}}.
+\newline\urlprefix\url{https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-8175.2007.00568.x}
+
+\bibitem{cardiac-amyloidosis}
+C.~S. Kwok, W.~E. Moody, \href{https://doi.org/10.1177/17539447231216318}{The
+  importance of pathways to facilitate early diagnosis and treatment of
+  patients with cardiac amyloidosis}, Therapeutic Advances in Cardiovascular
+  Disease 17 (2023) 17539447231216318, pMID: 38099406.
+\newblock \href
+  {http://arxiv.org/abs/https://doi.org/10.1177/17539447231216318}
+  {\path{arXiv:https://doi.org/10.1177/17539447231216318}}, \href
+  {https://doi.org/10.1177/17539447231216318}
+  {\path{doi:10.1177/17539447231216318}}.
+\newline\urlprefix\url{https://doi.org/10.1177/17539447231216318}
+
+\bibitem{van2024smart}
+E.~{van Weenen}, Smart wearables in healthcare, in: Dimensions of Intelligent
+  Analytics for Smart Digital Health Solutions, Chapman and Hall/CRC, 2024, pp.
+  23--61.
+
+\bibitem{aouedi2024survey}
+O.~Aouedi, T.~H. Vu, A.~Sacco, D.~C. Nguyen, K.~Piamrat, G.~Marchetto, Q.~V.
+  Pham, A survey on intelligent internet of things: applications, security,
+  privacy, and future directions, IEEE Communications Surveys \& Tutorials
+  (2024).
+
+\bibitem{ECG-diagnosis}
+K.~Nikus, O.~Pahlm, G.~Wagner, Y.~Birnbaum, J.~Cinca, P.~Clemmensen, M.~Eskola,
+  M.~Fiol, D.~Goldwasser, A.~Gorgels, S.~Sclarovsky, S.~Stern, H.~Wellens,
+  W.~Zareba, A.~B. {de Luna},
+  \href{https://www.sciencedirect.com/science/article/pii/S0022073609002829}{Electrocardiographic
+  classification of acute coronary syndromes: a review by a committee of the
+  international society for holter and non-invasive electrocardiology}, Journal
+  of Electrocardiology 43~(2) (2010) 91--103.
+\newblock \href
+  {https://doi.org/https://doi.org/10.1016/j.jelectrocard.2009.07.009}
+  {\path{doi:https://doi.org/10.1016/j.jelectrocard.2009.07.009}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0022073609002829}
+
+\bibitem{ppg-1}
+F.~Scardulla, G.~Cosoli, S.~Spinsante, A.~Poli, G.~Iadarola, R.~Pernice,
+  A.~Busacca, S.~Pasta, L.~Scalise, L.~D'Acquisto,
+  \href{https://www.sciencedirect.com/science/article/pii/S0263224123007145}{Photoplethysmograhic
+  sensors, potential and limitations: Is it time for regulation? a
+  comprehensive review}, Measurement 218 (2023) 113150.
+\newblock \href
+  {https://doi.org/https://doi.org/10.1016/j.measurement.2023.113150}
+  {\path{doi:https://doi.org/10.1016/j.measurement.2023.113150}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0263224123007145}
+
+\bibitem{butppg}
+A.~Nemcova, E.~Vargova, R.~Smisek, L.~Marsanova, L.~Smital, M.~Vitek,
+  \href{https://onlinelibrary.wiley.com/doi/abs/10.1155/2021/3453007}{Brno
+  university of technology smartphone ppg database (but ppg): Annotated dataset
+  for ppg quality assessment and heart rate estimation}, BioMed Research
+  International 2021~(1) (2021) 3453007.
+\newblock \href
+  {http://arxiv.org/abs/https://onlinelibrary.wiley.com/doi/pdf/10.1155/2021/3453007}
+  {\path{arXiv:https://onlinelibrary.wiley.com/doi/pdf/10.1155/2021/3453007}},
+  \href {https://doi.org/https://doi.org/10.1155/2021/3453007}
+  {\path{doi:https://doi.org/10.1155/2021/3453007}}.
+\newline\urlprefix\url{https://onlinelibrary.wiley.com/doi/abs/10.1155/2021/3453007}
+
+\bibitem{origins-1}
+S.~O. Rice, Mathematical analysis of random noise, The Bell System Technical
+  Journal 23~(3) (1944) 282--332.
+\newblock \href {https://doi.org/10.1002/j.1538-7305.1944.tb00874.x}
+  {\path{doi:10.1002/j.1538-7305.1944.tb00874.x}}.
+
+\bibitem{origins-2}
+C.~E. Shannon, A mathematical theory of communication, The Bell System
+  Technical Journal 27~(3) (1948) 379--423.
+\newblock \href {https://doi.org/10.1002/j.1538-7305.1948.tb01338.x}
+  {\path{doi:10.1002/j.1538-7305.1948.tb01338.x}}.
+
+\bibitem{origins-3}
+R.~H. Stehle, A double-sideband shortwave-broadcast signal-quality estimation
+  algorithm, IEEE Transactions on Broadcasting 34~(2) (1988) 263--282.
+\newblock \href {https://doi.org/10.1109/11.1443} {\path{doi:10.1109/11.1443}}.
+
+\bibitem{origins-4}
+A.~Bayya, M.~Vis, Objective measures for speech quality assessment in wireless
+  communications, in: 1996 IEEE International Conference on Acoustics, Speech,
+  and Signal Processing Conference Proceedings, Vol.~1, 1996, pp. 495--498 vol.
+  1.
+\newblock \href {https://doi.org/10.1109/ICASSP.1996.541141}
+  {\path{doi:10.1109/ICASSP.1996.541141}}.
+
+\bibitem{2000s-1}
+{Wang, J. Y.}, A new method for evaluating ecg signal quality for multi-lead
+  arrhythmia analysis, in: Computers in Cardiology, 2002, pp. 85--88.
+\newblock \href {https://doi.org/10.1109/CIC.2002.1166713}
+  {\path{doi:10.1109/CIC.2002.1166713}}.
+
+\bibitem{2000s-2}
+Q.~Li, R.~G. Mark, G.~D. Clifford,
+  \href{https://dx.doi.org/10.1088/0967-3334/29/1/002}{Robust heart rate
+  estimation from multiple asynchronous noisy sources using signal quality
+  indices and a kalman filter}, Physiological Measurement 29~(1) (2007) 15.
+\newblock \href {https://doi.org/10.1088/0967-3334/29/1/002}
+  {\path{doi:10.1088/0967-3334/29/1/002}}.
+\newline\urlprefix\url{https://dx.doi.org/10.1088/0967-3334/29/1/002}
+
+\bibitem{2000s-3}
+A.~V. Deshmane, False arrhythmia alarm suppression using ecg, abp, and
+  photoplethysmogram, Master's thesis, Massachusetts Institute of Technology
+  (2009).
+
+\bibitem{hjorth-parameters}
+B.~Hjorth,
+  \href{https://www.sciencedirect.com/science/article/pii/0013469470901434}{Eeg
+  analysis based on time domain properties}, Electroencephalography and
+  Clinical Neurophysiology 29~(3) (1970) 306--310.
+\newblock \href {https://doi.org/https://doi.org/10.1016/0013-4694(70)90143-4}
+  {\path{doi:https://doi.org/10.1016/0013-4694(70)90143-4}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/0013469470901434}
+
+\bibitem{2000s-4}
+P.~Zhang, J.~Liu, X.~Wu, X.~Liu, Q.~Gao, A novel feature extraction method for
+  signal quality assessment of arterial blood pressure for monitoring cerebral
+  autoregulation, in: 2010 4th International Conference on Bioinformatics and
+  Biomedical Engineering, 2010, pp. 1--4.
+\newblock \href {https://doi.org/10.1109/ICBBE.2010.5515739}
+  {\path{doi:10.1109/ICBBE.2010.5515739}}.
+
+\bibitem{ecg-1}
+S.~K. Berkaya, A.~K. Uysal, E.~S. Gunal, S.~Ergin, S.~Gunal, M.~B. Gulmezoglu,
+  \href{https://www.sciencedirect.com/science/article/pii/S1746809418300636}{A
+  survey on ecg analysis}, Biomedical Signal Processing and Control 43 (2018)
+  216--235.
+\newblock \href {https://doi.org/https://doi.org/10.1016/j.bspc.2018.03.003}
+  {\path{doi:https://doi.org/10.1016/j.bspc.2018.03.003}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S1746809418300636}
+
+\bibitem{ecg-2}
+H.~Naseri, M.~R. Homaeinezhad,
+  \href{https://doi.org/10.1080/10255842.2013.875163}{Electrocardiogram signal
+  quality assessment using an artificially reconstructed target lead}, Computer
+  Methods in Biomechanics and Biomedical Engineering 18~(10) (2015) 1126--1141,
+  pMID: 24460414.
+\newblock \href
+  {http://arxiv.org/abs/https://doi.org/10.1080/10255842.2013.875163}
+  {\path{arXiv:https://doi.org/10.1080/10255842.2013.875163}}, \href
+  {https://doi.org/10.1080/10255842.2013.875163}
+  {\path{doi:10.1080/10255842.2013.875163}}.
+\newline\urlprefix\url{https://doi.org/10.1080/10255842.2013.875163}
+
+\bibitem{ecg-3}
+C.~Orphanidou, I.~Drobnjak, Quality assessment of ambulatory ecg using wavelet
+  entropy of the hrv signal, IEEE Journal of Biomedical and Health Informatics
+  21~(5) (2017) 1216--1223.
+\newblock \href {https://doi.org/10.1109/JBHI.2016.2615316}
+  {\path{doi:10.1109/JBHI.2016.2615316}}.
+
+\bibitem{ecg-4}
+Y.~Shahriari, R.~Fidler, M.~M. Pelter, Y.~Bai, A.~Villaroman, X.~Hu,
+  Electrocardiogram signal quality assessment based on structural image
+  similarity metric, IEEE Transactions on Biomedical Engineering 65~(4) (2018)
+  745--753.
+\newblock \href {https://doi.org/10.1109/TBME.2017.2717876}
+  {\path{doi:10.1109/TBME.2017.2717876}}.
+
+\bibitem{ecg-5}
+J.~Moeyersons, E.~Smets, J.~Morales, A.~Villa, W.~{De Raedt}, D.~Testelmans,
+  B.~Buyse, C.~{Van Hoof}, R.~Willems, S.~{Van Huffel}, C.~Varon,
+  \href{https://www.sciencedirect.com/science/article/pii/S0169260719312817}{Artefact
+  detection and quality assessment of ambulatory ecg signals}, Computer Methods
+  and Programs in Biomedicine 182 (2019) 105050.
+\newblock \href {https://doi.org/https://doi.org/10.1016/j.cmpb.2019.105050}
+  {\path{doi:https://doi.org/10.1016/j.cmpb.2019.105050}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0169260719312817}
+
+\bibitem{ecg-6}
+A.~Huerta, A.~Martinez-Rodrigo, V.~Bertomeu-Gonzalez, O.~Ayo-Martin, J.~J.
+  Rieta, R.~Alcaraz,
+  \href{https://www.sciencedirect.com/science/article/pii/S1746809423013538}{Single-lead
+  electrocardiogram quality assessment in the context of paroxysmal atrial
+  fibrillation through phase space plots}, Biomedical Signal Processing and
+  Control 91 (2024) 105920.
+\newblock \href {https://doi.org/https://doi.org/10.1016/j.bspc.2023.105920}
+  {\path{doi:https://doi.org/10.1016/j.bspc.2023.105920}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S1746809423013538}
+
+\bibitem{ppg-2}
+Q.~Li, G.~D. Clifford,
+  \href{https://dx.doi.org/10.1088/0967-3334/33/9/1491}{Dynamic time warping
+  and machine learning for signal quality assessment of pulsatile signals},
+  Physiological Measurement 33~(9) (2012) 1491.
+\newblock \href {https://doi.org/10.1088/0967-3334/33/9/1491}
+  {\path{doi:10.1088/0967-3334/33/9/1491}}.
+\newline\urlprefix\url{https://dx.doi.org/10.1088/0967-3334/33/9/1491}
+
+\bibitem{ppg-3}
+G.~B. Papini, P.~Fonseca, X.~L. Aubert, S.~Overeem, J.~W.~M. Bergmans,
+  R.~Vullings, Photoplethysmography beat detection and pulse morphology quality
+  assessment for signal reliability estimation, in: 2017 39th Annual
+  International Conference of the IEEE Engineering in Medicine and Biology
+  Society (EMBC), 2017, pp. 117--120.
+\newblock \href {https://doi.org/10.1109/EMBC.2017.8036776}
+  {\path{doi:10.1109/EMBC.2017.8036776}}.
+
+\bibitem{such2007motion}
+O.~Such, Motion tolerance in wearable sensors-the challenge of motion artifact,
+  in: 2007 29th Annual International Conference of the IEEE Engineering in
+  Medicine and Biology Society, IEEE, 2007, pp. 1542--1545.
+
+\bibitem{nabavi2020robust}
+S.~Nabavi, S.~Bhadra, A robust fusion method for motion artifacts reduction in
+  photoplethysmography signal, IEEE Transactions on Instrumentation and
+  Measurement 69~(12) (2020) 9599--9608.
+
+\bibitem{tuauctan2015characterization}
+A.~M. T{\u{a}}u{\c{t}}an, A.~Young, E.~Wentink, F.~Wieringa, Characterization
+  and reduction of motion artifacts in photoplethysmographic signals from a
+  wrist-worn device, in: 2015 37th Annual International Conference of the IEEE
+  Engineering in Medicine and Biology Society (EMBC), IEEE, 2015, pp.
+  6146--6149.
+
+\bibitem{zhang2019motion}
+Y.~Zhang, S.~Song, R.~Vullings, D.~Biswas, N.~Sim{\~o}es-Capela,
+  N.~Van~Helleputte, C.~Van~Hoof, W.~Groenendaal, Motion artifact reduction for
+  wrist-worn photoplethysmograph sensors based on different wavelengths,
+  Sensors 19~(3) (2019) 673.
+
+\bibitem{ram2011novel}
+M.~R. Ram, K.~V. Madhav, E.~H. Krishna, N.~R. Komalla, K.~A. Reddy, A novel
+  approach for motion artifact reduction in ppg signals based on as-lms
+  adaptive filter, IEEE Transactions on Instrumentation and Measurement 61~(5)
+  (2011) 1445--1457.
+
+\bibitem{raghuram2016use}
+M.~Raghuram, K.~Sivani, K.~A. Reddy, Use of complex emd generated noise
+  reference for adaptive reduction of motion artifacts from ppg signals, in:
+  2016 international conference on electrical, electronics, and optimization
+  techniques (ICEEOT), IEEE, 2016, pp. 1816--1820.
+
+\bibitem{janiesch2021machine}
+C.~Janiesch, P.~Zschech, K.~Heinrich, Machine learning and deep learning,
+  Electronic Markets 31~(3) (2021) 685--695.
+
+\bibitem{ppg-sqa-1}
+F.~Mohagheghian, D.~Han, A.~Peitzsch, N.~Nishita, E.~Ding, E.~L. Dickson,
+  D.~DiMezza, E.~M. Otabil, K.~Noorishirazi, J.~Scott, D.~Lessard, Z.~Wang,
+  C.~Whitcomb, K.~V. Tran, T.~P. Fitzgibbons, D.~D. McManus, K.~H. Chon,
+  Optimized signal quality assessment for photoplethysmogram signals using
+  feature selection, IEEE Transactions on Biomedical Engineering 69~(9) (2022)
+  2982--2993.
+\newblock \href {https://doi.org/10.1109/TBME.2022.3158582}
+  {\path{doi:10.1109/TBME.2022.3158582}}.
+
+\bibitem{ppg-sqa-2}
+A.~Tiwari, G.~Gray, P.~Bondi, A.~Mahnam, T.~H. Falk,
+  \href{https://www.mdpi.com/1424-8220/23/12/5606}{Automated multi-wavelength
+  quality assessment of photoplethysmography signals using modulation spectrum
+  shape features}, Sensors 23~(12) (2023).
+\newblock \href {https://doi.org/10.3390/s23125606}
+  {\path{doi:10.3390/s23125606}}.
+\newline\urlprefix\url{https://www.mdpi.com/1424-8220/23/12/5606}
+
+\bibitem{ppg-sqa-3}
+J.~A. Miranda, C.~López-Ongil, J.~Andreu-Perez, Personalised and adjustable
+  interval type-2 fuzzy-based ppg quality assessment for the edge, in: 2023
+  IEEE International Conference on Fuzzy Systems (FUZZ), 2023, pp. 1--5.
+\newblock \href {https://doi.org/10.1109/FUZZ52849.2023.10309733}
+  {\path{doi:10.1109/FUZZ52849.2023.10309733}}.
+
+\bibitem{ppg-sqa-4}
+M.~S. Roy, R.~Gupta, K.~D. Sharma, Photoplethysmogram signal quality evaluation
+  by unsupervised learning approach, in: 2020 IEEE Applied Signal Processing
+  Conference (ASPCON), 2020, pp. 6--10.
+\newblock \href {https://doi.org/10.1109/ASPCON49795.2020.9276733}
+  {\path{doi:10.1109/ASPCON49795.2020.9276733}}.
+
+\bibitem{ppg-sqa-5}
+A.~Mahmoudzadeh, I.~Azimi, A.~M. Rahmani, P.~Liljeberg,
+  \href{https://www.sciencedirect.com/science/article/pii/S1877050921006499}{Lightweight
+  photoplethysmography quality assessment for real-time iot-based health
+  monitoring using unsupervised anomaly detection}, Procedia Computer Science
+  184 (2021) 140--147, the 12th International Conference on Ambient Systems,
+  Networks and Technologies (ANT) / The 4th International Conference on
+  Emerging Data and Industry 4.0 (EDI40) / Affiliated Workshops.
+\newblock \href {https://doi.org/https://doi.org/10.1016/j.procs.2021.03.025}
+  {\path{doi:https://doi.org/10.1016/j.procs.2021.03.025}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S1877050921006499}
+
+\bibitem{ppg-sqa-6}
+M.~Feli, I.~Azimi, A.~Anzanpour, A.~M. Rahmani, P.~Liljeberg,
+  \href{https://www.sciencedirect.com/science/article/pii/S2352648323000181}{An
+  energy-efficient semi-supervised approach for on-device photoplethysmogram
+  signal quality assessment}, Smart Health 28 (2023) 100390.
+\newblock \href {https://doi.org/https://doi.org/10.1016/j.smhl.2023.100390}
+  {\path{doi:https://doi.org/10.1016/j.smhl.2023.100390}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S2352648323000181}
+
+\bibitem{arrhythmia-1}
+C.~Antzelevitch, A.~Burashnikov, Overview of basic mechanisms of cardiac
+  arrhythmia, Cardiac electrophysiology clinics 3~(1) (2011) 23--45.
+
+\bibitem{arrhythmia-2}
+T.~Pereira, K.~Gadhoumi, M.~Ma, R.~Colorado, K.~J. Keenan, K.~Meisel, X.~Hu,
+  Robust assessment of photoplethysmogram signal quality in the presence of
+  atrial fibrillation, in: 2018 Computing in Cardiology Conference (CinC),
+  Vol.~45, 2018, pp. 1--4.
+\newblock \href {https://doi.org/10.22489/CinC.2018.254}
+  {\path{doi:10.22489/CinC.2018.254}}.
+
+\bibitem{arrhythmia-3}
+T.~Pereira, K.~Gadhoumi, M.~Ma, X.~Liu, R.~Xiao, R.~A. Colorado, K.~J. Keenan,
+  K.~Meisel, X.~Hu, A supervised approach to robust photoplethysmography
+  quality assessment, IEEE Journal of Biomedical and Health Informatics 24~(3)
+  (2020) 649--657.
+\newblock \href {https://doi.org/10.1109/JBHI.2019.2909065}
+  {\path{doi:10.1109/JBHI.2019.2909065}}.
+
+\bibitem{arrhythmia-4}
+T.~Pereira, C.~Ding, K.~Gadhoumi, N.~Tran, R.~A. Colorado, K.~Meisel, X.~Hu,
+  \href{https://dx.doi.org/10.1088/1361-6579/ab5b84}{Deep learning approaches
+  for plethysmography signal quality assessment in the presence of atrial
+  fibrillation}, Physiological Measurement 40~(12) (2019) 125002.
+\newblock \href {https://doi.org/10.1088/1361-6579/ab5b84}
+  {\path{doi:10.1088/1361-6579/ab5b84}}.
+\newline\urlprefix\url{https://dx.doi.org/10.1088/1361-6579/ab5b84}
+
+\bibitem{gaf-mtf-1}
+Z.~Wang, T.~Oates, Encoding time series as images for visual inspection and
+  classification using tiled convolutional neural networks, in: Workshops at
+  the twenty-ninth AAAI conference on artificial intelligence, 2015.
+
+\bibitem{rp-1}
+J.~P. Eckmann, S.~O. Kamphorst, D.~Ruelle, Recurrence plots of dynamical
+  systems, World Scientific Series on Nonlinear Science Series A 16 (1995)
+  441--446.
+
+\bibitem{imaging-6}
+J.~Liu, S.~Hu, Y.~Wang, Q.~Hu, D.~Wang, C.~Yang, A lightweight hybrid model
+  using multiscale markov transition field for real-time quality assessment of
+  photoplethysmography signals, IEEE Journal of Biomedical and Health
+  Informatics 28~(2) (2024) 1078--1088.
+\newblock \href {https://doi.org/10.1109/JBHI.2023.3331975}
+  {\path{doi:10.1109/JBHI.2023.3331975}}.
+
+\bibitem{STFT}
+K.~Gr{\"o}chenig, Foundations of time-frequency analysis, Springer Science \&
+  Business Media, 2013.
+
+\bibitem{imaging-1}
+J.~Chen, K.~Sun, Y.~Sun, X.~Li, Signal quality assessment of ppg signals using
+  stft time-frequency spectra and deep learning approaches, in: 2021 43rd
+  Annual International Conference of the IEEE Engineering in Medicine \&
+  Biology Society (EMBC), 2021, pp. 1153--1156.
+\newblock \href {https://doi.org/10.1109/EMBC46164.2021.9630758}
+  {\path{doi:10.1109/EMBC46164.2021.9630758}}.
+
+\bibitem{deep-learning-1}
+E.~K. Naeini, I.~Azimi, A.~M. Rahmani, P.~Liljeberg, N.~Dutt,
+  \href{https://www.sciencedirect.com/science/article/pii/S1877050919305368}{A
+  real-time ppg quality assessment approach for healthcare internet-of-things},
+  Procedia Computer Science 151 (2019) 551--558, the 10th International
+  Conference on Ambient Systems, Networks and Technologies (ANT 2019) / The 2nd
+  International Conference on Emerging Data and Industry 4.0 (EDI40 2019) /
+  Affiliated Workshops.
+\newblock \href {https://doi.org/https://doi.org/10.1016/j.procs.2019.04.074}
+  {\path{doi:https://doi.org/10.1016/j.procs.2019.04.074}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S1877050919305368}
+
+\bibitem{deep-learning-2}
+S.~Zanelli, M.~A. El~Yacoubi, M.~Hallab, M.~Ammi, Transfer learning of
+  cnn-based signal quality assessment from clinical to non-clinical ppg
+  signals, in: 2021 43rd Annual International Conference of the IEEE
+  Engineering in Medicine \& Biology Society (EMBC), 2021, pp. 902--905.
+\newblock \href {https://doi.org/10.1109/EMBC46164.2021.9629640}
+  {\path{doi:10.1109/EMBC46164.2021.9629640}}.
+
+\bibitem{deep-learning-3}
+G.~D. Lucaf{\'o}, P.~Freitas, R.~Lima, G.~da~Luz, R.~Bispo, P.~Rodrigues,
+  F.~Cabello, O.~Penatti, Signal quality assessment of photoplethysmogram
+  signals using hybrid rule-and learning-based models, Journal of Health
+  Informatics 15~(Especial) (2023).
+
+\bibitem{deep-learning-4}
+H.~Gao, C.~Zhang, S.~Pei, X.~Wu,
+  \href{https://opg.optica.org/boe/abstract.cfm?URI=boe-14-3-1119}{Lstm-based
+  real-time signal quality assessment for blood volume pulse analysis}, Biomed.
+  Opt. Express 14~(3) (2023) 1119--1136.
+\newblock \href {https://doi.org/10.1364/BOE.477143}
+  {\path{doi:10.1364/BOE.477143}}.
+\newline\urlprefix\url{https://opg.optica.org/boe/abstract.cfm?URI=boe-14-3-1119}
+
+\bibitem{deep-learning-5}
+M.~S. Roy, B.~Roy, R.~Gupta, K.~D. Sharma, On-device reliability assessment and
+  prediction of missing photoplethysmographic data using deep neural networks,
+  IEEE Transactions on Biomedical Circuits and Systems 14~(6) (2020)
+  1323--1332.
+\newblock \href {https://doi.org/10.1109/TBCAS.2020.3028935}
+  {\path{doi:10.1109/TBCAS.2020.3028935}}.
+
+\bibitem{deep-learning-6}
+E.~K. Naeini, F.~Sarhaddi, I.~Azimi, P.~Liljeberg, N.~Dutt, A.~M. Rahmani,
+  \href{https://doi.org/10.1145/3616019}{A deep learning–based ppg quality
+  assessment approach for heart rate and heart rate variability}, ACM Trans.
+  Comput. Healthcare 4~(4) (nov 2023).
+\newblock \href {https://doi.org/10.1145/3616019} {\path{doi:10.1145/3616019}}.
+\newline\urlprefix\url{https://doi.org/10.1145/3616019}
+
+\bibitem{vitaldb-dataset}
+H.~C. Lee, C.~W. Jung,
+  \href{https://www.doi.org/10.1038/s41598-018-20062-4}{Vital recorder—a free
+  research tool for automatic recording of high-resolution time-synchronised
+  physiological data from multiple anaesthesia devices}, Scientific reports
+  8~(1) (2018) 1527.
+\newblock \href {https://doi.org/10.1038/s41598-018-20062-4}
+  {\path{doi:10.1038/s41598-018-20062-4}}.
+\newline\urlprefix\url{https://www.doi.org/10.1038/s41598-018-20062-4}
+
+\bibitem{imaging-2}
+T.~Chatterjee, A.~Ghosh, S.~Sarkar, Signal quality assessment of
+  photoplethysmogram signals using quantum pattern recognition technique and
+  lightweight cnn module, in: 2022 44th Annual International Conference of the
+  IEEE Engineering in Medicine \& Biology Society (EMBC), 2022, pp. 3382--3386.
+\newblock \href {https://doi.org/10.1109/EMBC48229.2022.9871494}
+  {\path{doi:10.1109/EMBC48229.2022.9871494}}.
+
+\bibitem{queensland-dataset}
+D.~Liu, M.~G{\"o}rges, S.~A. Jenkins,
+  \href{https://www.doi.org/10.1213/ANE.0b013e318241f7c0}{University of
+  queensland vital signs dataset: Development of an accessible repository of
+  anesthesia patient monitoring data for research}, Anesthesia \& Analgesia
+  114~(3) (2012) 584--589.
+\newblock \href {https://doi.org/10.1213/ANE.0b013e318241f7c0}
+  {\path{doi:10.1213/ANE.0b013e318241f7c0}}.
+\newline\urlprefix\url{https://www.doi.org/10.1213/ANE.0b013e318241f7c0}
+
+\bibitem{imaging-3}
+D.~Roh, H.~Shin, \href{https://www.mdpi.com/1424-8220/21/6/2188}{Recurrence
+  plot and machine learning for signal quality assessment of photoplethysmogram
+  in mobile environment}, Sensors 21~(6) (2021).
+\newblock \href {https://doi.org/10.3390/s21062188}
+  {\path{doi:10.3390/s21062188}}.
+\newline\urlprefix\url{https://www.mdpi.com/1424-8220/21/6/2188}
+
+\bibitem{imaging-4}
+P.~G. Freitas, R.~G. De~Lima, G.~D. Lucafo, O.~A.~B. Penatti,
+  Photoplethysmogram signal quality assessment via 1d-to-2d projections and
+  vision transformers, in: 2023 15th International Conference on Quality of
+  Multimedia Experience (QoMEX), 2023, pp. 165--170.
+\newblock \href {https://doi.org/10.1109/QoMEX58391.2023.10178569}
+  {\path{doi:10.1109/QoMEX58391.2023.10178569}}.
+
+\bibitem{imaging-5}
+P.~G. Freitas, R.~G. De~Lima, G.~D. Lucafo, O.~A.~B. Penatti, Assessing the
+  quality of photoplethysmograms via gramian angular fields and vision
+  transformer, in: 2023 31st European Signal Processing Conference (EUSIPCO),
+  2023, pp. 1035--1039.
+\newblock \href {https://doi.org/10.23919/EUSIPCO58844.2023.10290014}
+  {\path{doi:10.23919/EUSIPCO58844.2023.10290014}}.
+
+\bibitem{rp-2}
+N.~Marwan, A historical review of recurrence plots, The European Physical
+  Journal Special Topics 164~(1) (2008) 3--12.
+
+\bibitem{rp-3}
+L.~C.~S. Afonso, G.~H. Rosa, C.~R. Pereira, S.~A.~T. Weber, C.~Hook, V.~H.~C.
+  Albuquerque, J.~P. Papa,
+  \href{https://www.sciencedirect.com/science/article/pii/S0167739X18322507}{A
+  recurrence plot-based approach for parkinson’s disease identification},
+  Future Generation Computer Systems 94 (2019) 282--292.
+\newblock \href {https://doi.org/https://doi.org/10.1016/j.future.2018.11.054}
+  {\path{doi:https://doi.org/10.1016/j.future.2018.11.054}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0167739X18322507}
+
+\bibitem{rp-4}
+A.~Shankar, H.~K. Khaing, S.~Dandapat, S.~Barma,
+  \href{https://www.sciencedirect.com/science/article/pii/S1746809421004511}{Analysis
+  of epileptic seizures based on eeg using recurrence plot images and deep
+  learning}, Biomedical Signal Processing and Control 69 (2021) 102854.
+\newblock \href {https://doi.org/https://doi.org/10.1016/j.bspc.2021.102854}
+  {\path{doi:https://doi.org/10.1016/j.bspc.2021.102854}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S1746809421004511}
+
+\bibitem{rp-5}
+Z.~Zhao, Y.~Zhang, Z.~Comert, Y.~Deng,
+  \href{https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2019.00255}{Computer-aided
+  diagnosis system of fetal hypoxia incorporating recurrence plot with
+  convolutional neural network}, Frontiers in Physiology 10 (2019).
+\newblock \href {https://doi.org/10.3389/fphys.2019.00255}
+  {\path{doi:10.3389/fphys.2019.00255}}.
+\newline\urlprefix\url{https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2019.00255}
+
+\bibitem{rp-6}
+X.~Li, T.~Zhou, S.~Qiu,
+  \href{https://www.frontiersin.org/journals/aging-neuroscience/articles/10.3389/fnagi.2022.888577}{Alzheimer's
+  disease analysis algorithm based on no-threshold recurrence plot convolution
+  network}, Frontiers in Aging Neuroscience 14 (2022).
+\newblock \href {https://doi.org/10.3389/fnagi.2022.888577}
+  {\path{doi:10.3389/fnagi.2022.888577}}.
+\newline\urlprefix\url{https://www.frontiersin.org/journals/aging-neuroscience/articles/10.3389/fnagi.2022.888577}
+
+\bibitem{mtf-1}
+A.~S. L.~O. Campanharo, M.~I. Sirer, R.~D. Malmgren, F.~M. Ramos, L.~A.~N.
+  Amaral, \href{https://doi.org/10.1371/journal.pone.0023378}{Duality between
+  time series and networks}, PLOS ONE 6~(8) (2011) 1--13.
+\newblock \href {https://doi.org/10.1371/journal.pone.0023378}
+  {\path{doi:10.1371/journal.pone.0023378}}.
+\newline\urlprefix\url{https://doi.org/10.1371/journal.pone.0023378}
+
+\bibitem{ImageNet}
+J.~Deng, W.~Dong, R.~Socher, L.~J. Li, K.~Li, L.~Fei-Fei, Imagenet: A
+  large-scale hierarchical image database, in: 2009 IEEE Conference on Computer
+  Vision and Pattern Recognition, 2009, pp. 248--255.
+\newblock \href {https://doi.org/10.1109/CVPR.2009.5206848}
+  {\path{doi:10.1109/CVPR.2009.5206848}}.
+
+\bibitem{aeon2024}
+M.~Middlehurst, A.~Ismail-Fawaz, A.~Guillaume, C.~Holder, D.~Guijo-Rubio,
+  G.~Bulatova, L.~Tsaprounis, L.~Mentel, M.~Walter, P.~Sch\"{a}fer, A.~Bagnall,
+  Aeon: a python toolkit for learning from time series, J. Mach. Learn. Res.
+  25~(1) (Jan. 2024).
+
+\bibitem{pytorch}
+A.~Paszke, S.~Gross, F.~Massa, A.~Lerer, J.~Bradbury, G.~Chanan, T.~Killeen,
+  Z.~Lin, N.~Gimelshein, L.~Antiga, A.~Desmaison, A.~K\"{o}pf, E.~Yang,
+  Z.~DeVito, M.~Raison, A.~Tejani, S.~Chilamkurthy, B.~Steiner, L.~Fang,
+  J.~Bai, S.~Chintala, PyTorch: An Imperative Style, High-Performance Deep
+  Learning Library, Curran Associates Inc., Red Hook, NY, USA, 2019.
+
+\bibitem{HIVECOTEV2}
+M.~Middlehurst, J.~Large, M.~Flynn, J.~Lines, A.~Bostrom, A.~Bagnall,
+  \href{https://doi.org/10.1007/s10994-021-06057-9}{Hive-cote 2.0: a new meta
+  ensemble for time series classification}, Mach. Learn. 110~(11–12) (2021)
+  3211–3243.
+\newblock \href {https://doi.org/10.1007/s10994-021-06057-9}
+  {\path{doi:10.1007/s10994-021-06057-9}}.
+\newline\urlprefix\url{https://doi.org/10.1007/s10994-021-06057-9}
+
+\bibitem{RocketClassifier}
+A.~Dempster, F.~Petitjean, G.~I. Webb,
+  \href{https://doi.org/10.1007/s10618-020-00701-z}{{ROCKET:} exceptionally
+  fast and accurate time series classification using random convolutional
+  kernels}, Data Min. Knowl. Discov. 34~(5) (2020) 1454--1495.
+\newblock \href {https://doi.org/10.1007/S10618-020-00701-Z}
+  {\path{doi:10.1007/S10618-020-00701-Z}}.
+\newline\urlprefix\url{https://doi.org/10.1007/s10618-020-00701-z}
+
+\bibitem{CNNClassifier}
+B.~Zhao, H.~Lu, S.~Chen, J.~Liu, D.~Wu, Convolutional neural networks for time
+  series classification, Journal of Systems Engineering and Electronics 28~(1)
+  (2017) 162--169.
+\newblock \href {https://doi.org/10.21629/JSEE.2017.01.18}
+  {\path{doi:10.21629/JSEE.2017.01.18}}.
+
+\bibitem{FCNClassifier-MLPClassifier}
+Z.~Wang, W.~Yan, T.~Oates,
+  \href{https://doi.org/10.1109/IJCNN.2017.7966039}{Time series classification
+  from scratch with deep neural networks: {A} strong baseline}, in: 2017
+  International Joint Conference on Neural Networks, {IJCNN} 2017, Anchorage,
+  AK, USA, May 14-19, 2017, {IEEE}, 2017, pp. 1578--1585.
+\newblock \href {https://doi.org/10.1109/IJCNN.2017.7966039}
+  {\path{doi:10.1109/IJCNN.2017.7966039}}.
+\newline\urlprefix\url{https://doi.org/10.1109/IJCNN.2017.7966039}
+
+\bibitem{Inception1}
+H.~Ismai-Fawaz, B.~Lucas, G.~Forestier, C.~Pelletier, D.~F. Schmidt, J.~Weber,
+  G.~I. Webb, L.~Idoumghar, P.~A. Muller, F.~Petitjean,
+  \href{https://doi.org/10.1007/s10618-020-00710-y}{Inceptiontime: Finding
+  alexnet for time series classification}, Data Min. Knowl. Discov. 34~(6)
+  (2020) 1936–1962.
+\newblock \href {https://doi.org/10.1007/s10618-020-00710-y}
+  {\path{doi:10.1007/s10618-020-00710-y}}.
+\newline\urlprefix\url{https://doi.org/10.1007/s10618-020-00710-y}
+
+\bibitem{Inception2}
+A.~Ismail-Fawaz, M.~Devanne, J.~Weber, G.~Forestier, Deep learning for time
+  series classification using new hand-crafted convolution filters, in: 2022
+  IEEE International Conference on Big Data (Big Data), 2022, pp. 972--981.
+\newblock \href {https://doi.org/10.1109/BigData55660.2022.10020496}
+  {\path{doi:10.1109/BigData55660.2022.10020496}}.
+
+\bibitem{LITETimeClassifier}
+A.~Ismail-Fawaz, M.~Devanne, S.~Berretti, J.~Weber, G.~Forestier, Lite: Light
+  inception with boosting techniques for time series classification, in: 2023
+  IEEE 10th International Conference on Data Science and Advanced Analytics
+  (DSAA), 2023, pp. 1--10.
+\newblock \href {https://doi.org/10.1109/DSAA60987.2023.10302569}
+  {\path{doi:10.1109/DSAA60987.2023.10302569}}.
+
+\bibitem{BOSSEnsemble}
+P.~Sch{\"{a}}fer, \href{https://doi.org/10.1007/s10618-014-0377-7}{The {BOSS}
+  is concerned with time series classification in the presence of noise}, Data
+  Min. Knowl. Discov. 29~(6) (2015) 1505--1530.
+\newblock \href {https://doi.org/10.1007/S10618-014-0377-7}
+  {\path{doi:10.1007/S10618-014-0377-7}}.
+\newline\urlprefix\url{https://doi.org/10.1007/s10618-014-0377-7}
+
+\bibitem{ContractableBOSS}
+M.~Middlehurst, W.~Vickers, A.~Bagnall, Scalable dictionary classifiers for
+  time series classification, in: H.~Yin, D.~Camacho, P.~Tino, A.~J.
+  Tall{\'o}n-Ballesteros, R.~Menezes, R.~Allmendinger (Eds.), Intelligent Data
+  Engineering and Automated Learning -- IDEAL 2019, Springer International
+  Publishing, Cham, 2019, pp. 11--19.
+
+\bibitem{TDE}
+M.~Middlehurst, J.~Large, G.~Cawley, A.~Bagnall,
+  \href{https://doi.org/10.1007/978-3-030-67658-2_38}{The temporal dictionary
+  ensemble (tde) classifier for time series classification}, in: Machine
+  Learning and Knowledge Discovery in Databases: European Conference, ECML PKDD
+  2020, Ghent, Belgium, September 14–18, 2020, Proceedings, Part I,
+  Springer-Verlag, Berlin, Heidelberg, 2020, p. 660–676.
+\newblock \href {https://doi.org/10.1007/978-3-030-67658-2_38}
+  {\path{doi:10.1007/978-3-030-67658-2_38}}.
+\newline\urlprefix\url{https://doi.org/10.1007/978-3-030-67658-2_38}
+
+\bibitem{MUSE}
+P.~Sch{\"{a}}fer, U.~Leser, \href{http://arxiv.org/abs/1711.11343}{Multivariate
+  time series classification with {WEASEL+MUSE}}, CoRR abs/1711.11343 (2017).
+\newblock \href {http://arxiv.org/abs/1711.11343} {\path{arXiv:1711.11343}}.
+\newline\urlprefix\url{http://arxiv.org/abs/1711.11343}
+
+\bibitem{WEASEL}
+P.~Sch\"{a}fer, U.~Leser, \href{https://doi.org/10.1145/3132847.3132980}{Fast
+  and accurate time series classification with weasel}, in: Proceedings of the
+  2017 ACM on Conference on Information and Knowledge Management, CIKM '17,
+  Association for Computing Machinery, New York, NY, USA, 2017, p. 637–646.
+\newblock \href {https://doi.org/10.1145/3132847.3132980}
+  {\path{doi:10.1145/3132847.3132980}}.
+\newline\urlprefix\url{https://doi.org/10.1145/3132847.3132980}
+
+\bibitem{WEASELV2}
+P.~Sch{\"{a}}fer, U.~Leser,
+  \href{https://doi.org/10.1007/s10994-023-06395-w}{{WEASEL} 2.0: a random
+  dilated dictionary transform for fast, accurate and memory constrained time
+  series classification}, Mach. Learn. 112~(12) (2023) 4763--4788.
+\newblock \href {https://doi.org/10.1007/S10994-023-06395-W}
+  {\path{doi:10.1007/S10994-023-06395-W}}.
+\newline\urlprefix\url{https://doi.org/10.1007/s10994-023-06395-w}
+
+\bibitem{REDCOMETS-1}
+L.~A. Bennett, Z.~S. Abdallah,
+  \href{https://doi.org/10.1007/978-3-031-49896-1\_6}{{RED} comets: An ensemble
+  classifier for symbolically represented multivariate time series}, in:
+  G.~Ifrim, R.~Tavenard, A.~J. Bagnall, P.~Sch{\"{a}}fer, S.~Malinowski,
+  T.~Guyet, V.~Lemaire (Eds.), Advanced Analytics and Learning on Temporal Data
+  - 8th {ECML} {PKDD} Workshop, {AALTD} 2023, Turin, Italy, September 18-22,
+  2023, Revised Selected Papers, Vol. 14343 of Lecture Notes in Computer
+  Science, Springer, 2023, pp. 76--91.
+\newblock \href {https://doi.org/10.1007/978-3-031-49896-1\_6}
+  {\path{doi:10.1007/978-3-031-49896-1\_6}}.
+\newline\urlprefix\url{https://doi.org/10.1007/978-3-031-49896-1\_6}
+
+\bibitem{REDCOMETS-2}
+Z.~S. Abdallah, M.~M. Gaber,
+  \href{https://doi.org/10.1007/s10994-020-05887-3}{Co-eye: a multi-resolution
+  ensemble classifier for symbolically approximated time series}, Mach. Learn.
+  109~(11) (2020) 2029--2061.
+\newblock \href {https://doi.org/10.1007/S10994-020-05887-3}
+  {\path{doi:10.1007/S10994-020-05887-3}}.
+\newline\urlprefix\url{https://doi.org/10.1007/s10994-020-05887-3}
+
+\bibitem{ElasticEnsemble}
+J.~Lines, A.~J. Bagnall, \href{https://doi.org/10.1007/s10618-014-0361-2}{Time
+  series classification with ensembles of elastic distance measures}, Data Min.
+  Knowl. Discov. 29~(3) (2015) 565--592.
+\newblock \href {https://doi.org/10.1007/S10618-014-0361-2}
+  {\path{doi:10.1007/S10618-014-0361-2}}.
+\newline\urlprefix\url{https://doi.org/10.1007/s10618-014-0361-2}
+
+\bibitem{ShapeDTW}
+J.~Zhao, L.~Itti,
+  \href{https://www.sciencedirect.com/science/article/pii/S0031320317303710}{shapedtw:
+  Shape dynamic time warping}, Pattern Recognition 74 (2018) 171--184.
+\newblock \href {https://doi.org/https://doi.org/10.1016/j.patcog.2017.09.020}
+  {\path{doi:https://doi.org/10.1016/j.patcog.2017.09.020}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0031320317303710}
+
+\bibitem{Catch22Classifier}
+C.~H. Lubba, S.~S. Sethi, P.~Knaute, S.~R. Schultz, B.~D. Fulcher, N.~S. Jones,
+  \href{https://doi.org/10.1007/s10618-019-00647-x}{catch22: Canonical
+  time-series characteristics - selected through highly comparative time-series
+  analysis}, Data Min. Knowl. Discov. 33~(6) (2019) 1821--1852.
+\newblock \href {https://doi.org/10.1007/S10618-019-00647-X}
+  {\path{doi:10.1007/S10618-019-00647-X}}.
+\newline\urlprefix\url{https://doi.org/10.1007/s10618-019-00647-x}
+
+\bibitem{TSFreshClassifier}
+M.~Christ, N.~Braun, J.~Neuffer, A.~W. Kempa-Liehr,
+  \href{https://www.sciencedirect.com/science/article/pii/S0925231218304843}{Time
+  series feature extraction on basis of scalable hypothesis tests (tsfresh –
+  a python package)}, Neurocomputing 307 (2018) 72--77.
+\newblock \href {https://doi.org/https://doi.org/10.1016/j.neucom.2018.03.067}
+  {\path{doi:https://doi.org/10.1016/j.neucom.2018.03.067}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0925231218304843}
+
+\bibitem{CanonicalIntervalForestClassifier}
+M.~Middlehurst, J.~Large, A.~Bagnall, The canonical interval forest (cif)
+  classifier for time series classification, in: 2020 IEEE International
+  Conference on Big Data (Big Data), 2020, pp. 188--195.
+\newblock \href {https://doi.org/10.1109/BigData50022.2020.9378424}
+  {\path{doi:10.1109/BigData50022.2020.9378424}}.
+
+\bibitem{RandomIntervalSpectralEnsembleClassifier}
+J.~Lines, S.~Taylor, A.~Bagnall, \href{https://doi.org/10.1145/3182382}{Time
+  series classification with hive-cote: The hierarchical vote collective of
+  transformation-based ensembles}, ACM Trans. Knowl. Discov. Data 12~(5) (jul
+  2018).
+\newblock \href {https://doi.org/10.1145/3182382} {\path{doi:10.1145/3182382}}.
+\newline\urlprefix\url{https://doi.org/10.1145/3182382}
+
+\bibitem{SupervisedTimeSeriesForest}
+N.~Cabello, E.~Naghizade, J.~Qi, L.~Kulik, Fast and accurate time series
+  classification through supervised interval search, in: 2020 IEEE
+  International Conference on Data Mining (ICDM), 2020, pp. 948--953.
+\newblock \href {https://doi.org/10.1109/ICDM50108.2020.00107}
+  {\path{doi:10.1109/ICDM50108.2020.00107}}.
+
+\bibitem{TimeSeriesForestClassifier}
+H.~Deng, G.~Runger, E.~Tuv, M.~Vladimir,
+  \href{https://www.sciencedirect.com/science/article/pii/S0020025513001473}{A
+  time series forest for classification and feature extraction}, Information
+  Sciences 239 (2013) 142--153.
+\newblock \href {https://doi.org/https://doi.org/10.1016/j.ins.2013.02.030}
+  {\path{doi:https://doi.org/10.1016/j.ins.2013.02.030}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0020025513001473}
+
+\bibitem{ShapeletTransformClassifier-1}
+J.~Hills, J.~Lines, E.~Baranauskas, J.~Mapp, A.~J. Bagnall,
+  \href{https://doi.org/10.1007/s10618-013-0322-1}{Classification of time
+  series by shapelet transformation}, Data Min. Knowl. Discov. 28~(4) (2014)
+  851--881.
+\newblock \href {https://doi.org/10.1007/S10618-013-0322-1}
+  {\path{doi:10.1007/S10618-013-0322-1}}.
+\newline\urlprefix\url{https://doi.org/10.1007/s10618-013-0322-1}
+
+\bibitem{ShapeletTransformClassifier-2}
+A.~Bostrom, A.~J. Bagnall,
+  \href{https://doi.org/10.1007/978-3-662-55608-5\_2}{Binary shapelet transform
+  for multiclass time series classification}, Trans. Large Scale Data Knowl.
+  Centered Syst. 32 (2017) 24--46.
+\newblock \href {https://doi.org/10.1007/978-3-662-55608-5\_2}
+  {\path{doi:10.1007/978-3-662-55608-5\_2}}.
+\newline\urlprefix\url{https://doi.org/10.1007/978-3-662-55608-5\_2}
+
+\bibitem{RDSTClassifier-1}
+A.~Guillaume, C.~Vrain, W.~Elloumi,
+  \href{https://doi.org/10.1007/978-3-031-09037-0\_53}{Random dilated shapelet
+  transform: {A} new approach for time series shapelets}, in: M.~A.
+  El{-}Yacoubi, E.~Granger, P.~C. Yuen, U.~Pal, N.~Vincent (Eds.), Pattern
+  Recognition and Artificial Intelligence - Third International Conference,
+  {ICPRAI} 2022, Paris, France, June 1-3, 2022, Proceedings, Part {I}, Vol.
+  13363 of Lecture Notes in Computer Science, Springer, 2022, pp. 653--664.
+\newblock \href {https://doi.org/10.1007/978-3-031-09037-0\_53}
+  {\path{doi:10.1007/978-3-031-09037-0\_53}}.
+\newline\urlprefix\url{https://doi.org/10.1007/978-3-031-09037-0\_53}
+
+\bibitem{RDSTClassifier-2}
+A.~Guillaume, C.~Vrain, W.~Elloumi,
+  \href{https://tel.archives-ouvertes.fr/tel-04368849}{Time series
+  classification with shapelets: Application to predictive maintenance on event
+  logs. (classification de s{\'{e}}ries temporelles avec les shapelets :
+  application {\`{a}} la maintenance pr{\'{e}}dictive via journaux
+  d'{\'{e}}v{\'{e}}nements)}, Ph.D. thesis, University of Orl{\'{e}}ans, France
+  (2023).
+\newline\urlprefix\url{https://tel.archives-ouvertes.fr/tel-04368849}
+
+\bibitem{OrdinalTDE}
+R.~Ayll\'{o}n-Gavil\'{a}n, D.~Guijo-Rubio, P.~A. Guti\'{e}rrez,
+  C.~Herv\'{a}s-Mart\'{\i}nez, A dictionary-based approach to time series
+  ordinal classification, in: Advances in Computational Intelligence: 17th
+  International Work-Conference on Artificial Neural Networks, IWANN 2023,
+  Ponta Delgada, Portugal, June 19–21, 2023, Proceedings, Part II,
+  Springer-Verlag, Berlin, Heidelberg, 2023, p. 541–552.
+\newblock \href {https://doi.org/10.1007/978-3-031-43078-7_44}
+  {\path{doi:10.1007/978-3-031-43078-7_44}}.
+
+\bibitem{ContinuousIntervalTree}
+H.~Deng, G.~Runger, E.~Tuv, M.~Vladimir,
+  \href{https://www.sciencedirect.com/science/article/pii/S0020025513001473}{A
+  time series forest for classification and feature extraction}, Information
+  Sciences 239 (2013) 142--153.
+\newblock \href {https://doi.org/https://doi.org/10.1016/j.ins.2013.02.030}
+  {\path{doi:https://doi.org/10.1016/j.ins.2013.02.030}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0020025513001473}
+
+\bibitem{RotationForestClassifier}
+J.~J. Rodr{\'{\i}}guez, L.~I. Kuncheva, C.~J. Alonso,
+  \href{https://doi.org/10.1109/TPAMI.2006.211}{Rotation forest: {A} new
+  classifier ensemble method}, {IEEE} Trans. Pattern Anal. Mach. Intell.
+  28~(10) (2006) 1619--1630.
+\newblock \href {https://doi.org/10.1109/TPAMI.2006.211}
+  {\path{doi:10.1109/TPAMI.2006.211}}.
+\newline\urlprefix\url{https://doi.org/10.1109/TPAMI.2006.211}
+
+\bibitem{VisionTransformer}
+A.~Dosovitskiy, L.~Beyer, A.~Kolesnikov, D.~Weissenborn, X.~Zhai,
+  T.~Unterthiner, M.~Dehghani, M.~Minderer, G.~Heigold, S.~Gelly, J.~Uszkoreit,
+  N.~Houlsby, \href{https://openreview.net/forum?id=YicbFdNTTy}{An image is
+  worth 16x16 words: Transformers for image recognition at scale}, in:
+  International Conference on Learning Representations, 2021.
+\newline\urlprefix\url{https://openreview.net/forum?id=YicbFdNTTy}
+
+\bibitem{MaxViT}
+Z.~Tu, H.~Talebi, H.~Zhang, F.~Yang, P.~Milanfar, A.~Bovik, Y.~Li, Maxvit:
+  Multi-axis vision transformer, in: S.~Avidan, G.~Brostow, M.~Ciss{\'e}, G.~M.
+  Farinella, T.~Hassner (Eds.), Computer Vision -- ECCV 2022, Springer Nature
+  Switzerland, Cham, 2022, pp. 459--479.
+
+\bibitem{SwinTransformer}
+Z.~Liu, Y.~Lin, Y.~Cao, H.~Hu, Y.~Wei, Z.~Zhang, S.~Lin, B.~Guo, Swin
+  transformer: Hierarchical vision transformer using shifted windows, in: 2021
+  IEEE/CVF International Conference on Computer Vision (ICCV), 2021, pp.
+  9992--10002.
+\newblock \href {https://doi.org/10.1109/ICCV48922.2021.00986}
+  {\path{doi:10.1109/ICCV48922.2021.00986}}.
+
+\bibitem{SwinTransformerV2}
+Z.~Liu, H.~Hu, Y.~Lin, Z.~Yao, Z.~Xie, Y.~Wei, J.~Ning, Y.~Cao, Z.~Zhang,
+  L.~Dong, F.~Wei, B.~Guo, Swin transformer v2: Scaling up capacity and
+  resolution, in: 2022 IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition (CVPR), 2022, pp. 11999--12009.
+\newblock \href {https://doi.org/10.1109/CVPR52688.2022.01170}
+  {\path{doi:10.1109/CVPR52688.2022.01170}}.
+
+\bibitem{ResNet}
+K.~He, X.~Zhang, S.~Ren, J.~Sun, Deep residual learning for image recognition,
+  in: 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR),
+  2016, pp. 770--778.
+\newblock \href {https://doi.org/10.1109/CVPR.2016.90}
+  {\path{doi:10.1109/CVPR.2016.90}}.
+
+\bibitem{ResNeXt}
+S.~Xie, R.~Girshick, P.~Dollár, Z.~Tu, K.~He, Aggregated residual
+  transformations for deep neural networks, in: 2017 IEEE Conference on
+  Computer Vision and Pattern Recognition (CVPR), 2017, pp. 5987--5995.
+\newblock \href {https://doi.org/10.1109/CVPR.2017.634}
+  {\path{doi:10.1109/CVPR.2017.634}}.
+
+\bibitem{WideResNet}
+S.~Zagoruyko, N.~Komodakis, \href{https://dx.doi.org/10.5244/C.30.87}{Wide
+  residual networks}, in: E.~R.~H. Richard C.~Wilson, W.~A.~P. Smith (Eds.),
+  Proceedings of the British Machine Vision Conference (BMVC), BMVA Press,
+  2016, pp. 87.1--87.12.
+\newblock \href {https://doi.org/10.5244/C.30.87} {\path{doi:10.5244/C.30.87}}.
+\newline\urlprefix\url{https://dx.doi.org/10.5244/C.30.87}
+
+\bibitem{DenseNet}
+G.~Huang, Z.~Liu, L.~Van Der~Maaten, K.~Q. Weinberger, Densely connected
+  convolutional networks, in: 2017 IEEE Conference on Computer Vision and
+  Pattern Recognition (CVPR), 2017, pp. 2261--2269.
+\newblock \href {https://doi.org/10.1109/CVPR.2017.243}
+  {\path{doi:10.1109/CVPR.2017.243}}.
+
+\bibitem{VGG}
+K.~Simonyan, A.~Zisserman, \href{http://arxiv.org/abs/1409.1556}{Very deep
+  convolutional networks for large-scale image recognition}, in: Y.~Bengio,
+  Y.~LeCun (Eds.), 3rd International Conference on Learning Representations,
+  {ICLR} 2015, San Diego, CA, USA, May 7-9, 2015, Conference Track Proceedings,
+  2015.
+\newline\urlprefix\url{http://arxiv.org/abs/1409.1556}
+
+\bibitem{SqueezeNet}
+F.~N. Iandola, S.~Han, M.~W. Moskewicz, K.~Ashraf, W.~J. Dally, K.~Keutzer,
+  \href{https://openreview.net/forum?id=S1xh5sYgx}{Squeezenet: Alexnet-level
+  accuracy with 50x fewer parameters and \ensuremath{<}0.5{MB} model size}
+  (2017).
+\newline\urlprefix\url{https://openreview.net/forum?id=S1xh5sYgx}
+
+\bibitem{MNASNet}
+M.~Tan, B.~Chen, R.~Pang, V.~Vasudevan, M.~Sandler, A.~Howard, Q.~V. Le,
+  \href{https://doi.ieeecomputersociety.org/10.1109/CVPR.2019.00293}{Mnasnet:
+  Platform-aware neural architecture search for mobile}, in: 2019 IEEE/CVF
+  Conference on Computer Vision and Pattern Recognition (CVPR), IEEE Computer
+  Society, Los Alamitos, CA, USA, 2019, pp. 2815--2823.
+\newblock \href {https://doi.org/10.1109/CVPR.2019.00293}
+  {\path{doi:10.1109/CVPR.2019.00293}}.
+\newline\urlprefix\url{https://doi.ieeecomputersociety.org/10.1109/CVPR.2019.00293}
+
+\bibitem{MobileNetV2}
+M.~Sandler, A.~Howard, M.~Zhu, A.~Zhmoginov, L.~Chen,
+  \href{https://doi.ieeecomputersociety.org/10.1109/CVPR.2018.00474}{Mobilenetv2:
+  Inverted residuals and linear bottlenecks}, in: 2018 IEEE/CVF Conference on
+  Computer Vision and Pattern Recognition (CVPR), IEEE Computer Society, Los
+  Alamitos, CA, USA, 2018, pp. 4510--4520.
+\newblock \href {https://doi.org/10.1109/CVPR.2018.00474}
+  {\path{doi:10.1109/CVPR.2018.00474}}.
+\newline\urlprefix\url{https://doi.ieeecomputersociety.org/10.1109/CVPR.2018.00474}
+
+\bibitem{MobileNetV3}
+A.~Howard, M.~Sandler, B.~Chen, W.~Wang, L.~C. Chen, M.~Tan, G.~Chu,
+  V.~Vasudevan, Y.~Zhu, R.~Pang, H.~Adam, Q.~Le, Searching for mobilenetv3, in:
+  2019 IEEE/CVF International Conference on Computer Vision (ICCV), 2019, pp.
+  1314--1324.
+\newblock \href {https://doi.org/10.1109/ICCV.2019.00140}
+  {\path{doi:10.1109/ICCV.2019.00140}}.
+
+\bibitem{EfficientNet}
+M.~Tan, Q.~V. Le, Efficientnet: Rethinking model scaling for convolutional
+  neural networks, in: K.~Chaudhuri, R.~Salakhutdinov (Eds.), Proceedings of
+  the 36th International Conference on Machine Learning, {ICML} 2019, 9-15 June
+  2019, Long Beach, California, {USA}, Vol.~97 of Proceedings of Machine
+  Learning Research, {PMLR}, 2019, pp. 6105--6114.
+
+\bibitem{EfficientNetV2}
+M.~Tan, Q.~V. Le, Efficientnetv2: Smaller models and faster training, in:
+  M.~Meila, T.~Zhang (Eds.), Proceedings of the 38th International Conference
+  on Machine Learning, {ICML} 2021, 18-24 July 2021, Virtual Event, Vol. 139 of
+  Proceedings of Machine Learning Research, {PMLR}, 2021, pp. 10096--10106.
+
+\bibitem{ShuffleNetV2}
+N.~Ma, X.~Zhang, H.~T. Zheng, J.~Sun, Shufflenet v2: Practical guidelines for
+  efficient cnn architecture design, in: V.~Ferrari, M.~Hebert,
+  C.~Sminchisescu, Y.~Weiss (Eds.), Computer Vision -- ECCV 2018, Springer
+  International Publishing, Cham, 2018, pp. 122--138.
+
+\bibitem{AlexNet}
+A.~Krizhevsky, I.~Sutskever, G.~E. Hinton,
+  \href{https://doi.org/10.1145/3065386}{Imagenet classification with deep
+  convolutional neural networks}, Commun. ACM 60~(6) (2017) 84–90.
+\newblock \href {https://doi.org/10.1145/3065386} {\path{doi:10.1145/3065386}}.
+\newline\urlprefix\url{https://doi.org/10.1145/3065386}
+
+\bibitem{ConvNeXt}
+Z.~Liu, H.~Mao, C.~Y. Wu, C.~Feichtenhofer, T.~Darrell, S.~Xie, A convnet for
+  the 2020s, in: 2022 IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition (CVPR), 2022, pp. 11966--11976.
+\newblock \href {https://doi.org/10.1109/CVPR52688.2022.01167}
+  {\path{doi:10.1109/CVPR52688.2022.01167}}.
+
+\bibitem{RegNet}
+I.~Radosavovic, R.~P. Kosaraju, R.~Girshick, K.~He, P.~Dollár, Designing
+  network design spaces, in: 2020 {IEEE/CVF} Conference on Computer Vision and
+  Pattern Recognition, {CVPR} 2020, Seattle, WA, USA, June 13-19, 2020, 2020,
+  pp. 10425--10433.
+\newblock \href {https://doi.org/10.1109/CVPR42600.2020.01044}
+  {\path{doi:10.1109/CVPR42600.2020.01044}}.
+
+\bibitem{NetAdapt}
+T.~J. Yang, A.~G. Howard, B.~Chen, X.~Zhang, A.~Go, M.~Sandler, V.~Sze,
+  H.~Adam, \href{https://doi.org/10.1007/978-3-030-01249-6\_18}{Netadapt:
+  Platform-aware neural network adaptation for mobile applications}, in:
+  V.~Ferrari, M.~Hebert, C.~Sminchisescu, Y.~Weiss (Eds.), Computer Vision -
+  {ECCV} 2018 - 15th European Conference, Munich, Germany, September 8-14,
+  2018, Proceedings, Part {X}, Vol. 11214 of Lecture Notes in Computer Science,
+  Springer, 2018, pp. 289--304.
+\newblock \href {https://doi.org/10.1007/978-3-030-01249-6\_18}
+  {\path{doi:10.1007/978-3-030-01249-6\_18}}.
+\newline\urlprefix\url{https://doi.org/10.1007/978-3-030-01249-6\_18}
+
+\bibitem{optuna}
+T.~Akiba, S.~Sano, T.~Yanase, T.~Ohta, M.~Koyama,
+  \href{https://doi.org/10.1145/3292500.3330701}{Optuna: A next-generation
+  hyperparameter optimization framework}, in: Proceedings of the 25th ACM
+  SIGKDD International Conference on Knowledge Discovery \& Data Mining, KDD
+  '19, Association for Computing Machinery, New York, NY, USA, 2019, p.
+  2623–2631.
+\newblock \href {https://doi.org/10.1145/3292500.3330701}
+  {\path{doi:10.1145/3292500.3330701}}.
+\newline\urlprefix\url{https://doi.org/10.1145/3292500.3330701}
+
+\bibitem{Adam}
+D.~P. Kingma, J.~Ba, \href{http://arxiv.org/abs/1412.6980}{Adam: {A} method for
+  stochastic optimization}, in: Y.~Bengio, Y.~LeCun (Eds.), 3rd International
+  Conference on Learning Representations, {ICLR} 2015, San Diego, CA, USA, May
+  7-9, 2015, Conference Track Proceedings, 2015.
+\newline\urlprefix\url{http://arxiv.org/abs/1412.6980}
+
+\bibitem{CohenKappa}
+J.~Cohen, \href{https://doi.org/10.1177/001316446002000104}{A coefficient of
+  agreement for nominal scales}, Educational and Psychological Measurement
+  20~(1) (1960) 37--46.
+\newblock \href
+  {http://arxiv.org/abs/https://doi.org/10.1177/001316446002000104}
+  {\path{arXiv:https://doi.org/10.1177/001316446002000104}}, \href
+  {https://doi.org/10.1177/001316446002000104}
+  {\path{doi:10.1177/001316446002000104}}.
+\newline\urlprefix\url{https://doi.org/10.1177/001316446002000104}
+
+\bibitem{ImbalancedLearn2017}
+G.~Lema{{\^i}}tre, F.~Nogueira, C.~K. Aridas,
+  \href{http://jmlr.org/papers/v18/16-365}{Imbalanced-learn: A python toolbox
+  to tackle the curse of imbalanced datasets in machine learning}, Journal of
+  Machine Learning Research 18~(17) (2017) 1--5.
+\newline\urlprefix\url{http://jmlr.org/papers/v18/16-365}
+
+\bibitem{PyTS}
+J.~Faouzi, H.~Janati, \href{http://jmlr.org/papers/v21/19-763.html}{pyts: A
+  python package for time series classification}, Journal of Machine Learning
+  Research 21~(46) (2020) 1--6.
+\newline\urlprefix\url{http://jmlr.org/papers/v21/19-763.html}
+
+\bibitem{Sklearn}
+F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
+  M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, J.~Vanderplas, A.~Passos,
+  D.~Cournapeau, M.~Brucher, M.~Perrot, E.~Duchesnay, Scikit-learn: Machine
+  learning in {P}ython (2011).
+
+\bibitem{Pympler}
+R.~S. J.~Brouwers, L.~Haehne, Pympler: A python package to measure, monitor and
+  analyze the memory behavior of python objects in a running python
+  application, \url{https://github.com/pympler/pympler}, accessed: 2026-01-13
+  (2023).
+
+\bibitem{TimeSeriesAugmentation}
+Q.~Wen, L.~Sun, F.~Yang, X.~Song, J.~Gao, X.~Wang, H.~Xu,
+  \href{https://doi.org/10.24963/ijcai.2021/631}{Time series data augmentation
+  for deep learning: {A} survey}, in: Z.~Zhou (Ed.), Proceedings of the
+  Thirtieth International Joint Conference on Artificial Intelligence, {IJCAI}
+  2021, Virtual Event / Montreal, Canada, 19-27 August 2021, ijcai.org, 2021,
+  pp. 4653--4660.
+\newblock \href {https://doi.org/10.24963/IJCAI.2021/631}
+  {\path{doi:10.24963/IJCAI.2021/631}}.
+\newline\urlprefix\url{https://doi.org/10.24963/ijcai.2021/631}
+
+\end{thebibliography}
+
+
+
 
 \end{document}
 
